@@ -1,0 +1,76 @@
+/*
+ *主要样式，所有页面都需要加载
+ *
+ *张麒
+ *
+ *2013-8-12
+ */
+@charset "utf-8";
+
+body, select, input, h1, h2, h3 {
+    font-size: 12px;
+    font-family: verdana;
+}
+
+body, h1, h2, h3, ul, li, form, p, img {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+a {
+    color: #000;
+    text-decoration: none
+}
+
+a:hover {
+    text-decoration: underline
+}
+
+.display-none {
+    display: none;
+}
+
+.cursor-pointer {
+    cursor: pointer;
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.align-center {
+    text-align: center;
+}
+
+.border-top-zero {
+    border-top: 0;
+}
+
+input::-webkit-input-placeholder, textarea::-webkit-input-placeholder {
+    color: #28528f;
+    font-weight: normal;
+}
+
+input:-moz-placeholder, textarea:-moz-placeholder {
+    color: #28528f;
+    font-weight: normal;
+}
+
+input::-moz-placeholder, textarea::-moz-placeholder {
+    color: #28528f;
+    font-weight: normal;
+}
+
+input:-ms-input-placeholder, textarea:-ms-input-placeholder {
+    color: #28528f;
+    font-weight: normal;
+}

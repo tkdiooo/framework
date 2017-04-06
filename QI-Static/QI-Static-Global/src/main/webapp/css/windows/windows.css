@@ -1,0 +1,184 @@
+/* `Basic HTML
+----------------------------------------------------------------------------------------------------*/
+* {
+	cursor: default;
+}
+
+html,body {
+	overflow: hidden;
+}
+
+body {
+	font: 12px/1 'Lucida Grande', Arial, 'Liberation Sans', FreeSans, sans-serif;
+}
+
+a {
+	color: #7a8698;
+	cursor: pointer;
+}
+
+a:hover {
+	text-decoration: none;
+}
+
+.floor,html,body {
+	width: 100%;
+	height: 100%
+}
+
+.floor {
+	background-color: #000; /*背景颜色*/
+	min-width: 689px;
+	min-height: 435px;
+	position: relative; +
+	zoom: 1
+}
+
+/* -----------------------------------------------------------start begin----------------------------------------------------------- */
+.border-radius {
+	border-top-left-radius: 9px;
+	border-top-right-radius: 9px;
+	-moz-border-top-left-radius: 9px;
+	-moz-border-top-right-radius: 9px;
+	-webkit-border-top-left-radius: 9px;
+	-webkit-border-top-right-radius: 9px;
+	-webkit-background-clip: padding-box;
+}
+
+.start {
+	border: 1px solid #252F38;
+	height: 530px;
+	left: 0;
+	bottom: 35px;
+	z-index: 999;
+}
+
+.start-inner {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+}
+
+.start-floor {
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background: #29333D;
+	overflow: hidden;
+	text-shadow: #000 0 1px 1px;
+	height: 530px;
+	line-height: 530px;
+	opacity: 0.8;
+	border-top-left-radius: 8px;
+	border-top-right-radius: 8px;
+	-moz-border-top-left-radius: 8px;
+	-moz-border-top-right-radius: 8px;
+	-webkit-border-top-left-radius: 8px;
+	-webkit-border-top-right-radius: 8px;
+	-webkit-background-clip: padding-box;
+}
+
+.start-sign {
+	top: -26.5px;
+	right: 40px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border-bottom-right-radius: 5px;
+	-moz-border-top-left-radius: 5px;
+	-moz-border-top-right-radius: 5px;
+	-moz-border-bottom-left-radius: 5px;
+	-moz-border-bottom-right-radius: 5px;
+	-webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-webkit-border-bottom-left-radius: 5px;
+	-webkit-border-bottom-right-radius: 5px;
+	cursor: pointer;
+	width: 58px;
+	height: 58px;
+	text-align: center;
+	padding-top: 6px;
+	background: url(../../images/windows/icons/border.png) no-repeat;
+}
+
+.start-logout {
+	background: url(../../images/windows/button/logout.png) no-repeat;
+	width: 69px;
+	height: 22px;
+	line-height: 20px;
+	color: #fff;
+	bottom: 15px;
+	right: 55px;
+	text-align: center;
+	cursor: pointer;
+}
+
+.start-logout:hover {
+	background: url(../../images/windows/button/logout-hover.png) no-repeat;
+}
+
+.start-quick {
+	width: 130px;
+	height: 31px;
+	line-height: 29px;
+	color: #fff;
+	right: 4px;
+	cursor: pointer;
+}
+
+.start-quick:hover {
+	background: url(../../images/windows/button/quick_naviga.png) no-repeat;
+}
+
+/* -----------------------------------------------------------start	end------------------------------------------------------------- */
+/* -------------------------------------------------------------版权	begin----------------------------------------------------------- */
+/* 主题背景 */
+.theme {
+	overflow: hidden;
+	position: absolute;
+	z-index: 5;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0
+}
+
+.theme img {
+	position: absolute;
+	top: -73px;
+	left: 100px;
+}
+
+/* 显示桌面 */
+.desktop-show {
+	background: url(../../images/windows/button/desktop_show.png) top;
+	width: 13px;
+	height: 35px;
+	right: 0;
+	bottom: 0;
+	cursor: pointer;
+}
+
+.desktop-show:hover {
+	opacity: 0.5;
+	filter: alpha(opacity = 50);
+}
+
+/* 任务栏图标获取焦点 */
+.dock-focus {
+	background-color: #fff;
+}
+
+/* iframe遮罩 */
+.iframe-mask {
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	display: none;
+}
+/* -------------------------------------------------------------版权	end------------------------------------------------------------- */

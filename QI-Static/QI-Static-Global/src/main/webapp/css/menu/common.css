@@ -1,0 +1,1036 @@
+.body-main {
+    background: #2D3133;
+    color: white;
+    padding: 10px;
+    outline: 0;
+}
+
+/* -------------------------------------------------------------面包屑 begin----------------------------------------------------------- */
+.breadcrumbs {
+    border-bottom: 1px #a3bdd0 solid;
+    height: 30px;
+    line-height: 30px;
+    padding-left: 15px;
+}
+
+.breadcrumbs a {
+    color: white;
+    text-decoration: none
+}
+
+.breadcrumbs .breadcrumbs-split {
+    margin: 0 5px 0 4px;
+    font-family: simsun, serif;
+}
+
+.breadcrumbs .breadcrumbs-text {
+    margin-right: 4px;
+    font-weight: 700;
+}
+
+/* -------------------------------------------------------------工具栏 begin------------------------------------------------------------- */
+.header-toolbar {
+    height: 35px;
+    line-height: 35px;
+    padding-left: 15px;
+    border-bottom: 1px #a3bdd0 solid;
+}
+
+.header-toolbar .toolbar-separator {
+    margin-left: 10px;
+}
+
+.header-toolbar ul {
+    margin-top: 7px;
+    list-style-type: none;
+}
+
+.header-toolbar li {
+    outline: none;
+    border: 1px #999 solid;
+    margin-right: -1px;
+    float: left;
+    /*height: 27px;*/
+    line-height: 27px;
+    background: url("../../images/menu/button-bg-white.png") 0 0 repeat-x;
+    color: black;
+}
+
+.header-toolbar li:first-of-type {
+    border-radius: 3px 0 0 3px;
+}
+
+.header-toolbar li:last-of-type {
+    border-radius: 0 3px 3px 0;
+}
+
+.header-toolbar li:only-of-type {
+    border-radius: 3px;
+}
+
+/* -------------------------------------------------------------工具栏按钮 begin----------------------------------------------------------- */
+.header-toolbar .toolbar-button {
+    cursor: pointer;
+    padding: 0 15px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+.header-toolbar .toolbar-button:hover {
+    background: url("../../images/menu/black-white-bg.png") 0 -40px repeat-x;
+}
+
+.header-toolbar .toolbar-button-menu {
+    cursor: pointer;
+    padding: 0 10px 0 15px;
+}
+
+.header-toolbar .toolbar-button-menu:hover {
+    background: url("../../images/menu/black-white-bg.png") 0 -40px repeat-x;
+}
+
+.header-toolbar .toolbar-button-menu .toolbar-arrow {
+    width: 7px;
+    height: 6px;
+    cursor: pointer;
+    margin: 11px 0 0 5px;
+    float: right;
+    background: url("../../images/menu/arrow-down.png") no-repeat;
+}
+
+.toolbar-link-menu {
+    display: none;
+    padding: 10px 0 10px 0;
+    position: absolute;
+    border: 1px solid #bbb;
+    border-radius: 4px;
+    text-align: left;
+    background: #fff;
+    z-index: 1000;
+    color: black;
+}
+
+.toolbar-link-menu .toolbar-li-menu {
+    cursor: pointer;
+    padding: 0 20px 0 20px;
+}
+
+.toolbar-link-menu .toolbar-li-menu:hover {
+    background: #CDE3F3;
+}
+
+/* -------------------------------------------------------------工具栏文本框 begin----------------------------------------------------------- */
+.header-toolbar .toolbar-input {
+    border: 1px #999 solid;
+    float: right;
+    margin-right: 2px;
+}
+
+.header-toolbar .toolbar-input:hover {
+    border-color: #98b6cd;
+}
+
+.header-toolbar .toolbar-input-ipt {
+    font-size: 12px;
+    line-height: 1.666;
+    position: relative;
+    padding: 3px 8px;
+    /*height: 20px;*/
+    background-color: #FEFEFE;
+}
+
+.toolbar-input-ipt input[type=text] {
+    font-size: 12px;
+    padding: 0;
+    margin: 0 16px 0 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    width: 150px;
+}
+
+.toolbar-input-ipt .input-icon-button {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: 5px;
+    top: 6px;
+    cursor: pointer;
+    outline: 0;
+}
+
+.input-icon-button .ipt-icon {
+    color: #ccc;
+    position: absolute;
+}
+
+.ipt-icon-search {
+    left: 1px;
+    top: 2px;
+    width: 13px;
+    height: 13px;
+    background: url("../../images/menu/input-find.png") no-repeat;
+}
+
+.ipt-icon-clear {
+    left: 2px;
+    top: 3px;
+    width: 9px;
+    height: 9px;
+    background: url("../../images/menu/input-clear.png") no-repeat;
+}
+
+/* -------------------------------------------------------------主要内容 begin----------------------------------------------------------- */
+.main-content {
+}
+
+/*表格样式*/
+.main-content .main-content-table {
+    width: 100%;
+    table-layout: fixed;
+    font-size: 12px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0;
+}
+
+/* -------------------------------------------------------------表格标题 begin----------------------------------------------------------- */
+.main-content-table .table-thead {
+    font-size: 12px;
+    border-collapse: collapse;
+}
+
+.main-content-table .table-header {
+    border-bottom: 1px solid #cecece;
+}
+
+.table-header th {
+    border-width: 1px 0;
+    border-color: #C8C8C8;
+    height: 36px;
+    line-height: 36px;
+    color: #999;
+    font-size: 12px;
+    background: -webkit-linear-gradient(top, #F8F8F8, #F4F4F4);
+    background: -moz-linear-gradient(top, #F8F8F8, #F4F4F4);
+    background: -o-linear-gradient(top, #F8F8F8, #F4F4F4);
+    background: -ms-linear-gradient(top, #F8F8F8, #F4F4F4);
+    background: linear-gradient(top, #F8F8F8, #F4F4F4);
+    background-color: #F7F7F7;
+}
+
+/*表格空位*/
+.main-content-table .table-cell-nbsp {
+    width: 5px;
+    padding: 0;
+    text-align: left;
+}
+
+/* -------------------------------------------------------------表格checkbox列 begin----------------------------------------------------------- */
+.main-content-table .table-cell-check {
+    width: 30px;
+    padding: 0;
+    text-align: center;
+}
+
+.table-cell-check .ipt-chk {
+    display: inline-block;
+    vertical-align: middle;
+    text-align: center;
+    font-weight: 400;
+    white-space: nowrap;
+    font-size: 12px;
+    line-height: 14px;
+    position: relative;
+    cursor: default;
+    outline: 0;
+    border-radius: 3px;
+}
+
+.ipt-chk .ipt-chk-symbol {
+    vertical-align: middle;
+}
+
+.ipt-chk-symbol .ipt-icon {
+    float: left;
+    font-weight: 400;
+    text-align: center;
+    line-height: normal;
+    overflow: hidden;
+    font-size: 12px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.ipt-chk-symbol .ipt-icon-checkbox {
+    width: 14px;
+    height: 14px;
+    background: url("../../images/menu/input-check.png") no-repeat;
+}
+
+.ipt-icon-checkbox:hover {
+    width: 16px;
+    height: 16px;
+    border-radius: 3px;
+    border: 1px #005DCC solid;
+    -webkit-box-shadow: 0 0 10px rgba(0, 204, 204, .5);
+    -moz-box-shadow: 0 0 10px rgba(0, 204, 204, .5);
+    box-shadow: 0 0 10px rgba(0, 204, 204, .5);
+}
+
+.ipt-chk-symbol .ipt-icon-checkbox-checked {
+    background: url("../../images/menu/input-check-checked.png") no-repeat;
+}
+
+/* -------------------------------------------------------------表格标题列 begin----------------------------------------------------------- */
+.main-content-table .table-cell-title {
+    width: auto;
+    text-align: left;
+}
+
+.table-cell-title .ipt-icon {
+    text-align: center;
+    overflow: hidden;
+    font-family: nui, serif !important;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.table-cell-title .ipt-icon-sort {
+    margin-left: 2px;
+    width: 6px;
+    height: 9px;
+}
+
+.table-cell-title .ipt-icon-sort-up {
+    background: url("../../images/menu/input-sort-up.png") no-repeat;
+}
+
+.table-cell-title .ipt-icon-sort-down {
+    background: url("../../images/menu/input-sort-down.png") no-repeat;
+}
+
+/* -------------------------------------------------------------表格主体 begin----------------------------------------------------------- */
+.main-content-table .table-body {
+    font-size: 12px;
+    border-collapse: collapse;
+}
+
+.table-body .table-row {
+    border-bottom: 1px #E2E2E2 solid;
+}
+
+.table-body .table-row:hover {
+    background-color: #8f9091;
+    color: #555;
+}
+
+.table-row td {
+    height: 41px;
+}
+
+/* -------------------------------------------------------------表格按钮 begin----------------------------------------------------------- */
+.table-cell-title .table-cell-oper {
+    display: none;
+}
+
+.table-cell-oper .ipt-mini-button {
+    border: 7px solid transparent;
+    box-shadow: none;
+    /*line-height: normal;*/
+    position: relative;
+    font-size: 12px;
+    color: #555;
+    outline: 0;
+    display: inline-block;
+    margin-right: 4px;
+    margin-bottom: 13px;
+    /*vertical-align: middle;*/
+}
+
+.ipt-mini-button, .ipt-mini-button .ipt-mini-button-text {
+    border-radius: 100% !important;
+    text-align: center;
+    line-height: 24px;
+    width: 24px;
+    height: 24px;
+}
+
+.ipt-mini-button .ipt-mini-button-icon {
+    width: 22px;
+    height: 22px;
+    font-size: 12px;
+    position: absolute;
+    cursor: pointer;
+    line-height: 0;
+    text-align: center;
+    color: #555;
+    top: 1px;
+    left: 1px;
+}
+
+.ipt-mini-button .ipt-mini-button-text {
+    padding: 0;
+    font-size: 0;
+    cursor: pointer;
+    overflow: hidden;
+    vertical-align: top;
+    /*border: 1px solid #999;*/
+    display: inline-block;
+    /*background: url("../../images/menu/input-row-back-white.png") repeat-x;*/
+    background-color: white;
+}
+
+.ipt-mini-button .ipt-icon-pencil {
+    width: 12px;
+    height: 12px;
+    margin-top: 5px;
+    /*margin-left: 2px;*/
+    background: url("../../images/menu/input-row-edit.png") no-repeat;
+}
+
+.ipt-mini-button .ipt-icon-trash {
+    width: 12px;
+    height: 12px;
+    margin-top: 5px;
+    /*margin-left: 1px;*/
+    background: url("../../images/menu/input-row-delete.png") no-repeat;
+}
+
+.ipt-mini-button .ipt-icon-child {
+    width: 12px;
+    height: 13px;
+    margin-top: 5px;
+    margin-left: 1px;
+    background: url("../../images/menu/input-row-list.png") no-repeat;
+}
+
+.ipt-mini-button .ipt-icon-operate {
+    width: 12px;
+    height: 13px;
+    margin-top: 5px;
+    margin-left: 0;
+    background: url("../../images/menu/input-row-operate.png") no-repeat;
+}
+
+.table-cell-title .ipt-fIBlock {
+    cursor: pointer;
+    white-space: nowrap;
+    font-size: 12px;
+    padding: 0 7px 0 7px;
+    line-height: 20px;
+    height: 20px;
+    overflow: hidden;
+    background-color: #E0E6EB;
+    color: #8f9091;
+    border-radius: 3px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* -------------------------------------------------------------分页栏 begin----------------------------------------------------------- */
+.page-toolbar {
+    padding: 25px 30px 0 0;
+    width: auto;
+    height: auto;
+    font-size: 12px;
+    text-align: right;
+}
+
+.page-toolbar a {
+    padding: 0 10px;
+    display: inline-block;
+    width: auto;
+    height: 25px;
+    line-height: 25px;
+    color: #666;
+    background: #f2f2f3;
+    border: 1px solid #cecece;
+    text-decoration: none;
+}
+
+.page-toolbar .currentPage {
+    color: #f2f2f3;
+    background: #e03800;
+    border-color: #e03800;
+    font-weight: bold;
+}
+
+.page-toolbar div {
+    float: right;
+    margin-left: 20px;
+    line-height: 30px;
+}
+
+/* -------------------------------------------------------------表单 begin----------------------------------------------------------- */
+.main-content .main-content-form {
+    padding: 20px;
+    border-bottom: 1px solid #a3bdd0;
+}
+
+.main-content-form .form-group {
+    margin: 0;
+    padding: 0;
+    height: 50px;
+}
+
+.main-content-form .group-block {
+    float: left;
+}
+
+.main-content-form label {
+    display: inline-block;
+    width: 150px;
+    text-align: right;
+    float: left;
+    padding-top: 7px;
+}
+
+.main-content-form .i-must {
+    font-size: 12px;
+    color: #FF3047;
+    font-style: normal;
+    height: 30px;
+    line-height: 30px;
+    display: inline;
+    margin-left: 5px;
+}
+
+.form-group .form-display-text {
+    height: 30px;
+    line-height: 30px;
+    font-weight: bold;
+    padding-left: 50px;
+}
+
+.form-group .form-input-ipt {
+    margin-left: 10px;
+    font-size: 12px;
+    line-height: 1.888;
+    position: relative;
+    padding: 3px 8px 1px 8px;
+    height: 30px;
+    background-color: #FEFEFE;
+    width: 250px;
+    border-radius: 3px;
+    border: 1px #999 solid;
+    float: left;
+}
+
+.form-input-ipt input[type=text] {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    width: 100%;
+    height: 22px;
+}
+
+.main-content-form .form-group-area {
+    margin: 0;
+    padding: 0;
+    height: 135px;
+}
+
+.form-group-area .form-input-area {
+    margin-left: 10px;
+    font-size: 12px;
+    line-height: 1.666;
+    position: relative;
+    padding: 3px 8px 1px 8px;
+    width: 350px;
+    height: 110px;
+    background-color: #FEFEFE;
+    border-radius: 3px;
+    border: 1px #999 solid;
+    float: left;
+}
+
+.form-input-area textarea {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    resize: none;
+}
+
+.main-content-form .form-group-table {
+    margin: 0;
+    padding: 0;
+    height: auto;
+}
+
+.form-group-table .form-input-table {
+    padding: 10px 50px;
+}
+
+.form-input-table .input-flex-table {
+    width: 900px;
+    table-layout: fixed;
+    font-size: 12px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin: 0;
+    border: 1px solid #a3bdd0;
+}
+
+.input-flex-table .flex-table-header {
+    border-bottom: 1px solid #a3bdd0;
+}
+
+.input-flex-table .table-cell {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+
+.table-cell .table-input-ipt {
+    margin-left: 10px;
+    font-size: 12px;
+    line-height: 1.888;
+    position: relative;
+    padding: 3px 8px 1px 8px;
+    height: 25px;
+    background-color: #FEFEFE;
+    width: 195px;
+    border-radius: 3px;
+    border: 1px #999 solid;
+    float: left;
+}
+
+.table-input-ipt input[type=text] {
+    font-size: 12px;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    width: 100%;
+    height: 22px;
+}
+
+.input-flex-table .cell-border {
+    border-right: 1px solid #a3bdd0;
+}
+
+.form-group .form-group-checkbox {
+    margin: 0;
+    padding: 0;
+}
+
+.form-group-checkbox .form-input-checkbox {
+    margin: 8px 0 0 10px;
+    font-size: 12px;
+    position: relative;
+    padding: 0;
+    width: 15px;
+    height: 15px;
+    background-color: #FEFEFE;
+    border-radius: 3px;
+    border: 1px #999 solid;
+    float: left;
+}
+
+.form-input-checkbox input[type=checkbox] {
+    padding: 0;
+    margin: 0;
+    border: 0;
+    outline: 0;
+    background: transparent;
+}
+
+.form-group .form-input-multi {
+    margin-left: 10px;
+    font-size: 12px;
+    line-height: 1.888;
+    position: relative;
+    padding-left: 8px;
+    height: 30px;
+    width: 250px;
+    background-color: #FEFEFE;
+    border-radius: 3px;
+    border: 1px #999 solid;
+    float: left;
+}
+
+.form-input-multi input[type=text] {
+    display: block;
+    font-size: 12px;
+    padding: 0;
+    margin-top: 3px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    height: 22px;
+    cursor: not-allowed;
+    float: left;
+}
+
+.form-input-multi .add-on-only {
+    width: 213px;
+}
+
+.form-input-multi .add-on-both {
+    width: 185px;
+}
+
+.form-input-multi .add-on {
+    display: inline-block;
+    width: 29px;
+    height: 28px;
+    min-width: 16px;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 30px;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff;
+    background-color: #FEFEFE;
+    border-left: 1px #999 solid;
+    border-right: 1px #999 solid;
+    margin: 0 -4px 0 -1px;
+}
+
+.add-on i {
+    cursor: pointer;
+    width: 14px;
+    height: 14px;
+}
+
+.icon-remove {
+    background-position: -312px 0;
+}
+
+.icon-calendar {
+    background-position: -192px -120px;
+}
+
+.icon-arrow-left {
+    background-position: -240px -98px;
+}
+
+.icon-arrow-right {
+    background-position: -263px -98px;
+}
+
+.icon-tree-left {
+    background-position: -263px -49px;
+}
+
+.icon-down {
+    background-position: -312px -120px;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    /*margin-top: 1px;*/
+    *margin-right: .3em;
+    line-height: 14px;
+    vertical-align: text-top;
+    background-image: url("../../images/menu/glyphicons-halflings.png");
+    background-repeat: no-repeat;
+}
+
+.form-group .form-input-ipt:hover, .form-input-area:hover, .form-input-checkbox:hover, .form-input-multi:hover, .table-input-ipt:hover {
+    border-color: #005DCC;
+    -webkit-box-shadow: 0 0 10px rgba(0, 204, 204, .5);
+    -moz-box-shadow: 0 0 10px rgba(0, 204, 204, .5);
+    box-shadow: 0 0 10px rgba(0, 204, 204, .5);
+}
+
+.form-input-ipt .asterisk, .form-input-checkbox .asterisk, .form-input-multi .asterisk {
+    position: absolute;
+    left: 255px;
+    top: 10px;
+}
+
+.table-input-ipt .asterisk {
+    position: absolute;
+    left: 200px;
+    top: 10px;
+}
+
+.form-input-area .asterisk {
+    position: absolute;
+    left: 370px;
+    top: 10px;
+}
+
+.group-block .form-tree-menu {
+    position: relative;
+    float: right;
+    margin-top: 1px;
+}
+
+.form-tree-menu .tree-menu-button {
+    outline: 0;
+    cursor: pointer;
+    padding: 0 10px;
+    color: black;
+    border-radius: 3px;
+    float: left;
+    height: 27px;
+    line-height: 27px;
+    border: 1px #999 solid;
+    background: url("../../images/menu/button-bg-white.png") 0 0 repeat-x;
+    position: relative;
+}
+
+.form-tree-menu .tree-menu-button:hover {
+    background: url("../../images/menu/black-white-bg.png") 0 -40px repeat-x;
+}
+
+.group-block .form-input-menu {
+    outline: none;
+    position: relative;
+    float: left;
+    width: 29px;
+    height: 28px;
+    line-height: 30px;
+    text-align: center;
+    text-shadow: 0 1px 0 #fff;
+    background-color: #FEFEFE;
+    border-left: 1px #999 solid;
+    border-right: 1px #999 solid;
+    margin: 0 -4px 0 -1px;
+}
+
+.form-input-menu .tree-menu-button {
+    outline: 0;
+    cursor: pointer;
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    vertical-align: text-top;
+    background-image: url("../../images/menu/glyphicons-halflings.png");
+    background-repeat: no-repeat;
+}
+
+.form-tree-menu .tree-menu-list, .form-input-menu .tree-menu-list {
+    -moz-user-select: none;
+    display: none;
+    border-radius: 4px;
+    text-align: left;
+    line-height: 25px;
+    padding: 7px 0;
+    visibility: visible;
+    white-space: nowrap;
+    position: absolute !important;
+    z-index: 1000;
+    border: 1px solid #bbb;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, .2);
+    background: #fff;
+    color: black;
+    cursor: default;
+    outline: 0;
+    left: 100%;
+    top: -1px;
+    margin-left: 1px;
+}
+
+.tree-menu-list .tree-menu-item {
+    position: relative;
+    display: inline-flex;
+    float: right;
+    width: 100%;
+    border: 1px #FFFFFF solid;
+}
+
+.tree-menu-item .menu-list-button {
+    position: relative;
+    cursor: pointer;
+    padding: 0 15px 0 15px;
+    width: 100%;
+}
+
+.tree-menu-item .menu-list-button:hover {
+    background: #CDE3F3;
+}
+
+.menu-list-button .button-text {
+    margin-right: 5px;
+}
+
+.menu-list-button .button-right-arrow {
+    position: absolute;
+    top: 9px;
+    width: 5px;
+    height: 8px;
+    cursor: pointer;
+    background: url("../../images/menu/arrow-right.png") no-repeat;
+}
+
+/* -------------------------------------------------------------表单提交按钮 begin----------------------------------------------------------- */
+.main-content .main-button {
+    text-align: right;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-right: 80px;
+}
+
+.main-button ul {
+    list-style-type: none;
+    float: right;
+}
+
+.main-button li {
+    color: black;
+    border-radius: 3px;
+    margin-right: -1px;
+    float: left;
+    height: 27px;
+    line-height: 27px;
+    border: 1px #999 solid;
+    background: url("../../images/menu/button-bg-white.png") 0 0 repeat-x;
+}
+
+.main-button .button-green {
+    border: 1px #459830 solid;
+    background: url("../../images/menu/button-bg-green.png") 0 0 repeat-x;
+}
+
+.main-button li:hover {
+    border: 1px #999 solid;
+    background: url("../../images/menu/black-white-bg.png") 0 -40px repeat-x;
+}
+
+.main-button .button-separator {
+    margin-left: 20px;
+}
+
+.main-button a {
+    cursor: pointer;
+    padding: 0 15px;
+    display: inline-block;
+    text-decoration: none;
+}
+
+/* -------------------------------------------------------------排序弹出框样式 begin----------------------------------------------------------- */
+.pop-up-main {
+    height: 100%;
+    overflow: hidden;
+}
+
+.pop-up-main .pop-up-main-left {
+    height: 100%;
+    display: inline-block;
+    border-right: 1px #c6c7c8 solid;
+}
+
+.pop-up-main-left .ztree-header {
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    font-size: 12px;
+}
+
+.ztree-header ul {
+    margin: 0 0 0 -50px;
+}
+
+.pop-up-main-left .ztree-main {
+    overflow: auto;
+}
+
+.pop-up-main .pop-up-main-right {
+    width: 300px;
+    float: right;
+    margin: 10px 60px 10px 5px;
+    overflow-x: hidden;
+}
+
+.pop-up-main-right ul {
+    white-space: nowrap;
+}
+
+.pop-up-main-right li {
+    list-style-type: none;
+    border: 1px #999 solid;
+    height: 27px;
+    line-height: 27px;
+    color: black;
+    padding-left: 25px;
+    cursor: pointer;
+    background: url("../../images/menu/arrow_ns.png") 5px 5px no-repeat;
+}
+
+/* -------------------------------------------------------------header begin----------------------------------------------------------- */
+.hidden {
+    display: none !important;
+}
+
+.header-tool {
+    position: absolute;
+    top: 40px;
+    left: 50%;
+    margin-left: -50px;
+    color: #fff;
+    width: 100px;
+    background-color: #fff;
+    border-radius: 3px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    -webkit-box-shadow: 0 0 10px #484848;
+    -moz-box-shadow: 0 0 10px #484848;
+    box-shadow: 0 0 10px #484848;
+    padding-bottom: 10px;
+    z-index: 1000;
+    text-align: center;
+}
+
+.header-tool > div {
+    height: 35px;
+    line-height: 35px;
+    color: #000;
+}
+
+.header-tool > a {
+    text-decoration: none;
+}
+
+.forMouseOver {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    top: -20px;
+}
+
+.htArrow-up {
+    position: absolute;
+    top: -35px;
+    left: 45px;
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-bottom: 10px solid #fff;
+}
+
+.header-btn {
+    line-height: 35px;
+    height: 35px;
+    font-size: 14px;
+}
+
+.header-btn:hover {
+    border-left: 3px solid #ff6a00;
+    color: #2D3133 !important;
+    background-color: #ececec;
+}

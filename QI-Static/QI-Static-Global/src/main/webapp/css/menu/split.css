@@ -1,0 +1,177 @@
+.frame-head {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    width: 100%;
+    min-width: 960px;
+    height: 68px;
+    z-index: 25;
+    background: #3B3A36;
+}
+
+.frame-head img {
+    margin: 3px 0 0 15px;
+}
+
+.frame-head .logo {
+    font: italic bold 40px "Minion Pro Med";
+    height: 60px;
+    line-height: 80px;
+    color: white;
+    position: absolute;
+    margin-left: 5px;
+}
+
+.frame-head .account-img {
+    position: absolute;
+    top: 20px;
+    right: 220px;
+    color: white;
+    font-weight: bold;
+    height: 31px;
+    width: 31px;
+    background: url(../../images/menu/header/user.png) 0 0;
+    border-radius: 30px;
+}
+
+.frame-head .account {
+    position: absolute;
+    top: 27px;
+    right: 160px;
+    color: white;
+    font-family: "Microsoft YaHei";
+    font-size: 18px;
+    height: 20px;
+    line-height: 20px;
+}
+
+.frame-head .operate {
+    position: absolute;
+    top: 20px;
+    right: 110px;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    background: url(../../images/menu/header/gear.png) 0 0;
+}
+
+.frame-head .switch {
+    position: absolute;
+    top: 24px;
+    right: 75px;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    background: url(../../images/menu/header/system-switch.png) 0 0;
+    border-radius: 30px;
+}
+
+.frame-head .logout {
+    position: absolute;
+    top: 24px;
+    right: 35px;
+    height: 24px;
+    width: 24px;
+    cursor: pointer;
+    background: url(../../images/menu/header/logout.png) 0 0;
+}
+
+/* -------------------------------------------------------------header----------------------------------------------------------- */
+.frame-navi {
+    position: absolute;
+    top: 69px;
+    left: 0;
+    right: 0;
+    color: #999;
+    line-height: 25px;
+    height: 25px;
+    background: #E4E4E4;
+    border-top: 1px solid #000;
+    border-bottom: 1px solid #000;
+    padding-left: 10px;
+    outline: 0;
+}
+
+.frame-navi .menu-bar {
+    position: relative;
+    float: left;
+}
+
+.frame-navi .menu-button {
+    color: #000;
+    padding: 0 10px;
+    overflow: hidden;
+    height: 25px;
+    min-height: 1px;
+    cursor: pointer;
+}
+
+.frame-navi .menu-button:hover {
+    background: #06c url(../../images/menu/split/bar_top_link.png) repeat-x 0 0;
+    color: #fff;
+}
+
+.menu-bar .menu-item {
+    display: none;
+    white-space: nowrap;
+    background: #eee;
+    border: 1px solid #333;
+    border-top-width: 0;
+    font-weight: normal;
+    margin: 1px 0 0 -1px;
+    padding: 1px 1px 0;
+    position: absolute !important;
+    z-index: 1000;
+}
+
+.menu-item .menu-item-li {
+    position: relative;
+    display: inline-flex;
+    float: right;
+    width: 100%;
+}
+
+.menu-item .menu-item-li a {
+    z-index: 1100;
+    display: block;
+    padding: 0 10px;
+    text-decoration: none;
+    color: #000;
+    overflow: hidden;
+    background: #fff;
+    border-bottom: 1px solid #eee;
+    cursor: pointer;
+    min-width: 80px;
+}
+
+.menu-item .menu-item-li a:hover {
+    background: #06c url(../../images/menu/split/bar_top_link.png) repeat-x 0 0;
+    color: #fff;
+    text-shadow: none;
+}
+
+.menu-item .menu-item-li .menu-item-right {
+    display: none;
+    white-space: nowrap;
+    background: #eee;
+    border: 1px solid #333;
+    font-weight: normal;
+    margin: 1px 0 0 0;
+    padding: 1px 1px 0;
+    position: absolute !important;
+    z-index: 1000;
+    left: 100%;
+}
+
+/* -------------------------------------------------------------navigation----------------------------------------------------------- */
+.frame-main {
+    position: absolute;
+    top: 95px;
+    left: 0;
+    right: 0;
+    background: #2D3133;
+    padding-left: 1px;
+    min-width: 718px;
+    overflow: hidden;
+}
