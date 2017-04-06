@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <parent>
+        <artifactId>QI-SSO</artifactId>
+        <groupId>com.qi.sso</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>QI-SSO-Server</artifactId>
+    <packaging>war</packaging>
+
+    <name>QI-SSO-Server</name>
+    <url>http://maven.apache.org</url>
+
+    <dependencies>
+        <!-- qi.sso -->
+        <dependency>
+            <groupId>com.qi.sso</groupId>
+            <artifactId>QI-SSO-Core</artifactId>
+            <version>${qi.sso.version}</version>
+        </dependency>
+        <!-- qi.package -->
+        <dependency>
+            <groupId>com.qi.package</groupId>
+            <artifactId>QI-Package-Service</artifactId>
+        </dependency>
+        <!--log-->
+        <dependency>
+            <groupId>com.efesco.kafka</groupId>
+            <artifactId>kafka-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.efesco.logback</groupId>
+            <artifactId>logback-rmt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+        </dependency>
+        <!-- tomcat -->
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-servlet-api</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-jasper</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-catalina</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-coyote</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat</groupId>
+            <artifactId>tomcat-dbcp</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>authority</finalName>
+    </build>
+</project>

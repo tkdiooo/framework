@@ -1,0 +1,69 @@
+#* --------------------------------------------------javascript-------------------------------------------------- *#
+#*jQuery*#
+<script type="text/javascript" src="$!property.getResourcePath()/js/plugin/jquery/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="$!property.getResourcePath()/js/plugin/jquery/jquery.form.min.js"></script>
+<script type="text/javascript" src="$!property.getResourcePath()/js/plugin/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="$!property.getResourcePath()/js/plugin/jquery/jquery.hotkeys.js"></script>
+#*layer*#
+<script type="text/javascript" src="$!property.getResourcePath()/js/plugin/layer/layer.js"></script>
+<link rel="stylesheet" type="text/css" href="$!property.getResourcePath()/js/plugin/layer/skin/layer.css"/>
+<link rel="stylesheet" type="text/css" href="$!property.getResourcePath()/js/plugin/layer/skin/demo.css"/>
+#*basic*#
+<script type="text/javascript" src="$!property.getResourcePath()/js/common.js"></script>
+<script type="text/javascript" src="$!property.getResourcePath()/js/util.js"></script>
+#* -----------------------------------------------------css----------------------------------------------------- *#
+<!-- css -->
+<link rel="stylesheet" type="text/css" href="$!property.getResourcePath()/css/common.css">
+<!-- login -->
+<link rel="stylesheet" type="text/css" href="$!property.getResourcePath()/css/sso/login.css">
+<script type="text/javascript" src="$!property.getResourcePath()/js/sso/login.js"></script>
+
+
+#*jQuery.ui*#
+##<link rel="stylesheet" type="text/css" href="$!property.getResourcePath()/js/plugin/jquery.ui/css/windows/jquery.ui.base.css">
+##<script type="text/javascript" src="$!property.getResourcePath()/js/plugin/jquery.ui/jquery.ui-1.8.16.js"></script>
+
+#*<script type="text/javascript" src="$!propertyTool.getSysPro()/js/jquery.form.min.js"></script>
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/global.js"></script>
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/lib/jquery.validate.js"></script>
+<!-- 日期控件   -->
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/date/wdatePicker.js"></script>
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/tab.js?v=20151222"></script>
+<!-- 弹出框  -->
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/plug-in/js/dialog.js"></script>
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/lib/template.js"></script>
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/common/common.js?v=20160204"></script>
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/jquery.serializeJson.js"></script>
+<!-- layer -->
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/layer/ejob-common.js?id=20150312"></script>
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/layer/tool.js?id=201601"></script>
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/plug-in/layer.min.js?v=2" ></script>
+
+<script type="text/javascript" src="$!propertyTool.getSysPro()/js/ztree/js/jquery.ztree.all-3.5.js"></script>
+*#
+
+<!-- js -->
+<script type="text/javascript">
+    var _BASE_ = '$!property.getResourcePath()';
+    var WEBROOT = '#getRequestBase()';
+    window.console = window.console || (function () {
+                var c = {};
+                c.log = c.warn = c.debug = c.info = c.error = c.time = c.dir = c.profile
+                        = c.clear = c.exception = c.trace = c.assert = function () {
+                };
+                return c;
+            })();
+
+    $.ajaxSetup({
+        cache: false //关闭AJAX相应的缓存
+    });
+    $(function () {
+    ##        $("img").each(function(i,v){
+    ##            var key = $(v).attr("key");
+    ##            $(v).attr("src","$!propertyTool.getSysPro()/img/"+key);
+    ##        })
+    ##		$("#homePage").attr("href","$!empServiceUrl");
+    ##        $("#homePage").on('click',homePage);
+    })
+
+</script>
