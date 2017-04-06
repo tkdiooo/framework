@@ -1,2 +1,0 @@
-# framework
-My Framework
