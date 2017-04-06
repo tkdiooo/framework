@@ -1,0 +1,399 @@
+<div class="body-main">
+    <div class="breadcrumbs">
+        <span>生活助手</span>
+        <span class="breadcrumbs-split">></span>
+        <span><a href="#springUrl("/gas/index.html")">燃气费管理</a></span>
+        <span class="breadcrumbs-split">></span>
+        <span class="breadcrumbs-text">新增燃气费单</span>
+    </div>
+    <main class="main-content">
+        <form id="save_form" method="post" class="main-content-form">
+            <input type="hidden" name="guid" value="$!model.guid">
+            <input type="hidden" id="useUp" value="$!VO.useUp">
+            <input type="hidden" name="beforeid" value="$!VO.beforeid">
+            <div class="form-group">
+                <div class="group-block">
+                    <label>单据日期</label>
+                    <div class="form-input-multi">
+                        <input class="add-on-both" type="text" id="billdate" name="billdate" placeholder="请输单据日期" value="$!VO.billdate"/>
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>抄表员</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="employe" placeholder="请输入抄表员" value="$!VO.employe"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>本次抄表日期</label>
+                    <div class="form-input-multi">
+                        <input class="add-on-both" type="text" id="currentdate" name="currentdate" placeholder="请输入本次抄表日期" value="$!dateFormat.format($!VO.currentdate, "yyyy-MM-dd")"/>
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>下次抄表日期</label>
+                    <div class="form-input-multi">
+                        <input class="add-on-both" type="text" name="nextdate" value="$!dateFormat.format($!VO.nextdate, "yyyy-MM-dd")" readonly/>
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>上期抄码</label>
+                    <div class="form-input-ipt">
+                        <input type="text" id="prevQuantity" name="prevQuantity" placeholder="请输入上期抄码" value="$!VO.prevQuantity" onkeyup="setCharge();"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>本期抄码</label>
+                    <div class="form-input-ipt">
+                        <input type="text" id="quantity" name="quantity" placeholder="请输入本期抄码" value="$!model.quantity" onkeyup="setCharge();"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>消费量</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" name="gasquantity" #if($model)value="$!VO.useQuantity"#else value="0"#end onfocus="gasFocus();" readonly/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>上次结余</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" name="beforebalance" value="$!VO.beforebalance" readonly/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>本次结转</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" name="currentbalance" value="$!VO.currentbalance" readonly/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>应付燃气费(元)</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="total" #if($model)value="$!model.total"#else value="0.00"#end />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="form-group-checkbox">
+                    <label>是否封账</label>
+                    <div class="form-input-checkbox">
+                        <input type="checkbox" name="isreset" value="true" />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group-table">
+                <div class="form-input-table">
+                    <table class="input-flex-table">
+                        <tr class="flex-table-header">
+                            <td class="table-cell cell-border">阶梯</td>
+                            <td class="table-cell cell-border">消费量</td>
+                            <td class="table-cell cell-border">单价(元)</td>
+                            <td class="table-cell cell-border">金额(元)</td>
+                        </tr>
+                        #foreach($op in $options)
+                            #set($index=$!{velocityCount} - 1)
+                            <tr id="row$!{op.grade}"
+                                #if(!$op.gasDetails)
+                                    class="display-none"
+                                #else
+                                    #set($grade=$!{op.grade})
+                                    #set($quantity=$!{op.quantity} - $!{op.amend})
+                                #end>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="grade" value="$numberUtil.intToCnNum($op.grade)">
+                                    <input type="hidden" name="children[$index].grade" value="$op.grade">
+                                    $op.grade
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="opQuantity" value="$op.quantity">
+                                    <input type="hidden" id="amend" value="$op.amend">
+                                    <div class="table-input-ipt">
+                                        <input class="cursor-not-allowed" type="text" id="gasquantity" name="children[$index].gasquantity" value="$!op.gasDetails.gasquantity" readonly/>
+                                    </div>
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="gasprice" name="children[$index].gasprice" value="$numberTool.format("#0.00", $op.priceone)" />
+                                    $numberTool.format("#0.00", $op.priceone)
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <div class="table-input-ipt">
+                                        <input class="cursor-not-allowed" type="text" id="gasamount" name="children[$index].gasamount" value="$!op.gasDetails.gasamount" readonly/>
+                                    </div>
+                                </td>
+                            </tr>
+                        #end
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-display-text #if(!$quantity)display-none #end">
+                    #set($remaining=$!{quantity} - $!{VO.useUp} - $!{VO.useQuantity})
+                    #set($useUp=$!{VO.useUp} + $!{VO.useQuantity})
+                    当前累计气量已达到$!{useUp}立方米。第$!numberUtil.intToCnNum($grade)档可用气量$!{quantity}立方米，还剩余$!{remaining}立方米
+                </div>
+            </div>
+        </form>
+        <div class="main-button">
+            <ul>
+                <li class="button-separator button-green">
+                    <a href="javascript:void(0);" onclick="submit();">确&nbsp;定</a>
+                </li>
+                <li class="button-separator">
+                    <a href="#springUrl("/gas/index.html")">取&nbsp;消</a>
+                </li>
+            </ul>
+        </div>
+    </main>
+</div>
+<script>
+    function initVerify() {
+        $("#save_form").validate({
+            ignore: true,
+            rules: {
+                billdate: {
+                    required: true,
+                    remote: {
+                        url: "#springUrl('/gas/checkUnique.ajax')",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            guid: function () {
+                                return $('input[name="guid"]').val();
+                            },
+                            billdate: function () {
+                                return $(':input[name="billdate"]').val();
+                            }
+                        }
+                    }
+                },
+                currentdate: {
+                    required: true
+                },
+                nextdate: {
+                    required: true
+                },
+                employe: {
+                    required: true
+                },
+                prevQuantity: {
+                    required: true,
+                    number: true,
+                    lessEqual: "#quantity"
+                },
+                quantity: {
+                    required: true,
+                    number: true,
+                    greaterEqual: "#prevQuantity"
+                },
+                gasquantity: {
+                    required: true
+                },
+                total: {
+                    required: true,
+                    money: true
+                }
+            },
+            messages: {
+                prevQuantity: {
+                    lessEqual: "上期抄码数值必须小于本期抄码"
+                },
+                quantity: {
+                    greaterEqual: "本期抄码数值必须大于上期抄码"
+                }
+            },
+            success: function (element) {
+            },
+            errorPlacement: function (error, element) {
+                $(element).parent().next('.i-must').html(error[0].innerHTML);
+            }
+
+        });
+    }
+
+    function submit() {
+        if (!$("#save_form").valid())return false;
+        var formParams = $("#save_form").serializeJson();
+        var opt = {contentType: "application/x-www-form-urlencoded"};
+        ajax_action("#springUrl("/gas/save.ajax")", formParams, opt, function (data) {
+            if (!data.success) {
+                alert(data.messages);
+            } else {
+                alert(data.messages, function () {
+                    window.location.href = "#springUrl("/gas/index.html")";
+                });
+            }
+        })
+    }
+
+    $(function () {
+        $('input[name="billdate"]').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3, //这里就设置了默认视图为年视图
+            minView: 3, //设置最小视图为年视图
+            forceParse: 0,
+            linkField: "currentdate",
+            linkFormat: "yyyy-mm-dd"
+        }).on('changeDate', function (ev) {
+            $('input[name="currentdate"]').datetimepicker('update');
+            setNextDate();
+        });
+        $('input[name="currentdate"]').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: 1,
+            autoclose: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            linkField: "billdate",
+            linkFormat: "yyyy-mm"
+        }).on('changeDate', function (ev) {
+            $('input[name="billdate"]').datetimepicker('update');
+            setNextDate();
+        });
+        $('input[name="nextdate"]').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: 1,
+            autoclose: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+    ## 表单验证绑定
+        initVerify();
+    });
+
+    function setNextDate(date) {
+        var intervaltype = $!VO.intervaltype;
+        var intervaldate = $!VO.intervaldate;
+        var currentdate = $('input[name="currentdate"]').val().split('-');
+        var now = new Date(currentdate[0], currentdate[1] - 1, currentdate[2]);
+        switch (intervaltype) {
+            case 3:
+                now.addWeeks(intervaldate);
+                $('input[name="nextdate"]').val(now.Format("yyyy-MM-dd"))
+                break;
+            case 2:
+                break;
+            default:
+        }
+    }
+
+    function resetFlexTable() {
+        $('.form-display-text').text('');
+        $('.form-display-text').hide();
+        $('.input-flex-table').find('tr[id^="row"]').each(function (i, v) {
+            $(v).hide();
+            $(v).find('#gasquantity').val('');
+            $(v).find('#gasamount').val('');
+        });
+    }
+
+    function setCharge() {
+        resetFlexTable();
+        if ($.trim($('#prevQuantity').val()) != '' && $.trim($('#quantity').val()) != '') {
+            ## 上期抄码
+            var prevQuantity = Number($('#prevQuantity').val());
+            ## 本期抄码
+            var quantity = Number($('#quantity').val());
+            if (quantity >= prevQuantity) {
+                $('input[name="gasquantity"]').val((quantity - prevQuantity));
+                ## 本期使用量
+                var gasquantity = $('input[name="gasquantity"]').val();
+                ## 总金额
+                var gasamount = 0;
+                ## 已用量
+                var Used = 0;
+                var grade;
+                var quan;
+                var remaining;
+                ## 循环获取阶梯以计算
+                $('.input-flex-table').find('tr[id^="row"]').each(function (i, v) {
+                    grade = $(v).find('#grade').val();
+                    ## 单价
+                    var gasprice = Number($(v).find('#gasprice').val());
+                    $(v).show();
+                    ## 阶梯可用量如果为0，表示最终阶梯，无限制。
+                    if (Number($(v).find('#opQuantity').val()) == 0) {
+                        quan = '不限';
+                        remaining = '。';
+                        $(v).find('#gasquantity').val(gasquantity - Used);
+                        $(v).find('#gasamount').val(((gasquantity - Used) * gasprice).toFixed(2));
+                        gasamount += Number($(v).find('#gasamount').val());
+                        return false;
+                    }
+                    ## 阶梯可用量：当前阶梯可用量 - 修正量 - 已用量 - 本期使用量
+                    var quantity = Number($(v).find('#opQuantity').val()) - Number($(v).find('#amend').val()) - Number($("#useUp").val()) - gasquantity;
+                    quan = Number($(v).find('#opQuantity').val()) - Number($(v).find('#amend').val()) + '立方米';
+                    remaining = '，还剩余' + ((Number($(v).find('#opQuantity').val()) - Number($(v).find('#amend').val())) - (Number($('input[name="gasquantity"]').val()) + Number($("#useUp").val()))) + '立方米。';
+                    ## 阶梯可用量 >= 0，并未超出当前阶梯直接赋值并跳出循环
+                    if (quantity >= 0) {
+                        $(v).find('#gasquantity').val(gasquantity - Used);
+                        $(v).find('#gasamount').val(((gasquantity - Used) * gasprice).toFixed(2));
+                        gasamount += Number($(v).find('#gasamount').val());
+                        return false;
+                    }
+                    ## 阶梯可用量 < 0，已超出当前阶梯，赋值当前阶梯可用余额。
+                    else if (quantity < 0) {
+                        ## 当前阶梯能用量：当前阶梯实际可用量 - 前面档次已用量总和
+                        var opQuantity = Number($(v).find('#opQuantity').val()) - Number($(v).find('#amend').val()) - Number($("#useUp").val()) - Used;
+                        Used += opQuantity;
+                        $(v).find('#gasquantity').val(opQuantity);
+                        $(v).find('#gasamount').val((opQuantity * gasprice).toFixed(2));
+                        gasamount += Number($(v).find('#gasamount').val());
+                    }
+                });
+                $('.form-display-text').text('当前累计气量已达到' + (Number($('input[name="gasquantity"]').val()) + Number($("#useUp").val())) + '立方米。第' + grade + '档可用气量' + quan + remaining);
+                $('.form-display-text').show();
+                compute(gasamount)
+            }
+        }
+    }
+
+    function gasFocus() {
+        if ($.trim($('#prevQuantity').val()) == '') {
+            $('#prevQuantity').focus();
+        } else if ($.trim($('#quantity').val()) == '') {
+            $('#quantity').focus();
+        }
+    }
+
+    function compute(amount) {
+        if (!/\./.test(amount)) {
+            $('input[name="total"]').val(amount.toFixed(2));
+        } else {
+            $('input[name="total"]').val(amount);
+        }
+    }
+</script>

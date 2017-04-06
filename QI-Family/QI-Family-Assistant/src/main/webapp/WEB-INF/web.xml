@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         version="2.5">
+
+    <display-name>assistant</display-name>
+
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            classpath:/config/spring/spring-context.xml
+        </param-value>
+    </context-param>
+
+    <!-- logback -->
+    <listener>
+        <listener-class>com.efesco.logback.mdc.trace.listener.LogbackConfigListener</listener-class>
+    </listener>
+    <context-param>
+        <param-name>logbackConfigLocation</param-name>
+        <param-value>file:${resources.config.path}QI-Family/logback-assistant.xml</param-value>
+    </context-param>
+    <!--日志过滤 -->
+    <filter>
+        <filter-name>traceNoFilter</filter-name>
+        <filter-class>com.efesco.logback.mdc.trace.servlet.filter.TraceNoFilter</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>traceNoFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+    <!-- Spring 刷新Introspector防止内存泄露 -->
+    <listener>
+        <listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+    </listener>
+    <!-- Spring Request Listener -->
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+    <listener>
+        <listener-class>com.qi.assistant.web.listener.ServerListener</listener-class>
+    </listener>
+    <!-- spring mvc dispatcher servlet -->
+    <servlet>
+        <servlet-name>dispatcher</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>classpath:config/spring/spring-mvc.xml</param-value>
+        </init-param>
+        <load-on-startup>2</load-on-startup>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.ajax</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.nsso</url-pattern>
+    </servlet-mapping>
+    <!--编码过滤 -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.htm</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <servlet-name>dispatcher</servlet-name>
+        <url-pattern>*.ajax</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>*.nsso</url-pattern>
+    </filter-mapping>
+    <!-- sso -->
+    <filter>
+        <filter-name>ssoFilter</filter-name>
+        <filter-class>com.qi.sso.auth.filter.SSOVerifyFilter</filter-class>
+        <!--<init-param>
+            <param-name>checkUrlPrefix</param-name>
+            <param-value>configured in properties</param-value>
+        </init-param>
+        <init-param>
+            <param-name>loginUrlPrefix</param-name>
+            <param-value>configured in properties</param-value>
+        </init-param>-->
+        <init-param>
+            <param-name>excludePattern</param-name>
+            <param-value>/reg/*.*,/entry/toWelcomeOrg.htm</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>ssoFilter</filter-name>
+        <url-pattern>*.html</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ssoFilter</filter-name>
+        <url-pattern>*.ajax</url-pattern>
+    </filter-mapping>
+
+    <session-config>
+        <session-timeout>180</session-timeout>
+    </session-config>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+</web-app>

@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="t_family_electric">
+
+    <resultMap id="PaginationMap" extends="ibatorgenerated_BaseResultMap" class="com.qi.assistant.web.model.vo.ElectricVO" >
+        <result column="Grade" property="grade" jdbcType="INTEGER"/>
+        <result column="PeakPrice" property="peakprice" jdbcType="DECIMAL"/>
+        <result column="PeakTotal" property="peaktotal" jdbcType="INTEGER"/>
+        <result column="FlatPrice" property="flatprice" jdbcType="DECIMAL"/>
+        <result column="FlatTotal" property="flattotal" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <sql id="ELECTRIC.count_template">
+        <![CDATA[
+
+        SELECT COUNT(*)
+
+        ]]>
+    </sql>
+
+    <sql id="ELECTRIC.field_template">
+        <![CDATA[
+
+        SELECT
+            Guid,
+            BeforeID,
+            BatchNumber,
+            BillDate,
+            CurrentDate,
+            NextDate,
+            Employe,
+            PeakQuantity,
+            FlatQuantity,
+            BeforeBalance,
+            CurrentBalance,
+            Deposited,
+            Additional,
+            TotalShould,
+            TotalActual,
+            Creator,
+            CreateTime,
+            Updater,
+            UpdateTime,
+            IsValid,
+            IsReset
+
+        ]]>
+    </sql>
+
+    <sql id="ELECTRIC.where_template">
+        <dynamic prepend="where">
+            <isNotEmpty property="param.billdate" prepend="and">
+                LEFT(E.BillDate, 4) = #param.billdate#
+            </isNotEmpty>
+            <isNotEmpty property="fullText" prepend="and">
+                CONCAT(
+                E.PeakQuantity,
+                E.FlatQuantity,
+                E.TotalActual,
+                E.BillDate
+                ) LIKE concat('%',#fullText#,'%')
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <select id="countByPagination" parameterClass="com.qi.common.model.model.PagingModel" resultClass="java.lang.Integer">
+        <include refid="ELECTRIC.count_template"/>
+        FROM t_family_electric E
+            LEFT JOIN (
+                SELECT
+                *,
+                SUM(t.PeakQuantity) AS PeakTotal,
+                SUM(t.FlatQuantity) AS FlatTotal
+            FROM (SELECT * FROM t_family_electric_details ORDER BY Grade DESC) t
+            GROUP BY ElectricGuid ORDER BY Grade DESC
+        ) AS ED
+        ON E.Guid = ED.ElectricGuid
+        <include refid="ELECTRIC.where_template"/>
+    </select>
+
+    <select id="queryByPagination" parameterClass="com.qi.common.model.model.PagingModel" resultMap="PaginationMap">
+        <include refid="MYSQL.paginationStart"/>
+        SELECT
+            E.Guid,
+            E.BeforeID,
+            E.BatchNumber,
+            E.BillDate,
+            E.CurrentDate,
+            E.NextDate,
+            E.Employe,
+            E.PeakQuantity,
+            E.FlatQuantity,
+            E.BeforeBalance,
+            E.CurrentBalance,
+            E.Deposited,
+            E.Additional,
+            E.TotalShould,
+            E.TotalActual,
+            E.Creator,
+            E.CreateTime,
+            E.Updater,
+            E.UpdateTime,
+            E.IsValid,
+            E.IsReset,
+            ED.Grade,
+            ED.PeakPrice,
+            ED.PeakTotal,
+            ED.FlatPrice,
+            ED.FlatTotal
+        FROM t_family_electric E
+        LEFT JOIN (
+            SELECT
+                *,
+                SUM(t.PeakQuantity) AS PeakTotal,
+                SUM(t.FlatQuantity) AS FlatTotal
+            FROM (SELECT * FROM t_family_electric_details WHERE Grade > 0 ORDER BY Grade DESC) t
+            GROUP BY ElectricGuid ORDER BY Grade DESC
+        ) AS ED
+        ON E.Guid = ED.ElectricGuid
+        <include refid="ELECTRIC.where_template"/>
+        <isNotNull property="orderByClause">
+            order by $orderByClause$
+        </isNotNull>
+        <include refid="MYSQL.paginationEnd"/>
+    </select>
+
+    <select id="countByQuantity" parameterClass="java.lang.Long" resultClass="java.lang.Integer">
+        SELECT
+          SUM(ed.PeakQuantity) + SUM(ed.FlatQuantity) AS Total
+        FROM
+        t_family_electric e
+        LEFT JOIN t_family_electric_details ed
+        ON e.Guid = ed.ElectricGuid
+        WHERE ed.Grade >= 0
+        <isNotEmpty property="value" prepend="and">
+            e.Guid > $value$
+        </isNotEmpty>
+    </select>
+
+    <select id="getLatestModel" resultMap="ibatorgenerated_BaseResultMap">
+        <include refid="ELECTRIC.field_template"/>
+        FROM
+          t_family_electric
+        ORDER BY
+          BillDate DESC
+        LIMIT 0, 1
+    </select>
+
+    <select id="getLatestReset" resultClass="java.lang.Long">
+        SELECT
+            Guid
+        FROM
+            t_family_electric
+        WHERE
+            IsReset = TRUE
+        ORDER BY
+            Guid DESC
+        LIMIT 0, 1
+    </select>
+
+    <select id="findYear" resultClass="java.lang.String">
+        SELECT
+            LEFT (BillDate, 4) AS year
+        FROM
+            t_family_electric
+        GROUP BY LEFT(BillDate, 4)
+    </select>
+
+</sqlMap>

@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="icon" href="pic.ico" type="image/x-ico"/>
+    <title>$!property.getSystemChinese()</title>
+    <meta charset="utf-8">
+    #parse("/layout/cssjs.vm")
+</head>
+<body>
+    ${screen_content}
+</body>
+</html>

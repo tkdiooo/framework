@@ -1,0 +1,500 @@
+<div class="body-main">
+    <div class="breadcrumbs">
+        <span>生活助手</span>
+        <span class="breadcrumbs-split">></span>
+        <span><a href="#springUrl("/water/index.html")">水费管理</a></span>
+        <span class="breadcrumbs-split">></span>
+        <span class="breadcrumbs-text">新增水费单</span>
+    </div>
+    <main class="main-content">
+        <form id="save_form" method="post" class="main-content-form">
+            <input type="hidden" name="guid" value="$!model.guid">
+            <input type="hidden" id="useUp" value="$!VO.useUp">
+            <input type="hidden" name="beforeid" value="$!VO.beforeid">
+            <div class="form-group">
+                <div class="group-block">
+                    <label>单据日期</label>
+                    <div class="form-input-multi">
+                        <input class="add-on-both" type="text" id="billdate" name="billdate" placeholder="请输单据日期" value="$!VO.billdate"/>
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>抄表员</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="employe" placeholder="请输入抄表员" value="$!VO.employe"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>本次抄表日期</label>
+                    <div class="form-input-multi">
+                        <input class="add-on-both" type="text" id="currentdate" name="currentdate" placeholder="请输入本次抄表日期" value="$!dateFormat.format($!VO.currentdate, "yyyy-MM-dd")"/>
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>下次抄表日期</label>
+                    <div class="form-input-multi">
+                        <input class="add-on-both" type="text" name="nextdate" value="$!dateFormat.format($!VO.nextdate, "yyyy-MM-dd")" readonly/>
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>上期抄表</label>
+                    <div class="form-input-ipt">
+                        <input type="text" id="prevquantity" name="prevquantity" placeholder="请输入上期抄表" value="$!VO.prevQuantity" onkeyup="setCharge();"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>本期抄表</label>
+                    <div class="form-input-ipt">
+                        <input type="text" id="quantity" name="quantity" placeholder="请输入本期抄表" value="$!model.quantity" onkeyup="setCharge();"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>消费量</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" id="waterquantity" name="waterquantity" #if($model)value="$!VO.useQuantity"#else value="0"#end onfocus="quantityFocus();" readonly/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>上月结余</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" name="beforebalance" value="$numberTool.format("#0.00", $!VO.beforebalance)" onkeyup="setBalance();" readonly/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>本月结转</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" name="currentbalance" value="$numberTool.format("#0.00", $!VO.currentbalance)" />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>本月应付水费(元)</label>
+                    <div class="form-input-ipt">
+                        <input type="hidden" id="totalshould" />
+                        <input class="cursor-not-allowed" type="text" name="total" #if($model)value="$!model.total"#else value="0.00"#end onkeyup="setBalance();"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>历史欠费</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" name="historyowe" value="$!model.historyowe" />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group-checkbox">
+                    <label>是否封账</label>
+                    <div class="form-input-checkbox">
+                        <input type="checkbox" name="isreset" value="true" />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group-table">
+                <div class="form-input-table">
+                    <table class="input-flex-table">
+                        <tr class="flex-table-header">
+                            <td class="table-cell cell-border" width="115">阶梯</td>
+                            <td class="table-cell cell-border" width="115">排水计算</td>
+                            <td class="table-cell cell-border">用水量</td>
+                            <td class="table-cell cell-border">单价(元)</td>
+                            <td class="table-cell cell-border">金额(元)</td>
+                        </tr>
+                        #foreach($op in $options)
+                            #set($index=$!{velocityCount} - 1)
+                            <tbody id="waterdetails">
+                                <tr id="water$!{op.grade}"
+                                    #if(!$op.waterDetails)
+                                        class="display-none"
+                                    #else
+                                        #set($grade=$!{op.grade})
+                                        #set($quantity=$!{op.quantity} - $!{op.amend})
+                                    #end>
+                                    <td class="table-cell cell-border">
+                                        <input type="hidden" id="grade" value="$numberUtil.intToCnNum($op.grade)">
+                                        <input type="hidden" name="children[$index].grade" value="$op.grade">
+                                        ${op.grade}(用水)
+                                    </td>
+                                    <td class="table-cell cell-border">
+                                    </td>
+                                    <td class="table-cell cell-border">
+                                        <input type="hidden" id="opQuantity" value="$op.quantity">
+                                        <input type="hidden" id="amend" value="$op.amend">
+                                        <div class="table-input-ipt">
+                                            <input class="cursor-not-allowed" type="text" id="waterquantity" name="children[$index].waterquantity" value="$!op.waterDetails.waterquantity" readonly/>
+                                        </div>
+                                    </td>
+                                    <td class="table-cell cell-border">
+                                        <input type="hidden" id="price" name="children[$index].waterprice" value="$numberTool.format("#0.00", $op.priceone)" />
+                                        $numberTool.format("#0.00", $op.priceone)
+                                    </td>
+                                    <td class="table-cell cell-border">
+                                        <div class="table-input-ipt">
+                                            <input class="cursor-not-allowed" type="text" id="amount" name="children[$index].wateramount" value="$!op.waterDetails.wateramount" readonly/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr id="drainage$!{op.grade}"
+                                    #if(!$op.waterDetails)
+                                        class="display-none"
+                                    #end>
+                                    <td class="table-cell cell-border">
+                                        <input type="hidden" id="grade" value="$numberUtil.intToCnNum($op.grade)">
+                                        ${op.grade}(排水)
+                                    </td>
+                                    <td class="table-cell cell-border">
+                                        <input type="hidden" id="formula" value="${op.formula}" />
+                                        <input type="hidden" id="drainageformula" name="children[$index].drainageformula" value="${op.formula}" />
+                                        <span></span>
+                                    </td>
+                                    <td class="table-cell cell-border">
+                                        <div class="table-input-ipt">
+                                            <input class="cursor-not-allowed" type="text" id="drainagequantity" value="$!op.waterDetails.waterquantity" readonly/>
+                                        </div>
+                                    </td>
+                                    <td class="table-cell cell-border">
+                                        <input type="hidden" id="price" name="children[$index].drainageprice" value="$numberTool.format("#0.00", $op.pricetwo)" />
+                                        $numberTool.format("#0.00", $op.pricetwo)
+                                    </td>
+                                    <td class="table-cell cell-border">
+                                        <div class="table-input-ipt">
+                                            <input class="cursor-not-allowed" type="text" id="amount" name="children[$index].drainageamount" value="$!op.waterDetails.drainageamount" readonly/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        #end
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-display-text #if(!$quantity)display-none #end">
+                    #set($remaining=$!{quantity} - $!{VO.useUp} - $!{VO.useQuantity})
+                    #set($useUp=$!{VO.useUp} + $!{VO.useQuantity})
+                    当前累计气量已达到$!{useUp}立方米。第$!numberUtil.intToCnNum($grade)档可用气量$!{quantity}立方米，还剩余$!{remaining}立方米
+                </div>
+            </div>
+        </form>
+        <div class="main-button">
+            <ul>
+                <li class="button-separator button-green">
+                    <a href="javascript:void(0);" onclick="submit();">确&nbsp;定</a>
+                </li>
+                <li class="button-separator">
+                    <a href="#springUrl("/water/index.html")">取&nbsp;消</a>
+                </li>
+            </ul>
+        </div>
+    </main>
+</div>
+<script>
+    function initVerify() {
+        $("#save_form").validate({
+            ignore: true,
+            rules: {
+                billdate: {
+                    required: true,
+                    remote: {
+                        url: "#springUrl('/water/checkUnique.ajax')",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            guid: function () {
+                                return $('input[name="guid"]').val();
+                            },
+                            billdate: function () {
+                                return $(':input[name="billdate"]').val();
+                            }
+                        }
+                    }
+                },
+                currentdate: {
+                    required: true
+                },
+                nextdate: {
+                    required: true
+                },
+                employe: {
+                    required: true
+                },
+                prevquantity: {
+                    required: true,
+                    number: true,
+                    lessEqual: "#quantity"
+                },
+                quantity: {
+                    required: true,
+                    number: true,
+                    greaterEqual: "#prevquantity"
+                },
+                waterquantity: {
+                    required: true
+                },
+                total: {
+                    required: true,
+                    money: true
+                }
+            },
+            messages: {
+                prevquantity: {
+                    lessEqual: "上期抄表数值必须小于本期抄表"
+                },
+                quantity: {
+                    greaterEqual: "本期抄表数值必须大于上期抄表"
+                }
+            },
+            success: function (element) {
+            },
+            errorPlacement: function (error, element) {
+                $(element).parent().next('.i-must').html(error[0].innerHTML);
+            }
+
+        });
+    }
+
+    function submit() {
+        if (!$("#save_form").valid())return false;
+        var formParams = $("#save_form").serializeJson();
+        var opt = {contentType: "application/x-www-form-urlencoded"};
+        ajax_action("#springUrl("/water/save.ajax")", formParams, opt, function (data) {
+            if (!data.success) {
+                alert(data.messages);
+            } else {
+                alert(data.messages, function () {
+                    window.location.href = "#springUrl("/water/index.html")";
+                });
+            }
+        })
+    }
+
+    $(function () {
+        $('input[name="billdate"]').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3, //这里就设置了默认视图为年视图
+            minView: 3, //设置最小视图为年视图
+            forceParse: 0,
+            linkField: "currentdate",
+            linkFormat: "yyyy-mm-dd"
+        }).on('changeDate', function (ev) {
+            $('input[name="currentdate"]').datetimepicker('update');
+            setNextDate();
+        });
+        $('input[name="currentdate"]').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: 1,
+            autoclose: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            linkField: "billdate",
+            linkFormat: "yyyy-mm"
+        }).on('changeDate', function (ev) {
+            $('input[name="billdate"]').datetimepicker('update');
+            setNextDate();
+        });
+        $('input[name="nextdate"]').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: 1,
+            autoclose: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+        ## 表单验证绑定
+        initVerify();
+        var isreset = '$!{model.isreset}';
+        if ($.trim(isreset) != '' && isreset == 'true') {
+            $('input[name="isreset"]').prop('checked', true);
+        }
+    });
+
+    function setNextDate() {
+        var intervaltype = $!VO.intervaltype;
+        var intervaldate = $!VO.intervaldate;
+        var currentdate = $('input[name="currentdate"]').val().split('-');
+        var now = new Date(currentdate[0], currentdate[1] - 1, currentdate[2]);
+        switch (intervaltype) {
+            case 3:
+                now.addWeeks(intervaldate);
+                $('input[name="nextdate"]').val(now.Format("yyyy-MM-dd"))
+                break;
+            case 1:
+                now.addMonths(intervaldate);
+                now.addDays(1);
+                $('input[name="nextdate"]').val(now.Format("yyyy-MM-dd"))
+                break;
+            default:
+        }
+    }
+
+    function resetFlexTable(flag) {
+        $('#total').val(0);
+        $('.form-display-text').text('');
+        $('.form-display-text').hide();
+        $('.input-flex-table').find('tbody[id="waterdetails"]').each(function (i, body) {
+            var wtr = $(body).find('tr[id^="water"]');
+            var dtr = $(body).find('tr[id^="drainage"]');
+            wtr.find('#waterquantity').val('');
+            wtr.find('#amount').val('');
+            dtr.hide();
+            dtr.find('#drainageformula').next('span').text('');
+            dtr.find('#drainagequantity').val('');
+            dtr.find('#amount').val('');
+        });
+    }
+
+    function setCharge() {
+        resetFlexTable();
+        if ($.trim($('#prevquantity').val()) != '' && $.trim($('#quantity').val()) != '') {
+            ## 上期抄码
+            var previous = Number($('#prevquantity').val());
+            ## 本期抄码
+            var current = Number($('#quantity').val());
+            if (current >= previous) {
+                $('input[name="waterquantity"]').val((current - previous));
+                ## 本期使用量
+                var quantity = Number($('input[name="waterquantity"]').val());
+                ## 已用量
+                var Used = 0;
+                var grade;
+                var quan;
+                var remaining;
+                ## 循环获取阶梯以计算
+                $('.input-flex-table').find('tbody[id="waterdetails"]').each(function (i, body) {
+                    var wtr = $(body).find('tr[id^="water"]');
+                    var dtr = $(body).find('tr[id^="drainage"]');
+                    ## 中文显示用
+                    grade = wtr.find('#grade').val();
+                    ## 单价
+                    var price = Number(wtr.find('#price').val());
+                    var dprice = Number(dtr.find('#price').val());
+                    var formula = Number(dtr.find('#formula').val()) / 100;
+                    wtr.show();
+                    dtr.show();
+                    ## 阶梯可用量如果为0，表示最终阶梯，无限制。
+                    if (Number(wtr.find('#opQuantity').val()) == 0) {
+                        quan = '不限';
+                        remaining = '。';
+                        wtr.find('#waterquantity').val(quantity - Used);
+                        wtr.find('#amount').val(decimal((quantity - Used).mul(price), 2));
+                        dtr.find('#drainageformula').val((quantity - Used) + "×" + dprice + "×" + formula);
+                        dtr.find('#drainageformula').next('span').text(dtr.find('#drainageformula').val());
+                        dtr.find('#drainagequantity').val(quantity - Used);
+                        dtr.find('#amount').val(decimal((quantity - Used).mul(dprice).mul(formula), 2));
+                        return false;
+                    }
+                    ## 阶梯可用量：当前阶梯可用量 - 修正量 - 已用量 - 本期使用量
+                    var balance = Number(wtr.find('#opQuantity').val()) - Number(wtr.find('#amend').val()) - Number($("#useUp").val()) - Number($('#waterquantity').val());
+                    quan = Number(wtr.find('#opQuantity').val()) - Number(wtr.find('#amend').val()) + '立方米';
+                    remaining = '，还剩余' + ((Number(wtr.find('#opQuantity').val()) - Number(wtr.find('#amend').val())) - (Number($('#waterquantity').val()) + Number($("#useUp").val()))) + '立方米。';
+                    ## 阶梯可用量 >= 0，并未超出当前阶梯直接赋值并跳出循环
+                    if (balance >= 0) {
+                        wtr.find('#waterquantity').val(quantity - Used);
+                        wtr.find('#amount').val(decimal((quantity - Used).mul(price), 2));
+                        dtr.find('#drainageformula').val((quantity - Used) + "×" + dprice + "×"+ formula);
+                        dtr.find('#drainageformula').next('span').text(dtr.find('#drainageformula').val());
+                        dtr.find('#drainagequantity').val(quantity - Used);
+                        dtr.find('#amount').val(decimal((quantity - Used).mul(dprice).mul(formula), 2));
+                        return false;
+                    }
+                    ## 阶梯可用量 < 0，已超出当前阶梯，赋值当前阶梯可用余额。
+                    else if (balance < 0) {
+                        ## 当前阶梯能用量：当前阶梯实际可用量 - 前面档次已用量总和
+                        var opQuantity = Number(wtr.find('#opQuantity').val()) - Number(wtr.find('#amend').val()) - Number($("#useUp").val()) - Used;
+                        Used += opQuantity;
+                        wtr.find('#waterquantity').val(opQuantity);
+                        wtr.find('#amount').val(decimal(opQuantity.mul(price), 2));
+                        dtr.find('#drainageformula').val(opQuantity + "×" + dprice + "×" + formula);
+                        dtr.find('#drainageformula').next('span').text(dtr.find('#drainageformula').val());
+                        dtr.find('#drainagequantity').val(opQuantity);
+                        dtr.find('#amount').val(decimal(opQuantity.mul(dprice).mul(formula), 2));
+                    }
+                });
+                $('.form-display-text').text('当前累计用水量已达到' + (Number($('input[name="waterquantity"]').val()) + Number($("#useUp").val())) + '立方米。第' + grade + '阶梯可用水量' + quan + remaining);
+                $('.form-display-text').show();
+            }
+            compute();
+        }
+    }
+
+    function quantityFocus() {
+        if ($.trim($('#prevquantity').val()) == '') {
+            $('#prevquantity').focus();
+        } else if ($.trim($('#quantity').val()) == '') {
+            $('#quantity').focus();
+        }
+    }
+
+    // 金额计算
+    function compute() {
+        ## 总金额
+        var amount = 0;
+        $('.input-flex-table').find('tr').each(function (i, v) {
+            if (!$(v).is(':hidden') && v.id) {
+                amount = Number($(v).find('#amount').val()).add(amount);
+            }
+        });
+        $('#totalshould').val(amount);
+        var totalactual = decimal(amount, 1);
+        var currentbalance = Number(totalactual).sub(amount);
+        if (currentbalance != 0) {
+            var beforebalance = $('input[name="beforebalance"]').val();
+            if (Number(beforebalance) == 0) {
+                $('input[name="beforebalance"]').removeAttr("readonly");
+                $('input[name="currentbalance"]').val(currentbalance);
+            } else {
+                $('input[name="currentbalance"]').val(Number(beforebalance).add(currentbalance));
+            }
+        } else {
+            $('input[name="currentbalance"]').val(currentbalance);
+        }
+        if (!/\./.test(totalactual)) {
+            $('input[name="total"]').val(totalactual.toFixed(2));
+        } else {
+            $('input[name="total"]').val(totalactual);
+        }
+        setBalance();
+    }
+
+    function setBalance(){
+        var beforebalance = $('input[name="beforebalance"]').val();
+        var amount = $('#totalshould').val();
+        var totalactual = $('input[name="total"]').val();
+        var currentbalance = Number(totalactual).sub(amount);
+        $('input[name="currentbalance"]').val(Number(beforebalance).add(currentbalance));
+    }
+
+</script>

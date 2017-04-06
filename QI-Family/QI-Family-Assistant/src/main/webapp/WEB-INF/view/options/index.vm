@@ -1,0 +1,101 @@
+<div class="body-main" tabindex="0" hidefocus="true">
+    <div class="breadcrumbs">
+        <span>基础设置</span>
+        <span class="breadcrumbs-split">></span>
+        <span class="breadcrumbs-text">$!breadcrumbs</span>
+    </div>
+    <header class="header-toolbar">
+        <ul>
+            <li>
+                <a class="toolbar-button" href="javascript:void(0);" onclick="toAdded();">新增</a>
+            </li>
+            <li>
+                <a class="toolbar-button" href="javascript:void(0);" onclick="batchDelete();">批量删除</a>
+            </li>
+            #select($FamilyOptions,'单据类别','selectChanges')
+        </ul>
+        <ul>
+            <li class="toolbar-separator">
+                <a class="toolbar-button" href="javascript:void(0);" onclick="reload();">刷新</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toolbar-separator toolbar-input">
+                #search()
+            </li>
+        </ul>
+    </header>
+    <form id="query_form" action="#springUrl("/options/queryPagination.html")?optionstype=$!optionstype" method="post" onsubmit="return false">
+        <input type="hidden" name="fullText"/>
+    </form>
+    <input type="hidden" name="optionstype" value="$!optionstype"/>
+    <main id="main_content" class="main-content">
+    </main>
+</div>
+<script>
+    $(function () {
+        $('.body-main')[0].focus();
+        loadPaging();
+    });
+
+    function loadPaging(){
+        load_url("#springUrl("/options/toPaging.html")?optionstype=" + $('input[name="optionstype"]').val(), $('#main_content'));
+    }
+
+    function selectChanges(value, key) {
+        $('.breadcrumbs-text').text(key);
+        var action = $('#query_form').attr('action');
+        $('#query_form').attr('action', $.trim(action.substring(0, action.lastIndexOf('=') + 1)) + $.trim(value))
+        $('input[name="optionstype"]').val($.trim(value));
+        loadPaging();
+    }
+
+    function toAdded() {
+        window.location.href = "#springUrl("/options/added.html")?optionstype=" + $('input[name="optionstype"]').val();
+    }
+
+    function batchDelete() {
+        var cbs = getChecked();
+        if (cbs.length == 0) {
+            alert("请选择要操作的数据");
+        } else {
+            confirm("确认删除已选择的数据", function () {
+                var params = {
+                    'guids': cbs.serializeString()
+                };
+                var opt = {contentType: "application/x-www-form-urlencoded"};
+                ajax_action("#springUrl("/options/batchDelete.ajax")", params, opt, function (data) {
+                    if (!data.success) {
+                        alert(data.messages);
+                    } else {
+                        alert(data.messages, function () {
+                            reload();
+                        });
+                    }
+                })
+            });
+        }
+    }
+    ## 编辑按钮事件
+    function editGrid(guid) {
+        window.location.href = "#springUrl("/options/edited.html")?guid=" + guid;
+    }
+    ## 删除按钮事件
+    function deleteGrid(guid) {
+        confirm("确认删除当前数据", function () {
+            var params = {
+                'guid': guid
+            };
+            var opt = {contentType: "application/x-www-form-urlencoded"};
+            ajax_action("#springUrl("/options/delete.ajax")", params, opt, function (data) {
+                if (!data.success) {
+                    alert(data.messages);
+                } else {
+                    alert(data.messages, function () {
+                        reload();
+                    });
+                }
+            })
+        });
+    }
+</script>

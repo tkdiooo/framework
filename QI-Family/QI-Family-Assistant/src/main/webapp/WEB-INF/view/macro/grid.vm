@@ -1,0 +1,142 @@
+#foreach($map in $!pagingVO.pagingModel.mapResult)
+<tr class="table-row" onmouseenter="toggleOper(this);" onmouseleave="toggleOper(this);">
+    <td class="table-cell-nbsp">&nbsp;</td>
+    #if($!pagingVO.header.checkbox)
+        <td class="table-cell-check" onclick="check(this);">
+            <span role="checkbox" tabindex="0" class="ipt-chk">
+                <span class="ipt-chk-symbol">
+                    <b name="$map.guid" class="ipt-icon ipt-icon-checkbox"></b>
+                </span>
+            </span>
+        </td>
+    #end
+    #foreach($title in $!pagingVO.header.title)
+        #if($title.field == $constants.fieldType.text)
+            <td title="$map.get($title.code)" class="table-cell-title" onclick="rowClick(this);">
+                $!map.get($title.code)
+            </td>
+        #elseif($title.field == $constants.fieldType.dateDash)
+            <td title="$dateFormat.format($!map.get($title.code), "yyyy-MM-dd")" class="table-cell-title"
+                onclick="rowClick(this);">
+                $dateFormat.format($!map.get($title.code), "yyyy-MM-dd")
+            </td>
+        #elseif($title.field == $constants.fieldType.textNode)
+            <td title="$map.get($title.code)" class="table-cell-title">
+            ##                        $constants.getEnum("Status",$t.status)
+                <div class="ipt-fIBlock"
+                     onclick="gridSearch('$title.code', '$map.get($title.code)');">$map.get($title.code)</div>
+            </td>
+        #elseif($title.field == $constants.fieldType.multiNode)
+            <td title="$map.get($title.code)" class="table-cell-title">
+                <div class="ipt-fIBlock"
+                     onclick="gridSearch('$title.code', '$map.get($title.code)');">$map.get($title.text)</div>
+            </td>
+        #else
+            <td class="table-cell-title">
+                <div class="table-cell-oper">
+                    #if($map.get($title.code))
+                        #foreach($oper in $!map.get($title.code).type)
+                            #if($oper == $constants.operateType.edited)
+                                <div class="ipt-mini-button" title="编辑" role="button" tabindex="0"
+                                     onclick="operation('editGrid', this);">
+                                    <span class="ipt-mini-button-icon">
+                                        <b class="ipt-icon ipt-icon-pencil"></b>
+                                    </span>
+                                    <span class="ipt-mini-button-text"></span>
+                                </div>
+                            #elseif($oper == $constants.operateType.delete)
+                                <div class="ipt-mini-button" title="删除" role="button" tabindex="0"
+                                     onclick="operation('deleteGrid', this);">
+                                    <span class="ipt-mini-button-icon">
+                                        <b class="ipt-icon ipt-icon-trash"></b>
+                                    </span>
+                                    <span class="ipt-mini-button-text"></span>
+                                </div>
+                            #elseif($oper == $constants.operateType.search)
+                                $oper
+                            #end
+                        #end
+                    #else
+                        <div class="ipt-mini-button" title="编辑" role="button" tabindex="0"
+                             onclick="operation('editGrid', this);">
+                        <span class="ipt-mini-button-icon">
+                            <b class="ipt-icon ipt-icon-pencil"></b>
+                        </span>
+                            <span class="ipt-mini-button-text"></span>
+                        </div>
+                        <div class="ipt-mini-button" title="删除" role="button" tabindex="0"
+                             onclick="operation('deleteGrid', this);">
+                        <span class="ipt-mini-button-icon">
+                            <b class="ipt-icon ipt-icon-trash"></b>
+                        </span>
+                            <span class="ipt-mini-button-text"></span>
+                        </div>
+                    #end
+
+                </div>
+            </td>
+        #end
+    #end
+</tr>
+#end
+#if($!pagingVO.pagingModel.mapResult.size() > 0)
+    #if($!pagingVO.header.checkbox)
+        #set($colspan = $pagingVO.header.title.size() + 2)
+    #else
+        #set($colspan = $pagingVO.header.title.size() + 1)
+    #end
+<tr>
+    <td colspan="$colspan">
+        <div class="page-toolbar">
+            <div>
+            ## 设置页码数量，默认从1 ~ 7
+                #set($pageStartIndex = 1)
+                #set($pageEndIndex = 7)
+            ##计算结尾页面
+                #if($pagingVO.pagingModel.totalPage > 7)
+                ## 根据当前页index计算页码
+                ## 如果当前页面大于3，设置起始页码和结尾页码
+                    #if($pagingVO.pagingModel.currentPage > 4)
+                        #set($pageStartIndex = $pagingVO.pagingModel.currentPage - 3)
+                    ## 如果当前页码+3小于总页数
+                        #if($pagingVO.pagingModel.currentPage + 3 < $pagingVO.pagingModel.totalPage)
+                            #set($pageEndIndex = $pagingVO.pagingModel.currentPage + 3)
+                        #else
+                            #set($pageEndIndex = $pagingVO.pagingModel.totalPage)
+                        #end
+                    #end
+                #else
+                    #set($pageEndIndex = $pagingVO.pagingModel.totalPage)
+                #end
+            ## 判断是否有上一页，当前页数大于1才有
+                #if($pagingVO.pagingModel.currentPage > 1)
+                    #set($pageIndex=${pagingVO.pagingModel.currentPage} - 1)
+                    <a id="previous_page" href="javascript:void(0);"
+                       onclick="javascript:gotoPage($pageIndex);">上一页</a>
+                #end
+            ## 显示页码
+                #foreach($pageIndex in [$pageStartIndex..$pageEndIndex] )
+                    <a href="javascript:void(0);" onclick="javascript:gotoPage($pageIndex);"
+                       #if($pagingVO.pagingModel.currentPage == $pageIndex)class="currentPage"#end>$pageIndex</a>
+                #end
+            ## 判断是否有下一页，当前页数小于总页数时才有
+                #if($pagingVO.pagingModel.currentPage < $pagingVO.pagingModel.totalPage)
+                    #set($pageIndex=${pagingVO.pagingModel.currentPage} + 1)
+                    <a id="next_page" href="javascript:void(0);" onclick="javascript:gotoPage($pageIndex);">下一页</a>
+                #end
+            </div>
+            <div>支持键盘左右键“← →”翻页</div>
+        </div>
+    </td>
+</tr>
+<script>
+    $(function () {
+        bindHotKey('left', function () {
+            $('#previous_page').click();
+        });
+        bindHotKey('right', function () {
+            $('#next_page').click();
+        });
+    });
+</script>
+#end

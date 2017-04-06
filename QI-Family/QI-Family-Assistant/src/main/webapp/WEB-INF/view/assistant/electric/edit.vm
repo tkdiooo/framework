@@ -1,0 +1,628 @@
+<div class="body-main">
+    <div class="breadcrumbs">
+        <span>生活助手</span>
+        <span class="breadcrumbs-split">></span>
+        <span><a href="#springUrl("/electric/index.html")">电费管理</a></span>
+        <span class="breadcrumbs-split">></span>
+        <span class="breadcrumbs-text">新增电费单</span>
+    </div>
+    <main class="main-content">
+        <form id="save_form" method="post" class="main-content-form">
+            <input type="hidden" name="guid" value="$!model.guid">
+            <input type="hidden" id="useUp" value="$!VO.useUp">
+            <input type="hidden" name="beforeid" value="$!VO.beforeid">
+            <div class="form-group">
+                <div class="group-block">
+                    <label>单据日期</label>
+                    <div class="form-input-multi">
+                        <input class="add-on-both" type="text" id="billdate" name="billdate" placeholder="请输单据日期" value="$!VO.billdate"/>
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>抄表员</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="employe" placeholder="请输入抄表员" value="$!VO.employe"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>本次抄表日期</label>
+                    <div class="form-input-multi">
+                        <input class="add-on-both" type="text" id="currentdate" name="currentdate" placeholder="请输入本次抄表日期" value="$!dateFormat.format($!VO.currentdate, "yyyy-MM-dd")"/>
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>下次抄表日期</label>
+                    <div class="form-input-multi">
+                        <input class="add-on-both" type="text" name="nextdate" value="$!dateFormat.format($!VO.nextdate, "yyyy-MM-dd")" readonly/>
+                        <span class="add-on"><i class="icon-remove"></i></span>
+                        <span class="add-on"><i class="icon-calendar"></i></span>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>上期抄表(峰)</label>
+                    <div class="form-input-ipt">
+                        <input type="text" id="peakprevious" name="peakprevious" placeholder="请输入上期抄表(峰)" value="$!VO.prevQuantity" onkeyup="setCharge('peak');"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>本期抄表(峰)</label>
+                    <div class="form-input-ipt">
+                        <input type="text" id="peakquantity" name="peakquantity" placeholder="请输入本期抄表(峰)" value="$!model.peakquantity" onkeyup="setCharge('peak');"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>消费量(峰)</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" id="peaktotal" name="peaktotal" #if($model)value="$!VO.useQuantity"#else value="0"#end onfocus="gasFocus('peak');" readonly/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>上期抄表(谷)</label>
+                    <div class="form-input-ipt">
+                        <input type="text" id="flatprevious" name="flatprevious" placeholder="请输入上期抄表(谷)" value="$!VO.prevQuantityT" onkeyup="setCharge('flat');"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>本期抄表(谷)</label>
+                    <div class="form-input-ipt">
+                        <input type="text" id="flatquantity" name="flatquantity" placeholder="请输入本期抄表(谷)" value="$!model.flatquantity" onkeyup="setCharge('flat');"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>消费量(谷)</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" id="flattotal" name="flattotal" #if($model)value="$!VO.useQuantityT"#else value="0"#end onfocus="gasFocus('flat');" readonly/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>上月结余</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" name="beforebalance" value="$numberTool.format("#0.00", $!VO.beforebalance)" onkeyup="setBalance();" readonly/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>本月结转</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" name="currentbalance" value="$numberTool.format("#0.00", $!VO.currentbalance)" />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>抵扣往月预存电费</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="deposited" #if($model)value="$!model.deposited"#else value="0.00"#end />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>地方附加</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="additional" #if($model)value="$!model.additional"#else value="0.00"#end />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>本月应付电费(元)</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" name="totalshould" #if($model)value="$!model.totalshould"#else value="0.00"#end />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>本月实付电费(元)</label>
+                    <div class="form-input-ipt">
+                        <input class="cursor-not-allowed" type="text" name="totalactual" #if($model)value="$!model.totalactual"#else value="0.00"#end />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-group-checkbox">
+                    <label>是否封账</label>
+                    <div class="form-input-checkbox">
+                        <input type="checkbox" name="isreset" value="true" />
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group-table">
+                <div class="form-input-table">
+                    <table class="input-flex-table">
+                        <tr class="flex-table-header">
+                            <td colspan="2" width="230">
+                                <div class="form-group-checkbox">
+                                    <label>添加优惠电量</label>
+                                    <div class="form-input-checkbox">
+                                        <input type="checkbox" id="cb_favourable" value="true" onchange="favourable(this);"/>
+                                    </div>
+                                </div>
+                            </td>
+                            <td colspan="3" class="form-group">
+                                <div id="favourable" class="form-input-ipt display-none">
+                                    <input type="text" value="0" onkeyup="setFavourable(this.value);"/>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="flex-table-header">
+                            <td class="table-cell cell-border" width="115">阶梯</td>
+                            <td class="table-cell cell-border" width="115">倍率</td>
+                            <td class="table-cell cell-border">用电量</td>
+                            <td class="table-cell cell-border">单价(元)</td>
+                            <td class="table-cell cell-border">金额(元)</td>
+                        </tr>
+                        #foreach($op in $options)
+                            #set($index=$!{velocityCount} - 1)
+                            <tr id="peak$!{op.grade}"
+                                #if(!$op.electricDetails)
+                                    class="display-none"
+                                #else
+                                    #set($grade=$!{op.grade})
+                                    #set($quantity=$!{op.quantity} - $!{op.amend})
+                                #end>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="grade" value="$numberUtil.intToCnNum($op.grade)">
+                                    <input type="hidden" name="children[$index].grade" value="$op.grade">
+                                    ${op.grade}(峰)
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="peakrate" name="children[$index].peakrate" value="1" />
+                                    1
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="opQuantity" value="$op.quantity">
+                                    <input type="hidden" id="amend" value="$op.amend">
+                                    <div class="table-input-ipt">
+                                        <input class="cursor-not-allowed" type="text" id="peakquantity" name="children[$index].peakquantity" value="$!op.electricDetails.peakquantity" readonly/>
+                                    </div>
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="price" name="children[$index].peakprice" value="$numberTool.format("#0.000", $op.priceone)" />
+                                    $numberTool.format("#0.000", $op.priceone)
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <div class="table-input-ipt">
+                                        <input class="cursor-not-allowed" type="text" id="amount" name="children[$index].peakamount" value="$!op.electricDetails.peakamount" readonly/>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr id="flat$!{op.grade}"
+                                #if(!$op.electricDetails)
+                                    class="display-none"
+                                #else
+                                    #set($grade=$!{op.grade})
+                                    #set($quantity=$!{op.quantity} - $!{op.amend})
+                                #end>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="grade" value="$numberUtil.intToCnNum($op.grade)">
+                                    ${op.grade}(谷)
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="flatrate" name="children[$index].flatrate" value="1" />
+                                    1
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="opQuantity" value="$op.quantity">
+                                    <input type="hidden" id="amend" value="$op.amend">
+                                    <div class="table-input-ipt">
+                                        <input class="cursor-not-allowed" type="text" id="flatquantity" name="children[$index].flatquantity" value="$!op.electricDetails.flatquantity" readonly/>
+                                    </div>
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <input type="hidden" id="price" name="children[$index].flatprice" value="$numberTool.format("#0.000", $op.pricetwo)" />
+                                    $numberTool.format("#0.000", $op.pricetwo)
+                                </td>
+                                <td class="table-cell cell-border">
+                                    <div class="table-input-ipt">
+                                        <input class="cursor-not-allowed" type="text" id="amount" name="children[$index].flatamount" value="$!op.electricDetails.flatamount" readonly/>
+                                    </div>
+                                </td>
+                            </tr>
+                        #end
+                    </table>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="form-display-text #if(!$quantity)display-none #end">
+                    #set($remaining=$!{quantity} - $!{VO.useUp} - $!{VO.useQuantity} - $!{VO.useQuantityT})
+                    #set($useUp=$!{VO.useUp} + $!{VO.useQuantity} + $!{VO.useQuantityT})
+                    当前累计用阶梯电量已达到$!{useUp}千瓦时。第$!numberUtil.intToCnNum($grade)档电量可用$!{quantity}千瓦时，还剩余$!{remaining}千瓦时。
+                </div>
+            </div>
+        </form>
+        <div class="main-button">
+            <ul>
+                <li class="button-separator button-green">
+                    <a href="javascript:void(0);" onclick="submit();">确&nbsp;定</a>
+                </li>
+                <li class="button-separator">
+                    <a href="#springUrl("/electric/index.html")">取&nbsp;消</a>
+                </li>
+            </ul>
+        </div>
+    </main>
+</div>
+<script>
+    function initVerify() {
+        $("#save_form").validate({
+            ignore: true,
+            rules: {
+                billdate: {
+                    required: true,
+                    remote: {
+                        url: "#springUrl('/electric/checkUnique.ajax')",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            guid: function () {
+                                return $('input[name="guid"]').val();
+                            },
+                            billdate: function () {
+                                return $(':input[name="billdate"]').val();
+                            }
+                        }
+                    }
+                },
+                currentdate: {
+                    required: true
+                },
+                nextdate: {
+                    required: true
+                },
+                employe: {
+                    required: true
+                },
+                peakprevious: {
+                    required: true,
+                    number: true,
+                    lessEqual: "#peakquantity"
+                },
+                peakquantity: {
+                    required: true,
+                    number: true,
+                    greaterEqual: "#peakprevious"
+                },
+                peaktotal: {
+                    required: true
+                },
+                flatprevious: {
+                    required: true,
+                    number: true,
+                    lessEqual: "#flatquantity"
+                },
+                flatquantity: {
+                    required: true,
+                    number: true,
+                    greaterEqual: "#flatprevious"
+                },
+                flattotal: {
+                    required: true
+                },
+                deposited: {
+                    required: true
+                },
+                additional: {
+                    required: true
+                },
+                totalshould: {
+                    required: true,
+                    money: true
+                },
+                totalactual: {
+                    required: true,
+                    money: true
+                }
+            },
+            messages: {
+                peakprevious: {
+                    lessEqual: "上期抄表(峰)数值必须小于本期抄表(峰)"
+                },
+                peakquantity: {
+                    greaterEqual: "本期抄表(峰)数值必须大于上期抄表(峰)"
+                },
+                flatprevious: {
+                    lessEqual: "上期抄表(谷)数值必须小于本期抄表(谷)"
+                },
+                flatquantity: {
+                    greaterEqual: "本期抄表(谷)数值必须大于上期抄表(谷)"
+                }
+            },
+            success: function (element) {
+            },
+            errorPlacement: function (error, element) {
+                $(element).parent().next('.i-must').html(error[0].innerHTML);
+            }
+
+        });
+    }
+
+    function submit() {
+        if (!$("#save_form").valid())return false;
+        var formParams = $("#save_form").serializeJson();
+        var opt = {contentType: "application/x-www-form-urlencoded"};
+        ajax_action("#springUrl("/electric/save.ajax")", formParams, opt, function (data) {
+            if (!data.success) {
+                alert(data.messages);
+            } else {
+                alert(data.messages, function () {
+                    window.location.href = "#springUrl("/electric/index.html")";
+                });
+            }
+        })
+    }
+
+    $(function () {
+        $('input[name="billdate"]').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm',
+            weekStart: 1,
+            todayBtn: 1,
+            autoclose: 1,
+            todayHighlight: 1,
+            startView: 3, //这里就设置了默认视图为年视图
+            minView: 3, //设置最小视图为年视图
+            forceParse: 0,
+            linkField: "currentdate",
+            linkFormat: "yyyy-mm-dd"
+        }).on('changeDate', function (ev) {
+            $('input[name="currentdate"]').datetimepicker('update');
+            setNextDate();
+        });
+        $('input[name="currentdate"]').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: 1,
+            autoclose: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0,
+            linkField: "billdate",
+            linkFormat: "yyyy-mm"
+        }).on('changeDate', function (ev) {
+            $('input[name="billdate"]').datetimepicker('update');
+            setNextDate();
+        });
+        $('input[name="nextdate"]').datetimepicker({
+            language: 'zh-CN',
+            format: 'yyyy-mm-dd',
+            todayBtn: 1,
+            autoclose: 1,
+            startView: 2,
+            minView: 2,
+            forceParse: 0
+        });
+        ## 表单验证绑定
+        initVerify();
+        ## 优惠预处理
+        var favorable = '$!{favorable}';
+        if ($.trim(favorable) != '') {
+            $('#favourable').show();
+            $('#cb_favourable').prop('checked', true);
+            $('#favourable').children('input').val(favorable);
+            setFavourable(favorable);
+        }
+        var isreset = '$!{model.isreset}';
+        if ($.trim(isreset) != '' && isreset == 'true') {
+            $('input[name="isreset"]').prop('checked', true);
+        }
+    });
+
+    function setNextDate(date) {
+        var intervaltype = $!VO.intervaltype;
+        var intervaldate = $!VO.intervaldate;
+        var currentdate = $('input[name="currentdate"]').val().split('-');
+        var now = new Date(currentdate[0], currentdate[1] - 1, currentdate[2]);
+        switch (intervaltype) {
+            case 3:
+                now.addWeeks(intervaldate);
+                $('input[name="nextdate"]').val(now.Format("yyyy-MM-dd"))
+                break;
+            case 1:
+                now.addMonths(intervaldate);
+                $('input[name="nextdate"]').val(now.Format("yyyy-MM-dd"))
+                break;
+            default:
+        }
+    }
+
+    function resetFlexTable(flag) {
+        $('#' + flag + 'total').val(0);
+        $('.form-display-text').text('');
+        $('.form-display-text').hide();
+        $('.input-flex-table').find('tr[id^="' + flag + '"]').each(function (i, v) {
+            $(v).hide();
+            $(v).find('#' + flag + 'quantity').val('');
+            $(v).find('#amount').val('');
+        });
+    }
+
+    function setCharge(flag) {
+        resetFlexTable(flag);
+        if ($.trim($('#' + flag + 'previous').val()) != '' && $.trim($('#' + flag + 'quantity').val()) != '') {
+            ## 上期抄码
+            var previous = Number($('#' + flag + 'previous').val());
+            ## 本期抄码
+            var current = Number($('#' + flag + 'quantity').val());
+            if (current >= previous) {
+                $('#' + flag + 'total').val((current - previous));
+                ## 本期使用量
+                var quantity = Number($('#' + flag + 'total').val());
+                ## 已用量
+                var Used = 0;
+                var grade;
+                var quan;
+                var remaining;
+                ## 循环获取阶梯以计算
+                $('.input-flex-table').find('tr[id^="' + flag + '"]').each(function (i, v) {
+                    ## 中文显示用
+                    grade = $(v).find('#grade').val();
+                    ## 单价
+                    var price = Number($(v).find('#price').val());
+                    $(v).show();
+                    ## 阶梯可用量如果为0，表示最终阶梯，无限制。
+                    if (Number($(v).find('#opQuantity').val()) == 0) {
+                        quan = '不限';
+                        remaining = '。';
+                        $(v).find('#' + flag + 'quantity').val(quantity - Used);
+                        $(v).find('#amount').val(decimal((quantity - Used).mul(price), 2));
+                        return false;
+                    }
+                    ## 阶梯可用量：当前阶梯可用量 - 修正量 - 已用量 - 本期使用量
+                    var balance = Number($(v).find('#opQuantity').val()) - Number($(v).find('#amend').val()) - Number($("#useUp").val()) - (Number($('#peaktotal').val()) + Number($('#flattotal').val()));
+                    quan = Number($(v).find('#opQuantity').val()) - Number($(v).find('#amend').val()) + '千瓦时';
+                    remaining = '，还剩余' + ((Number($(v).find('#opQuantity').val()) - Number($(v).find('#amend').val())) - (Number($('#peaktotal').val()) + Number($('#flattotal').val()) + Number($("#useUp").val()))) + '千瓦时。';
+                    ## 阶梯可用量 >= 0，并未超出当前阶梯直接赋值并跳出循环
+                    if (balance >= 0) {
+                        $(v).find('#' + flag + 'quantity').val(quantity - Used);
+                        $(v).find('#amount').val(decimal((quantity - Used).mul(price), 2));
+                        return false;
+                    }
+                    ## 阶梯可用量 < 0，已超出当前阶梯，赋值当前阶梯可用余额。
+                    else if (balance < 0) {
+                        ## 当前阶梯能用量：当前阶梯实际可用量 - 前面档次已用量总和
+                        var opQuantity = Number($(v).find('#opQuantity').val()) - Number($(v).find('#amend').val()) - Number($("#useUp").val()) - Used;
+                        Used += opQuantity;
+                        $(v).find('#' + flag + 'quantity').val(opQuantity);
+                        $(v).find('#amount').val(decimal(opQuantity.mul(price), 2));
+                    }
+                });
+                $('.form-display-text').text('当前累计用阶梯电量已达到' + (Number($('#peaktotal').val()) + Number($('#flattotal').val()) + Number($("#useUp").val())) + '千瓦时。第' + grade + '档电量可用' + quan + remaining);
+                $('.form-display-text').show();
+            }
+            compute();
+        }
+    }
+
+    function gasFocus(flag) {
+        if ($.trim($('#' + flag + 'previous').val()) == '') {
+            $('#' + flag + 'previous').focus();
+        } else if ($.trim($('#' + flag + 'quantity').val()) == '') {
+            $('#' + flag + 'quantity').focus();
+        }
+    }
+
+    // 金额计算
+    function compute() {
+        ## 总金额
+        var amount = 0;
+        $('.input-flex-table').find('tr').each(function (i, v) {
+            if (!$(v).is(':hidden') && v.id) {
+                amount = Number($(v).find('#amount').val()).add(amount);
+            }
+        });
+        if (!/\./.test(amount)) {
+            $('input[name="totalshould"]').val(amount.toFixed(2));
+        } else {
+            $('input[name="totalshould"]').val(amount);
+        }
+        var totalactual = decimal(amount, 1);
+        $('input[name="totalactual"]').val(totalactual);
+        var currentbalance = Number(totalactual).sub(amount);
+        if (currentbalance != 0) {
+            var beforebalance = $('input[name="beforebalance"]').val();
+            if (Number(beforebalance) == 0) {
+                $('input[name="beforebalance"]').removeAttr("readonly");
+                $('input[name="currentbalance"]').val(currentbalance);
+            } else {
+                $('input[name="currentbalance"]').val(Number(beforebalance).add(currentbalance));
+            }
+        } else {
+            $('input[name="currentbalance"]').val(currentbalance);
+        }
+        setBalance();
+    }
+
+    function setBalance(){
+        var beforebalance = $('input[name="beforebalance"]').val();
+        var amount = $('input[name="totalshould"]').val();
+        var totalactual = $('input[name="totalactual"]').val();
+        var currentbalance = Number(totalactual).sub(amount);
+        $('input[name="currentbalance"]').val(Number(beforebalance).add(currentbalance));
+    }
+
+    // 优惠按钮方法
+    function favourable(cb) {
+        if ($(cb).is(':checked')) {
+            $('#favourable').show();
+        } else {
+            $('#favourable').hide();
+            $('#favourable').children('input').val(0);
+            $('.input-flex-table').find('tr[id="favourable"]').remove();
+            compute();
+        }
+    }
+
+    // 显示优惠行信息
+    function setFavourable(value){
+        ## 优惠量
+        var quantity = Number(value);
+        var tr = null;
+        $('.input-flex-table').find('tr[id^="peak"]').each(function (i, v) {
+            if (!$(v).is(':hidden')) {
+                tr = v;
+            }
+        });
+        if (tr != null) {
+            var price = Number($(tr).find('#price').val());
+            var favourable = $('.input-flex-table').find('tr[id="favourable"]');
+            ## 创建优惠行
+            if (favourable.length == 0) {
+                favourable = $('<tr id="favourable">' +
+                        '<td class="table-cell cell-border">' +
+                        '<input type="hidden" name="children[3].grade" value="-1">优惠</td>' +
+                        '<td class="table-cell cell-border">' +
+                        '<input type="hidden" id="rate" name="children[3].peakrate" value="1" />1</td>' +
+                        '<td class="table-cell cell-border">' +
+                        '<input type="hidden" id="quantity" name="children[3].peakquantity" />' +
+                        '<span id="quantity_span"></span></td>' +
+                        '<td class="table-cell cell-border">' +
+                        '<input type="hidden" id="price" name="children[3].peakprice" />' +
+                        '<span id="price_span"></span></td>' +
+                        '<td class="table-cell cell-border">' +
+                        '<input type="hidden" id="amount" name="children[3].peakamount" />' +
+                        '<span id="amount_span"></span></td></tr>');
+            }
+            favourable.find('#quantity').val(-quantity);
+            favourable.find('#quantity_span').text(-quantity)
+            favourable.find('#price').val(price);
+            favourable.find('#price_span').text(price)
+            var num = quantity.mul(price);
+            favourable.find('#amount').val(-decimal(num, 2));
+            favourable.find('#amount_span').text(-decimal(num, 2))
+            $('.input-flex-table').append(favourable);
+            compute();
+        } else {
+            alert('请先添加用电抄表');
+        }
+    }
+</script>
