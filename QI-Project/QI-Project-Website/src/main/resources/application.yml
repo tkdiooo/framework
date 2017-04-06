@@ -1,0 +1,56 @@
+# Server Settings (ServerProperties)
+server:
+  port: 8181
+  address: 127.0.0.1
+  contextPath: /project
+  tomcat:
+    uri-encoding: utf-8
+    basedir: D:/opt/logs/project/tomcat
+  error:
+    path: /error
+# Spring Settings
+spring:
+  output:
+    ansi:
+      enabled: detect
+# Thymeleaf Settings
+  thymeleaf:
+    cache: false
+    suffix: .html
+    mode: LEGACYHTML5
+#指定静态资源处理路径，如果是默认/**，404请求不会抛出NoHandlerFoundException
+  mvc:
+    static-path-pattern: /static/**
+  messages:
+    basename: i18n/messages
+  http:
+    multipart:
+      # 存放生成的文件地址
+      location:
+      # 允许上传的单个文件最大值。默认值为 -1，表示没有限制
+      max-file-size: 10MB
+      # 针对该 multipart/form-data 上传文件的最大值，默认值为 -1，表示没有限制
+      max-request-size: 50MB
+      # 当数据量大于该值时，内容将被写入文件
+      file-size-threshold: 0
+# Logger Settings
+logging:
+  path: D:/opt/logs/project/website
+
+# Custom Settings
+#----------------------------------------------------------------------------
+# 静态资源网站根路径 http://192.168.37.128:8080/
+website:
+  static:
+    resources: http://www.zzl.com/static-global
+# 单点登录
+sso:
+  # 登录服务
+  login:
+    url: http://www.zzl.com/portal
+  # 验证服务
+  check:
+    url: http://www.zzl.com/authority
+  # 登出服务
+  logout:
+    url: http://www.zzl.com/portal/logout.html
