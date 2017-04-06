@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "log4j.dtd">
+
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/">
+	<!--日志输出到控制台-->
+	<appender name="CONSOLE" class="org.apache.log4j.ConsoleAppender">
+		<param name="Threshold" value="debug" />
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern"
+				value="[%-d{HH:mm:ss}][igoldjob] %p [%t] %c.%M(%L) | %m%n" />
+		</layout>
+	</appender>
+
+	<!--日志输出到文件-->
+	<!--<appender name="FILE" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="Threshold" value="debug" />
+		<param name="File" value="D:/logs/webdemo.log" />
+		<param name="Append" value="true" />
+		<param name="DatePattern" value="'.'yyyy-MM-dd" />
+		<layout class="org.apache.log4j.PatternLayout">
+			&lt;!&ndash;<param name="ConversionPattern"&ndash;&gt;
+				&lt;!&ndash;value="[%-d{HH:mm:ss}][igoldjob] %p [%t] %c.%M(%L) | %m%n" />&ndash;&gt;
+            <param name="ConversionPattern"
+                   value="%d{yyyy-MM-dd HH:mm:ss,SSS}[igoldjob][%t][MDC %X{MDC-YBT}] [%24F][%60l][%-3L][%-5p]%m %n" />
+		</layout>
+	</appender>-->
+	<!--
+		Suppress success logging from InteractiveAuthenticationSuccessEvent
+	-->
+	<logger name="org.mybatis" additivity="false">
+		<level value="DEBUG" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="com.efesco" additivity="false">
+		<level value="DEBUG" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="freemarker" additivity="false">
+	    <level value ="error"/>
+	    <!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="com.danga" additivity="false">
+		<level value="error" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	<logger name="com.qi" additivity="false">
+		<level value="error" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	<logger name="java.sql.PreparedStatement" additivity="false">
+		<level value="DEBUG" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	
+	
+	<logger name="org.apache.http" additivity="false">
+		<level value="error" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="org.springframework.beans" additivity="false">
+		<level value="error" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	<logger name="org.springframework.web.servlet.view" additivity="false">
+		<level value="error" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+	 
+	
+	<logger name="org.springframework.web.servlet.mvc.annotation" additivity="false">
+		<level value="error" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+	
+
+
+	<logger name="java.sql.Statement" additivity="false">
+		<level value="DEBUG" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<logger name="java.sql.Connection" additivity="false">
+		<level value="DEBUG" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</logger>
+
+	<root>
+		<priority value="DEBUG" />
+		<!--<appender-ref ref="FILE" />-->
+		<appender-ref ref="CONSOLE" />
+	</root>
+</log4j:configuration>

@@ -1,0 +1,31 @@
+<div class="body-main" tabindex="0" hidefocus="true">
+    <div class="breadcrumbs">
+        <span>门户管理</span>
+        <span class="breadcrumbs-split">></span>
+        <span class="breadcrumbs-text">门户系统</span>
+    </div>
+    <header class="header-toolbar">
+        <ul>
+            <li class="toolbar-separator">
+                <a class="toolbar-button" href="javascript:void(0);" onclick="reload();">刷新</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toolbar-separator toolbar-input">
+                #search()
+            </li>
+        </ul>
+    </header>
+    <form id="menu_query_form" action="#springUrl("/portal/queryPagination.html")" method="post" onsubmit="return false">
+        <input type="hidden" name="status"/>
+        <input type="hidden" name="fullText"/>
+    </form>
+    <main id="main_content" class="main-content">
+        #pagingGrid($header, 'menu_query_form', 'main_content')
+    </main>
+</div>
+<script>
+    $(function () {
+        $('.body-main')[0].focus();
+    });
+</script>

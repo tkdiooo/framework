@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="t_basic_system_registry">
+
+    <sql id="PORTAL.count_template">
+        <![CDATA[
+
+        SELECT COUNT(*)
+
+        ]]>
+    </sql>
+
+    <sql id="PORTAL.field_template">
+        <![CDATA[
+
+        SELECT
+            Guid,
+            Code,
+            NameCn,
+            NameEn,
+            Domain,
+            ContextPath,
+            HomePage,
+            Type,
+            LogoPath,
+            STATUS
+
+        ]]>
+    </sql>
+
+    <sql id="PORTAL.where_template">
+        <dynamic prepend="where">
+            <isNotEmpty property="param.type" prepend="and">
+                type = #param.type#
+            </isNotEmpty>
+            <isNotEmpty property="param.status" prepend="and">
+                STATUS = #param.status#
+            </isNotEmpty>
+            <!--<isNotEmpty property="param.level" prepend="and">-->
+            <!--pm.LEVEL = #param.level#-->
+            <!--</isNotEmpty>-->
+            <isNotEmpty property="fullText" prepend="and">
+                CONCAT(
+                Code,
+                NameCn,
+                Domain,
+                ContextPath
+                ) LIKE concat('%',#fullText#,'%')
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <select id="countByPagination" parameterClass="com.qi.common.model.model.PagingModel"
+            resultClass="java.lang.Integer">
+        <include refid="PORTAL.count_template"/>
+        FROM
+        t_basic_system_registry
+        <include refid="PORTAL.where_template"/>
+    </select>
+
+    <select id="queryByPagination" parameterClass="com.qi.common.model.model.PagingModel"
+            resultMap="ibatorgenerated_BaseResultMap">
+        <include refid="MYSQL.paginationStart"/>
+        <include refid="PORTAL.field_template"/>
+        FROM
+        t_basic_system_registry
+        <include refid="PORTAL.where_template"/>
+        <isNotNull property="orderByClause">
+            order by $orderByClause$
+        </isNotNull>
+        <include refid="MYSQL.paginationEnd"/>
+    </select>
+</sqlMap>

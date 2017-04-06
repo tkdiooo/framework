@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="true"
+         monitoring="autodetect" dynamicConfig="true">
+
+    <diskStore path="D:/ehcache/diskStore"/>
+    <!-- 
+        <cacheManagerPeerProviderFactory  
+    class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"  
+    properties="peerDiscovery=manual,  
+    rmiUrls=//192.168.5.31:40002/myCache"/>   -->
+    <cacheManagerPeerProviderFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerProviderFactory"
+            properties="peerDiscovery=automatic, multicastGroupAddress=230.0.0.1,
+        multicastGroupPort=4446, timeToLive=32,hostName=localhost"/>
+    <cacheManagerPeerListenerFactory
+            class="net.sf.ehcache.distribution.RMICacheManagerPeerListenerFactory"
+            properties="hostName=localhost, port=40001,
+    socketTimeoutMillis=2000"/>
+
+    <cache name="uamsCache" maxEntriesLocalHeap="10" eternal="false"
+           timeToIdleSeconds="10000" timeToLiveSeconds="10000" overflowToDisk="false">
+        <cacheEventListenerFactory
+                class="net.sf.ehcache.distribution.RMICacheReplicatorFactory"
+                properties="replicateAsynchronously=true, replicatePuts=true, replicateUpdates=true,
+                            replicateUpdatesViaCopy=false, replicateRemovals=true,asynchronousReplicationIntervalMillis=1000"
+        />
+
+    </cache>
+</ehcache> 

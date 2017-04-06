@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN" "http://ibatis.apache.org/dtd/sql-map-2.dtd" >
+<sqlMap namespace="t_basic_dictionary">
+
+    <sql id="PAGING.count_template">
+        <![CDATA[
+
+        SELECT COUNT(*)
+
+        ]]>
+    </sql>
+
+    <sql id="PAGING.field_template">
+        <![CDATA[
+
+        SELECT
+            Guid,
+            ParentCode,
+            DictCode,
+            DictName,
+            Description,
+            Sort,
+            STATUS
+
+        ]]>
+    </sql>
+
+    <sql id="PAGING.where_template">
+        <dynamic prepend="where">
+            <isNotEmpty property="param.parentcode" prepend="and">
+                ParentCode = #param.parentcode#
+            </isNotEmpty>
+            <isNotEmpty property="param.status" prepend="and">
+                STATUS = #param.status#
+            </isNotEmpty>
+            <isNotEmpty property="fullText" prepend="and">
+                CONCAT(
+                DictCode,
+                DictName
+                ) LIKE concat('%',#fullText#,'%')
+            </isNotEmpty>
+        </dynamic>
+    </sql>
+
+    <select id="countByPagination" parameterClass="com.qi.common.model.model.PagingModel"
+            resultClass="java.lang.Integer">
+        <include refid="PAGING.count_template"/>
+        FROM
+        t_basic_dictionary
+        <include refid="PAGING.where_template"/>
+    </select>
+
+    <select id="queryByPagination" parameterClass="com.qi.common.model.model.PagingModel"
+            resultMap="ibatorgenerated_BaseResultMap">
+        <include refid="MYSQL.paginationStart"/>
+        <include refid="PAGING.field_template"/>
+        FROM
+        t_basic_dictionary
+        <include refid="PAGING.where_template"/>
+        <isNotNull property="orderByClause">
+            order by $orderByClause$
+        </isNotNull>
+        <include refid="MYSQL.paginationEnd"/>
+    </select>
+</sqlMap>

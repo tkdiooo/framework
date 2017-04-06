@@ -1,0 +1,446 @@
+#macro(getRequestBase)
+    #if($request.contextPath != "")$request.contextPath#end
+#end
+
+#macro(getStaticPath $path)
+    #getRequestBase()/static/$path
+#end
+
+#macro(search)
+<div class="toolbar-input-ipt">
+    <input type="text" id="fullText" placeholder="搜索" onkeyup="search();"/>
+    <span class="input-icon-button" hidefocus="hidefocus" onclick="fullClick(this);">
+        <b class="ipt-icon ipt-icon-search"></b>
+    </span>
+</div>
+<script>
+    var last;
+    function search(event) {
+        last = event.timeStamp;
+        //设时延迟0.5s执行
+        setTimeout(function () {
+            //如果时间差为0（也就是你停止输入0.5s之内都没有其它的keyup事件发生）则做你想要做的事
+            if (last - event.timeStamp == 0) {
+                //做你要做的事情
+                var ipt = $('#fullText');
+                var icon = ipt.next('.input-icon-button').find('.ipt-icon');
+                if ($.trim(ipt.val()) != '') {
+                    if (!icon.hasClass('ipt-icon-clear')) {
+                        icon.addClass('ipt-icon-clear');
+                    }
+                    gridSearch('fullText', ipt.val());
+                } else if (icon.hasClass('ipt-icon-clear')) {
+                    icon.removeClass('ipt-icon-clear');
+                    reload();
+                }
+            }
+        }, 500);
+    }
+    function fullClick(node) {
+        var ipt = $('#fullText');
+        var icon = $(node).find('.ipt-icon');
+        if (icon.hasClass('ipt-icon-clear')) {
+            icon.removeClass('ipt-icon-clear');
+            if ($.trim(ipt.val()) != '') {
+                ipt.val('');
+                reload();
+            }
+        } else if ($.trim(ipt.val()) == '') {
+            ipt.focus();
+        } else {
+            icon.addClass('ipt-icon-clear');
+        }
+    }
+</script>
+#end
+
+#macro(select $dataset $text $callback)
+    #if($text =="input-select")
+    <div class="form-input-menu" tabindex="0" hidefocus="true" onblur="hideSelect(this);">
+        <div class="tree-menu-button icon-down" onclick="showSelect(this);"></div>
+    #else
+    <li tabindex="0" hidefocus="true" onblur="hideSelect(this);">
+        <div class="toolbar-button-menu" onclick="showSelect(this);">
+            $text
+            <div class="toolbar-arrow"></div>
+        </div>
+    #end
+    <div class="toolbar-link-menu">
+        #foreach($v in $dataset)
+            <div class="toolbar-li-menu" id="$v.key" onclick="confirmSelect(this)">$v.value</div>
+        #end
+    </div>
+    #if($text =="input-select")
+    </div>
+    #else
+    </li>
+    #end
+<script>
+    function showSelect(node) {
+        var menulink = $(node).next('.toolbar-link-menu');
+        if (menulink.is(':hidden')) {
+            $(".toolbar-link-menu").fadeOut(100);
+            menulink.fadeIn(100);
+        } else {
+            menulink.fadeOut(100);
+        }
+    }
+    function hideSelect(node) {
+        $(node).find('.toolbar-link-menu').fadeOut(100);
+    }
+    function confirmSelect(node) {
+        var func = eval($callback);
+        new func($(node).attr('id'), $(node).text());
+        $(node).parent('.toolbar-link-menu').fadeOut(100);
+    }
+</script>
+#end
+
+#macro(treeDraw $children)
+<div class="tree-menu-list">
+    #foreach($v in $children)
+        <div class="tree-menu-item">
+            <div class="menu-list-button" onclick="confirmTree(this);"
+                 #if($v.children && !$v.leaf)onmouseenter="showTree(this);"#end>
+                <span class="button-text" id="$v.nodeID">$v.nodeName</span>
+                #if(!$v.leaf)
+                    <span class="button-right-arrow"></span>
+                #end
+            </div>
+            #if($v.children)
+                #treeDraw($v.children)
+            #end
+        </div>
+    #end
+</div>
+#end
+
+#macro(tree $treeModel $id $name)
+<div class="form-tree-menu" tabindex="0" hidefocus="true" onblur="hideTree();">
+    <div class="tree-menu-button" onclick="toggleTree(this);">
+        请选择
+    </div>
+    #if(!$treeModel && $treeModel.size() > 0)
+        <div class="tree-menu-list" id="${id}_tree">
+            #foreach($v in $treeModel)
+                <div class="tree-menu-item" #if($v.children || !$v.leaf)onmouseleave="clearTree(this);"#end>
+                    <div class="menu-list-button" onclick="confirmTree(this);"
+                        #if($v.children && !$v.leaf)
+                         onmouseenter="showTree(this);"
+                        #elseif(!$v.leaf)
+                         onmouseenter="loadTree(this);"
+                        #end>
+                        <span class="button-text" id="$v.nodeID">$v.nodeName</span>
+                        #if(!$v.leaf)
+                            <span class="button-right-arrow"></span>
+                        #end
+                    </div>
+                    #if($v.children)
+                        #treeDraw($v.children)
+                    #end
+                </div>
+            #end
+        </div>
+    #end
+</div>
+<script>
+    function loadTree(node) {
+        if ($(node).next('.tree-menu-list').length == 1) {
+            showTree(node);
+        } else {
+            var data = {"guid": $(node).find('.button-text').attr('id')};
+            var opt = {waiting: false};
+            ajax_action($('#$name').attr('action'), data, opt, function (data) {
+                if (data.success) {
+                    var tree = $('<div class="tree-menu-list"></div>');
+                    $.each(data.result, function (i) {
+                        var item = '<div class="tree-menu-item"';
+                        if (!this.leaf) {
+                            item += 'onmouseleave="clearTree(this);"';
+                        }
+                        item += '><div class="menu-list-button" onclick="confirmTree(this);"';
+                        if (!this.leaf) {
+                            item += 'onmouseenter="loadTree(this);"';
+                        }
+                        item += '><span class="button-text" id="' + this.nodeID + '">' + this.nodeName + '</span>';
+                        if (!this.leaf) {
+                            item += '<span class="button-right-arrow"></span>';
+                        }
+                        item += '</div></div>';
+                        tree.append(item);
+                    });
+                    $(node).after(tree);
+                    showTree(node);
+                }
+            })
+        }
+    }
+    function clearTree(node) {
+        $(node).find('.tree-menu-list').hide(100);
+    }
+    function toggleTree(node) {
+        $(node).next('.tree-menu-list').toggle(100);
+    }
+    function showTree(node) {
+        $(node).next('.tree-menu-list').show(100);
+    }
+    function hideTree() {
+        $('#$id' + '_tree').find('.tree-menu-list').hide(100);
+        $('#$id' + '_tree').hide(100);
+    }
+    function confirmTree(node) {
+        $('#$id').val($(node).find('.button-text').attr('id'));
+        $('#$name').text($(node).find('.button-text').text());
+        hideTree();
+    }
+</script>
+#end
+
+#macro(pagingGrid $header $formName $target)
+<table class="main-content-table">
+    <thead class="table-thead">
+    <tr class="table-header">
+        <th class="table-cell-nbsp">&nbsp;</th>
+        #if($!header.checkbox)
+            <th class="table-cell-check" onclick="allCheck(this);">
+            <span title="全选" role="checkbox" tabindex="0" class="ipt-chk">
+                <span class="ipt-chk-symbol">
+                    <b class="ipt-icon ipt-icon-checkbox"></b>
+                </span>
+            </span>
+            </th>
+        #end
+        #foreach($title in $!header.title)
+            <th title="$title.title" class="table-cell-title"
+                #if($title.sort)
+                id="$title.code" onclick="sortGrid(this);"
+                #end
+                #if($title.width)
+                style="width: ${title.width}px"
+                #end>
+                $title.text
+                #if($title.sort)
+                    <b class="ipt-icon ipt-icon-sort ipt-icon-sort-up"></b>
+                #end
+            </th>
+        #end
+    </tr>
+    </thead>
+    <tbody class="table-body"></tbody>
+</table>
+<script type="text/javascript">
+    ## 单独选中
+    function check(node) {
+        var checkbox = $(node).find('span[role="checkbox"]');
+        if (checkbox.attr('checked')) {
+            checkbox.attr('checked', false);
+            checkbox.find('.ipt-icon-checkbox').removeClass('ipt-icon-checkbox-checked');
+            return false;
+        } else {
+            checkbox.attr('checked', true);
+            checkbox.find('.ipt-icon-checkbox').addClass('ipt-icon-checkbox-checked');
+            return true;
+        }
+    }
+    ## 全选操作
+    function allCheck(node) {
+        if (check(node))
+            $(node).parent().parent().next('.table-body').find('span[role="checkbox"]').find('.ipt-icon-checkbox').addClass('ipt-icon-checkbox-checked');
+        else
+            $(node).parent().parent().next('.table-body').find('span[role="checkbox"]').find('.ipt-icon-checkbox').removeClass('ipt-icon-checkbox-checked');
+    }
+    ## 行选操作
+    function rowClick(node) {
+        check($(node).parent().find('.table-cell-check'));
+    }
+    ## 获取当前已经选择的行
+    function getChecked() {
+        return $("#$target").find('.main-content-table').find('.table-body').find('span[role="checkbox"]').find('.ipt-icon-checkbox-checked');
+    }
+    ## 鼠标悬停效果，显示按钮
+    function toggleOper(node) {
+        $(node).find('.table-cell-oper').toggle();
+    }
+    ## 操作列按钮点击事件
+    function operation(opt, node) {
+        var guid = $(node).parent().parent().parent().find('.ipt-icon-checkbox').attr('name');
+        switch (opt) {
+            case 'editGrid':
+                editGrid(guid);
+                break;
+            case 'deleteGrid':
+                deleteGrid(guid);
+                break;
+            case 'childGrid':
+                childGrid(guid);
+                break;
+        }
+    }
+    ## 分页页面跳转
+    function gotoPage(pageIndex) {
+        var data = $('#$formName').serializeJson();
+        data['currentPage'] = pageIndex;
+        load_url($('#$formName').attr("action"), $("#$target").find('.main-content-table').find('.table-body'), {data: data});
+    }
+    ## 排序查询
+    function sortGrid(node) {
+        var sort = $(node).find('.ipt-icon-sort');
+        var order = sort.hasClass('ipt-icon-sort-down');
+        if (order) {
+            sort.removeClass('ipt-icon-sort-down');
+        } else {
+            sort.addClass('ipt-icon-sort-down');
+        }
+        buildCondition('orderBy[' + node.id + ']', (!order));
+        load();
+    }
+    ## 节点点击查询
+    function gridSearch(field, text) {
+        buildCondition(field, text);
+        load();
+    }
+    ## 构建查询条件
+    function buildCondition(field, text) {
+        var condition = $('#$formName').find('input[name="' + field + '"]');
+        if (condition.length == 0) {
+            condition = $('<input type="hidden" name="' + field + '" />');
+            $('#$formName').append(condition);
+        }
+        condition.val(text)
+    }
+    ## 根据form表单构建参数
+    function buildParams() {
+        var data = $('#$formName').serializeJson();
+        var currentPage = $("#$target").find('.main-content-table').find('.page-toolbar').find('.currentPage');
+        if (currentPage.length > 0) {
+            data['currentPage'] = currentPage.text();
+        }
+        return data;
+    }
+    ## 刷新页面
+    function reload() {
+        $("#$target").find('.main-content-table').find('.table-thead').find('.ipt-icon-sort-down').removeClass('ipt-icon-sort-down');
+        $('#$formName :input').val('');
+        load_url($('#$formName').attr("action"), $("#$target").find('.main-content-table').find('.table-body'));
+    }
+    function load() {
+        load_url($('#$formName').attr("action"), $("#$target").find('.main-content-table').find('.table-body'), {data: buildParams()});
+    }
+    $(function () {
+        load_url($('#$formName').attr("action"), $("#$target").find('.main-content-table').find('.table-body'));
+    });
+</script>
+#end
+
+##macro(getJs $jsFileName)#getStaticPath()/js/$jsFileName?v=1.0#end
+##macro(getCss $cssFileName)#getStaticPath()/js/$cssFileName?v=1.0#end
+#macro(pagingBar $pageInfo $formName $target)
+    #if($pageInfo)
+    <div class="home-page">
+        <div class="home-pageleft">
+            共$!pageInfo.totalCount条记录，每页$!pageInfo.pageSize条，共$!pageInfo.totalPage页
+        </div>
+        <div class="quotes">
+        ##********************
+        ## 设置页码宽度，一边pageWidth个
+            #set($pageLeftWidth = 3)
+            #set($pageRightWidth = 2)
+        ## 判断是否有上一页，当前页数大于1才有
+            #if($pageInfo.currentPage > 1)
+                #set($previousPage=${pageInfo.currentPage} - 1)
+                <a href="javascript:gotoPage('$formName','$target', $previousPage, $pageInfo.pageSize);"> &lt; </a>
+            #else
+                <span class="disabled">&lt;</span>
+            #end
+        ## 计算最左边的页码
+            #if($pageInfo.currentPage > $pageLeftWidth)
+                #if ($pageInfo.totalPage <= 6)
+                    #set ($leftPage = 1)
+                #else
+                    #if($pageInfo.currentPage > $pageInfo.totalPage - 2)
+                        #set ($leftPage = $pageInfo.currentPage - $pageLeftWidth - 2 + $pageInfo.totalPage - $pageInfo.currentPage)
+                    #else
+                        #set ($leftPage = $pageInfo.currentPage - $pageLeftWidth)
+                    #end
+                #end
+            #else
+                #set ($leftPage = 1)
+            #end
+        ## 计算最右边的页码
+            #if($pageInfo.currentPage + $pageRightWidth > $pageInfo.totalPage)
+                #set ($rightPage=$pageInfo.totalPage)
+            #else
+                #if ($pageInfo.totalPage <= 6)
+                    #set ($rightPage = $pageInfo.totalPage)
+                #else
+                    #if($pageInfo.currentPage <= 4)
+                        #set ($rightPage = $pageInfo.currentPage + $pageRightWidth + 4 - $pageInfo.currentPage)
+                    #else
+                        #set ($rightPage = $pageInfo.currentPage + $pageRightWidth)
+                    #end
+                #end
+            #end
+            #if($rightPage < 1)
+                #set ($rightPage = 1)
+            #end
+        ## 显示页码
+            #foreach( $pageIndex in [$leftPage..$rightPage] )
+                #if($pageIndex!=$pageInfo.currentPage)
+                    <a href="javascript:gotoPage('$formName','$target', $pageIndex, $pageInfo.pageSize);">$pageIndex</a>
+                #else
+                    <span class="current">$pageIndex</span>
+                #end
+            #end
+        ## 判断是否有下一页，当前页数小于总页数时才有
+            #if($pageInfo.currentPage < $pageInfo.totalPage)
+                #set($nextPage=${pageInfo.currentPage} + 1)
+                <a href="javascript:gotoPage('$formName','$target', $nextPage, $pageInfo.pageSize);">&gt;</a>
+            #else
+                <span class="disabled">&gt;</span>
+            #end
+        ##********************
+        </div>
+        <div class="clear">
+        </div>
+    </DIV>
+    ##<li><span>共$!pageInfo.totalCount条记录，每页$!pageInfo.pageSize条</span></li>
+    ##<li><a href="javascript:gotoPage('$formName','$target', 1, 10);" #if($pageInfo.pageSize == 10) class="current" #end>10</a></li>
+    ##<li><a href="javascript:gotoPage('$formName','$target', 1, 30);" #if($pageInfo.pageSize == 30) class="current" #end>30</a></li>
+    ##<li><a href="javascript:gotoPage('$formName','$target', 1, 50);" #if($pageInfo.pageSize == 50) class="current" #end>50</a></li>
+    ##<li><span>条</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
+    ##<li>共<span class="fw-b">$pageInfo.totalCount</span>条记录/$pageInfo.totalPage页</li>
+
+    <script>
+        function inputPage(formName, obj) {
+            gotoPage(formName, obj.value)
+        }
+        function gotoPage(formName, target, pageIndex, pageSize) {
+            if (pageIndex == "") {
+                alert("请输入页码");
+                return;
+            }
+            if (pageIndex >$pageInfo.totalPage) {
+                pageIndex =$pageInfo.totalPage;
+            }
+            var pageNum1 = pageIndex + "";
+            var pageNum = 1;
+            var pattern = /^([0-9])+$/;
+            var flag = pattern.test(pageNum1);
+            if (flag) {
+                pageNum = pageNum1;
+            } else {
+                alert("页码[" + pageNum1 + "]不正确");
+                return;
+            }
+            var data = {};
+            var formarray = $("#" + formName + "").serializeArray();
+            $.each(formarray, function (i, field) {
+                data[field.name] = field.value;
+            });
+            data['currentPage'] = pageNum;
+            data['pageSize'] = pageSize;
+            loadURL($("#" + formName).attr("action"), $("#" + target + ""), {data: data});
+        }
+    </script>
+    #end
+#end

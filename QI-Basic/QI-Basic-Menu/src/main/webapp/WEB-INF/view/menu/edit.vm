@@ -1,0 +1,155 @@
+<div class="body-main">
+    <div class="breadcrumbs">
+        <span>门户管理</span>
+        <span class="breadcrumbs-split">></span>
+        <span><a href="#springUrl("/menu/index.html")">系统菜单</a></span>
+        <span class="breadcrumbs-split">></span>
+        <span class="breadcrumbs-text">编辑菜单</span>
+    </div>
+    <main class="main-content">
+        <form id="menu_save_form" method="post" class="main-content-form">
+            <input type="hidden" name="guid" value="$!menu.guid">
+            <div class="form-group">
+                <div class="group-block">
+                    <label>所属系统</label>
+                    <div class="form-input-multi" action="#springUrl("/menu/findMenuForRTree.ajax")">
+                        <input type="hidden" id="sysid" name="systemcode" value="$!menu.systemcode" action="#springUrl("/menu/findMenuByCodeForZTree.ajax")"/>
+                        <input class="add-on-only" type="text" id="sysname" name="namecn" placeholder="请选择所属门户" #if($system) value="$!system.namecn" #end />
+                        #tree($systemTree, "sys", "add-on", "parent")
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>上级菜单</label>
+                    <div class="form-input-multi" action="#springUrl("/menu/findMenuForRTree.ajax")">
+                        <input type="hidden" id="parentid" name="parentid" #if($menu && $menu.parentid != 0) value="$menu.parentid" #else value="0" #end />
+                        <input class="add-on-only" type="text" id="parentname" placeholder="如不选择上级菜单，默认为根菜单" value="$!menu.parentname" />
+                        #tree("sysid", "parent", "add-on")
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>菜单编码</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="menucode" placeholder="请输入菜单编码" value="$!menu.menucode"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>菜单名称</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="menuname" placeholder="请输入菜单名称" value="$!menu.menuname"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>系统上下文</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="contextpath" placeholder="请输入系统上下文" value="$!menu.contextpath"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>Controller映射路径</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="controller" placeholder="请输入映射路径" value="$!menu.controller"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>Request映射路径</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="requestmapping" placeholder="请输入映射路径" value="$!menu.requestmapping"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group-area">
+                <div class="group-block">
+                    <label>菜单描述</label>
+                    <div class="form-input-area">
+                        <textarea name="description" placeholder="请输入菜单描述">$!menu.description</textarea>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+        </form>
+        <div class="main-button">
+            <ul>
+                <li class="button-separator button-green">
+                    <a href="javascript:void(0);" onclick="submit();">确&nbsp;定</a>
+                </li>
+                <li class="button-separator">
+                    <a href="#springUrl("/menu/index.html")">取&nbsp;消</a>
+                </li>
+            </ul>
+        </div>
+    </main>
+</div>
+<script>
+    function initVerify() {
+        $("#menu_save_form").validate({
+            ignore: true,
+            rules: {
+                namecn: {
+                    required: true
+                },
+                menucode: {
+                    notchinese: true,
+                    required: true,
+                    maxlength: 50,
+                    remote: {
+                        url: "#springUrl('/menu/checkUnique.ajax')",
+                        type: "post",
+                        dataType: "json",
+                        data: {
+                            guid: function () {
+                                return $('input[name="guid"]').val();
+                            },
+                            menucode: function () {
+                                return $(':input[name="menucode"]').val();
+                            }
+                        }
+                    }
+                },
+                menuname: {
+                    required: true
+                }
+            },
+            success: function (element) {
+            },
+            errorPlacement: function (error, element) {
+                $(element).parent().next('.i-must').html(error[0].innerHTML);
+            }
+
+        });
+    }
+    function submit() {
+        if (!$("#menu_save_form").valid())return false;
+        var formParams = $("#menu_save_form").serializeJson();
+        var opt = {contentType: "application/x-www-form-urlencoded"};
+        ajax_action("#springUrl("/menu/save.ajax")", formParams, opt, function (data) {
+            if (!data.success) {
+                alert(data.messages);
+            } else {
+                alert(data.messages, function () {
+                    window.location.href = "#springUrl("/menu/index.html")";
+                });
+            }
+        })
+    }
+    $(function () {
+    ## 表单验证绑定
+        initVerify();
+    });
+</script>

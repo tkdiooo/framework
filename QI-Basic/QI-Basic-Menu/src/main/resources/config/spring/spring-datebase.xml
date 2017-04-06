@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="dataSource1" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="${driver}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${username}"/>
+        <property name="password" value="${password}"/>
+        <property name="initialSize" value="${initialSize}"/>
+        <property name="maxActive" value="${maxActive}"/>
+        <property name="maxIdle" value="${maxIdle}"/>
+        <property name="defaultAutoCommit" value="${defaultAutoCommit}"/>
+        <property name="removeAbandoned" value="${removeAbandoned}"/>
+        <property name="removeAbandonedTimeout" value="${removeAbandonedTimeout}"/>
+        <property name="maxWait" value="${maxWait}"/>
+    </bean>
+
+    <bean id="dataSource" class="com.qi.common.database.datasource.dynamic.WriteOrReadDataSource">
+        <property name="readDataSources">
+            <map>
+                <entry key="dataSource_read1" value-ref="dataSource1"/>
+            </map>
+        </property>
+        <property name="writeDataSource" ref="dataSource1"/>
+    </bean>
+
+    <bean id="sqlMapClientMysql" class="com.qi.common.database.dao.ibatis.SqlMapClientFactoryBean">
+        <property name="configLocation" value="classpath:config/ibatis/sql-map-config.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 通知 实现  -->
+
+    <bean id="beforAdvice" class="com.qi.common.database.datasource.dynamic.ReadWriteAdvice"/>
+
+    <!--  通知器或切面 -->
+    <bean id="readWriteAdvisor" class="org.springframework.aop.support.NameMatchMethodPointcutAdvisor">
+        <property name="advice" ref="beforAdvice">
+        <!--<ref local="beforAdvice"/>-->
+        </property>
+        <property name="mappedNames">
+            <list>
+                <value>*</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--  自动代理   -->
+
+    <bean class="org.springframework.aop.framework.autoproxy.BeanNameAutoProxyCreator">
+        <property name="proxyTargetClass" value="true"/>
+        <property name="beanNames" value="*ServiceImpl"/>
+        <property name="interceptorNames">
+            <list>
+                <value>readWriteAdvisor</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+</beans>

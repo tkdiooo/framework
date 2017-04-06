@@ -1,0 +1,141 @@
+<link rel="stylesheet" type="text/css" href="$!property.getResourcePath()/css/menu/split.css"/>
+<!-- header -->
+<header class="frame-head">
+    <div>
+        <img src="$!property.getResourcePath()$!portal.logopath" title="$!portal.namecn" width="60" height="60"/>
+        <span class="logo cursor-pointer" title="$!portal.namecn" onclick="goHomePage();">$!portal.nameen</span>
+        <div class="account-img"></div><div class="account">admin</div>
+        <div class="operate">
+            <div class="header-tool hidden">
+                <div class="forMouseOver"></div>
+                <div class="htArrow-up"></div>
+                <div class="header-btn">修改密码</div>
+                <a href="$!{layoutUrl}"><div class="header-btn">布局切换</div></a>
+            </div>
+        </div>
+        <div class="switch">
+            <div class="header-tool hidden">
+                <div class="forMouseOver"></div>
+                <div class="htArrow-up"></div>
+                #foreach($vo in $systems)
+                    <a href="$!{vo.portalUrl}"><div class="header-btn">$vo.namecn</div></a>
+                #end
+            </div>
+        </div>
+        <a class="logout" href="$!property.getLogoutPath()" title="注销"></a>
+    </div>
+</header>
+<div class="frame-navi" tabindex="0" hidefocus="true" onblur="hideMenu();">
+    #foreach($v in $menus)
+        <div class="menu-bar">
+            <div class="menu-button" onmouseenter="showMenu(this);">
+                $v.menuname
+            </div>
+            <div class="menu-item">
+                #foreach($c in $v.children)
+                    <div class="menu-item-li" #if(!$c.isleaf)onmouseenter="loadMenu(this);"#else onmouseenter="clearActive(this);"#end>
+                        <a id="$!{c.guid}" href="$!{v.domain}$!{c.contextpath}$!{c.controller}$!{c.requestmapping}" target="myFrame">$c.menuname</a>
+                    </div>
+                #end
+            </div>
+        </div>
+    #end
+</div>
+<div class="frame-main">
+    <iframe name="myFrame" src="$!form_url" vsspace="0" hspace="0" allowTransparency="true" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" width="100%"></iframe>
+</div>
+<script>
+    function autoHeight() {
+        $('iframe[name="myFrame"]')[0].height = win.height - 100
+    }
+
+    $(function () {
+        autoHeight();
+
+        $(".operate").mouseover(toolMouseOverListener);
+        $(".operate").mouseleave(toolMouseLeaveListener);
+
+        $(".switch").mouseover(toolMouseOverListener);
+        $(".switch").mouseleave(toolMouseLeaveListener);
+    });
+
+    function showMenu(menu) {
+        $('.frame-navi').focus();
+        if ($(menu).next('.menu-item').is(':hidden')) {
+            clearMenu();
+            $(menu).next('.menu-item').show();
+        }
+    }
+
+    function clearMenu() {
+        $('.menu-item').hide();
+        $('.menu-item-right').hide();
+    }
+
+    function hideMenu() {
+        setTimeout(clearMenu, 200)
+    }
+
+    function loadMenu(menu) {
+        if ($(menu).children('.menu-item-right').length > 0) {
+            clearActive(menu);
+            $(menu).children('.menu-item-right').show();
+        } else {
+            var formParams = {'guid': $(menu).find('a')[0].id}
+            var opt = {contentType: "application/x-www-form-urlencoded", waiting: false};
+            ajax_action("#springUrl("/menu/findMenuByAuthority.ajax")", formParams, opt, function (data) {
+                if (data.success) {
+                    var menuDIV = $('<div class="menu-item-right"></div>');
+                    $.each(data.result, function (i) {
+                        var item = '<div class="menu-item-li"';
+                        if (!this.isleaf) {
+                            item += ' onmouseenter="loadMenu(this);"';
+                        } else{
+                            item += ' onmouseenter="clearActive(this);"';
+                        }
+                        item += '><a id="' + this.guid + '" href="' + this.domain + this.controller + this.requestmapping + '" target="myFrame">' + this.menuname + '</a></div>';
+                        menuDIV.append(item);
+                    });
+                    $(menu).append(menuDIV);
+                    clearActive(menu);
+                    menuDIV.show();
+                }
+            })
+        }
+    }
+
+    function clearActive(item) {
+        $(item).parent().find('.menu-item-right').hide();
+    }
+
+    /**
+     * 窗口缩放事件
+     */
+    window.onresize = function () {
+        initWindow();
+        autoHeight();
+    };
+
+    function toolMouseOverListener(e) {
+        var tool = $(this).children('.header-tool');
+        if (!tool.hasClass("hidden")) {
+            return;
+        }
+        tool.removeClass("hidden");
+        tool.slideDown(200);
+
+        setTimeout(function () {
+            tool.attr("style", "overflow:normal");
+        }, 200);
+        e.stopPropagation();
+    }
+
+    function toolMouseLeaveListener(e) {
+        var tool = $(this).children('.header-tool');
+        tool.slideUp(200);
+
+        setTimeout(function () {
+            tool.addClass("hidden");
+        }, 200);
+    }
+</script>

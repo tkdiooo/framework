@@ -1,0 +1,124 @@
+<div class="body-main" tabindex="0" hidefocus="true">
+    <div class="breadcrumbs">
+        <span>门户管理</span>
+        <span class="breadcrumbs-split">></span>
+        <span class="breadcrumbs-text">系统菜单</span>
+    </div>
+    <header class="header-toolbar">
+        <ul>
+            <li>
+                <a class="toolbar-button" href="#springUrl("/menu/added.html")">新增</a>
+            </li>
+            <li>
+                <a class="toolbar-button" href="javascript:void(0);" onclick="batchDelete();">批量删除</a>
+            </li>
+            <li>
+                <a class="toolbar-button" href="javascript:void(0);" onclick="ordering();">排序</a>
+            </li>
+            #select($constants.Status.options,'状态变更','changesSelect')
+            #select($portalList,'所属系统','portalSelect')
+        </ul>
+        <ul>
+            <li class="toolbar-separator">
+                <a class="toolbar-button" href="javascript:void(0);" onclick="reload();">刷新</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toolbar-separator toolbar-input">
+                #search()
+            </li>
+        </ul>
+    </header>
+    <form id="menu_query_form" action="#springUrl("/menu/queryPagination.html")" method="post" onsubmit="return false">
+        <input type="hidden" name="status"/>
+        <input type="hidden" name="systemcode"/>
+        <input type="hidden" name="fullText"/>
+        <input type="hidden" id="orderCols" />
+    </form>
+    <main id="main_content" class="main-content">
+        #pagingGrid($header, 'menu_query_form', 'main_content')
+    </main>
+</div>
+<script>
+    $(function () {
+        $('.body-main')[0].focus();
+    });
+    function changesSelect(value) {
+        var cbs = getChecked();
+        if (cbs.length == 0) {
+            alert("请选择要操作的数据");
+        } else {
+            var params = {
+                'guids': cbs.serializeString(),
+                'status': value
+            };
+            var opt = {contentType: "application/x-www-form-urlencoded"};
+            ajax_action("#springUrl("/menu/statusChanges.ajax")", params, opt, function (data) {
+                if (!data.success) {
+                    alert(data.messages);
+                } else {
+                    alert(data.messages, function () {
+                        reload();
+                    });
+                }
+            })
+        }
+    }
+    function portalSelect(value) {
+        $('input[name="systemcode"]').val(value);
+        load();
+    }
+    function batchDelete() {
+        var cbs = getChecked();
+        if (cbs.length == 0) {
+            alert("请选择要操作的数据");
+        } else {
+            confirm("确认删除已选择的数据", function () {
+                var params = {
+                    'guids': cbs.serializeString()
+                };
+                var opt = {contentType: "application/x-www-form-urlencoded"};
+                ajax_action("#springUrl("/menu/batchDelete.ajax")", params, opt, function (data) {
+                    if (!data.success) {
+                        alert(data.messages);
+                    } else {
+                        alert(data.messages, function () {
+                            reload();
+                        });
+                    }
+                })
+            });
+        }
+    }
+    function ordering() {
+        var opt = {
+            type: 2,
+            title: '菜单排序',
+            content: "#springUrl("/menu/ordering.html")",
+            area: ['600px', '400px']
+        };
+        open(opt);
+    }
+    ## 编辑按钮事件
+    function editGrid(guid) {
+        window.location.href = "#springUrl("/menu/edited.html")?guid=" + guid;
+    }
+    ## 删除按钮事件
+    function deleteGrid(guid) {
+        confirm("确认删除当前数据", function () {
+            var params = {
+                'guid': guid
+            };
+            var opt = {contentType: "application/x-www-form-urlencoded"};
+            ajax_action("#springUrl("/menu/delete.ajax")", params, opt, function (data) {
+                if (!data.success) {
+                    alert(data.messages);
+                } else {
+                    alert(data.messages, function () {
+                        reload();
+                    });
+                }
+            })
+        });
+    }
+</script>

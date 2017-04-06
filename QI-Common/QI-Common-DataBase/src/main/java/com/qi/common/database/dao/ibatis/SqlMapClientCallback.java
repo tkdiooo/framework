@@ -1,0 +1,45 @@
+package com.qi.common.database.dao.ibatis;
+
+import com.ibatis.sqlmap.client.SqlMapExecutor;
+
+import java.sql.SQLException;
+
+/**
+ * Callback interface for data access code that works with the iBATIS
+ * {@link com.ibatis.sqlmap.client.SqlMapExecutor} interface. To be used
+ * with {@link SqlMapClientTemplate}'s <code>execute</code> method,
+ * assumably often as anonymous classes within a method implementation.
+ *
+ * @author Juergen Hoeller
+ * @see SqlMapClientTemplate
+ * @see org.springframework.jdbc.datasource.DataSourceTransactionManager
+ * @since 24.02.2004
+ */
+public interface SqlMapClientCallback<T> {
+
+    /**
+     * Gets called by <code>SqlMapClientTemplate.execute</code> with an active
+     * <code>SqlMapExecutor</code>. Does not need to care about activating
+     * or closing the <code>SqlMapExecutor</code>, or handling transactions.
+     * <p>
+     * <p>If called without a thread-bound JDBC transaction (initiated by
+     * DataSourceTransactionManager), the code will simply get executed on the
+     * underlying JDBC connection with its transactional semantics. If using
+     * a JTA-aware DataSource, the JDBC connection and thus the callback code
+     * will be transactional if a JTA transaction is active.
+     * <p>
+     * <p>Allows for returning a result object created within the callback,
+     * i.e. a domain object or a collection of domain objects.
+     * A thrown custom RuntimeException is treated as an application exception:
+     * It gets propagated to the caller of the template.
+     *
+     * @param executor an active iBATIS SqlMapSession, passed-in as
+     *                 SqlMapExecutor interface here to avoid manual lifecycle handling
+     * @return a result object, or <code>null</code> if none
+     * @throws SQLException if thrown by the iBATIS SQL Maps API
+     * @see SqlMapClientTemplate#execute
+     * @see SqlMapClientTemplate#executeWithListResult
+     * @see SqlMapClientTemplate#executeWithMapResult
+     */
+    T doInSqlMapClient(SqlMapExecutor executor) throws SQLException;
+}

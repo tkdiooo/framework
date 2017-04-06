@@ -1,0 +1,168 @@
+<script type="text/javascript" src="$!property.getResourcePath()/js/plugin/jquery.ztree/js/jquery.ztree.core.js"></script>
+<link rel="stylesheet" type="text/css" href="$!property.getResourcePath()/js/plugin/jquery.ztree/css/metroStyle/metroStyle.css"/>
+<div class="body-main" tabindex="0" hidefocus="true">
+    <div class="breadcrumbs">
+        <span>系统管理</span>
+        <span class="breadcrumbs-split">></span>
+        <span class="breadcrumbs-text">验证配置</span>
+    </div>
+    <main class="main-content">
+        <form id="save_form" method="post" class="main-content-form">
+            <div class="form-group">
+                <div class="group-block">
+                    <label>选择数据库</label>
+                    <div class="form-input-multi">
+                        <input type="hidden" name="intervaltype" value="">
+                        <input class="add-on-only" type="text" name="interval" placeholder="请选择数据库" value=""/>
+                        #select($dateType,'input-select','selectChanges')
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>数据库IP端口</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="ippost" placeholder="请输入IP端口"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>数据库名称</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="dbname" placeholder="请输入数据库名称"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="group-block">
+                    <label>用户名</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="dbuser" placeholder="请输入用户名"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="group-block">
+                    <label>密码</label>
+                    <div class="form-input-ipt">
+                        <input type="text" name="dbpassword" placeholder="请输入密码"/>
+                    </div>
+                    <li class="i-must"></li>
+                </div>
+                <div class="main-button" style="margin: 0;">
+                    <ul>
+                        <li class="button-separator button-green">
+                            <a href="javascript:void(0);" onclick="submit();">连&nbsp;接</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+    </main>
+    <main id="main_content" class="main-content">
+        <div class="pop-up-main-left">
+            <div class="ztree-main">
+                <ul class="ztree"></ul>
+            </div>
+        </div>
+        <div class="pop-up-main-right">
+        </div>
+    </main>
+</div>
+
+<script type="text/javascript">
+    var setting = {
+        async: {
+            enable: true,
+            url: "#springUrl("/entity/findTableForZTree.ajax")",
+            autoParam: ["id"],
+            otherParam: []
+        },
+        view: {
+            nameIsHTML: true,
+            selectedMulti: false
+        },
+//        data: {
+//            simpleData: {
+//                enable: true,
+//                rootPId: 0
+//            }
+//        },
+        callback: {
+            onClick: zTreeOnClick
+        }
+    };
+
+    function initVerify() {
+        $("#save_form").validate({
+            ignore: true,
+            rules: {
+                ippost: {
+                    required: true
+                },
+                dbname: {
+                    notchinese: true,
+                    required: true
+                },
+                dbuser: {
+                    required: true
+                },
+                dbpassword: {
+                    required: true
+                }
+            },
+            success: function (element) {
+            },
+            errorPlacement: function (error, element) {
+                $(element).parent().next('.i-must').html(error[0].innerHTML);
+            }
+        });
+    }
+
+    function submit(index) {
+        if (!$("#save_form").valid())return false;
+        var formParams = $("#save_form").serializeJson();
+        setting.async.otherParam = ["ippost", formParams.ippost, "dbname", formParams.dbname, "dbuser", formParams.dbuser, "dbpassword", formParams.dbpassword];
+        $.fn.zTree.init($(".ztree"), setting);
+    ##        load_url("#springUrl("/menu/sortable.html")", $("#main_content"), {data: formParams});
+//        var opt = {contentType: "application/x-www-form-urlencoded"};
+    ##        ajax_action("#springUrl("/menu/save.ajax")", formParams, opt, function (data) {
+    ##            if (!data.success) {
+    ##                alert(data.messages);
+    ##            } else {
+    ##                alert(data.messages, function () {
+    ##                    window.location.href = "#springUrl("/menu/index.html")";
+    ##                });
+    ##            }
+    ##        })
+    }
+
+
+    function zTreeOnClick(event, treeId, treeNode, clickFlag) {
+        if (!treeNode.isParent) {
+            $('.pop-up-main-right').empty();
+        } else {
+            var data = {guid: treeNode.id};
+            load_url("#springUrl("/menu/sortable.html")", $(".pop-up-main-right"), {data: data});
+        }
+    }
+    function showOperater() {
+        var opt = {
+            type: 1,
+            title: '连接数据库',
+            content: $('.body-main').html(),
+            shadeClose: false,
+            area: ['600px', '400px'],
+            closeBtn: 0,
+            btn: ['确认'],
+            yes: function (index) {
+                parent.layer.close(index);
+            }
+        };
+        layerOpen(opt);
+    }
+
+    $(function () {
+        initVerify();
+//        showOperater();
+    });
+</script>

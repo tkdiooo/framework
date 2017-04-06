@@ -1,0 +1,131 @@
+<div class="body-main" tabindex="0" hidefocus="true">
+    <div class="breadcrumbs">
+        <span>开发管理</span>
+        <span class="breadcrumbs-split">></span>
+        <span class="breadcrumbs-text">字典管理</span>
+    </div>
+    <header class="header-toolbar">
+        <ul>
+            <li>
+                <a class="toolbar-button" href="javascript:void(0);" onclick="toAdded();">新增</a>
+            </li>
+            <li>
+                <a class="toolbar-button" href="javascript:void(0);" onclick="batchDelete();">批量删除</a>
+            </li>
+            #select($constants.Status.options,'状态','selectChanges')
+            <li>
+                <a class="toolbar-button" href="javascript:void(0);" onclick="ordering();">排序</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toolbar-separator">
+                <a class="toolbar-button" href="javascript:void(0);" onclick="reload();">刷新</a>
+            </li>
+        </ul>
+        <ul>
+            <li class="toolbar-separator toolbar-input">
+                #search()
+            </li>
+        </ul>
+    </header>
+    <form id="query_form" action="#springUrl("/queryPagination.html")?parentcode=$!parentCode" method="post" onsubmit="return false">
+        <input type="hidden" name="fullText"/>
+        <input type="hidden" name="status"/>
+    </form>
+    <input type="hidden" name="parentcode" value="$!parentCode"/>
+    <main id="main_content" class="main-content">
+        #pagingGrid($header, 'query_form', 'main_content')
+    </main>
+</div>
+<script>
+    $(function () {
+        $('.body-main')[0].focus();
+    });
+
+    function toAdded() {
+        window.location.href = "#springUrl("/added.html")?parentCode=" + $('input[name="parentcode"]').val();
+    }
+
+    function selectChanges(value) {
+        var cbs = getChecked();
+        if (cbs.length == 0) {
+            alert("请选择要操作的数据");
+        } else {
+            var params = {
+                'guids': cbs.serializeString(),
+                'status': value
+            };
+            var opt = {contentType: "application/x-www-form-urlencoded"};
+            ajax_action("#springUrl("/statusChanges.ajax")", params, opt, function (data) {
+                if (!data.success) {
+                    alert(data.messages);
+                } else {
+                    alert(data.messages, function () {
+                        reload();
+                    });
+                }
+            })
+        }
+    }
+    function batchDelete() {
+        var cbs = getChecked();
+        if (cbs.length == 0) {
+            alert("请选择要操作的数据");
+        } else {
+            confirm("确认删除已选择的数据", function () {
+                var params = {
+                    'guids': cbs.serializeString()
+                };
+                var opt = {contentType: "application/x-www-form-urlencoded"};
+                ajax_action("#springUrl("/batchDelete.ajax")", params, opt, function (data) {
+                    if (!data.success) {
+                        alert(data.messages);
+                    } else {
+                        alert(data.messages, function () {
+                            reload();
+                        });
+                    }
+                })
+            });
+        }
+    }
+    function ordering() {
+        var opt = {
+            type: 2,
+            title: '字典排序',
+            content: "#springUrl("/ordering.html")",
+            area: ['600px', '400px']
+        };
+        open(opt);
+    }
+    ## 编辑按钮事件
+    function editGrid(guid) {
+        window.location.href = "#springUrl("/edited.html")?guid=" + guid;
+    }
+    ## 删除按钮事件
+    function deleteGrid(guid) {
+        confirm("确认删除当前数据", function () {
+            var params = {
+                'guid': guid
+            };
+            var opt = {contentType: "application/x-www-form-urlencoded"};
+            ajax_action("#springUrl("/delete.ajax")", params, opt, function (data) {
+                if (!data.success) {
+                    alert(data.messages);
+                } else {
+                    alert(data.messages, function () {
+                        reload();
+                    });
+                }
+            })
+        });
+    }
+    ## 下级列表
+    function childGrid(guid){
+        var code = $('#main_content').find('b[name="' + guid + '"]').parent().parent().parent().parent().children('td').eq(3);
+        var action = $('#query_form').attr('action');
+        $('#query_form').attr('action', $.trim(action.substring(0, action.lastIndexOf('=') + 1)) + $.trim(code.text()))
+        $('input[name="parentcode"]').val($.trim(code.text()))
+        reload();
+    }
+</script>

@@ -1,0 +1,108 @@
+<link rel="stylesheet" type="text/css" href="$!property.getResourcePath()/css/menu/tshape.css"/>
+<!-- header -->
+<header class="frame-head">
+    <div>
+        <img src="$!property.getResourcePath()$!portal.logopath" title="$!portal.namecn" width="60" height="60"/>
+        <span class="logo cursor-pointer" title="$!portal.namecn" onclick="goHomePage();">$!portal.nameen</span>
+        <div class="account-img"></div><div class="account">admin</div>
+        <div class="operate">
+            <div class="header-tool hidden">
+                <div class="forMouseOver"></div>
+                <div class="htArrow-up"></div>
+                <div class="header-btn">修改密码</div>
+                <a href="$!{layoutUrl}"><div class="header-btn">布局切换</div></a>
+            </div>
+        </div>
+        <div class="switch">
+            <div class="header-tool hidden">
+                <div class="forMouseOver"></div>
+                <div class="htArrow-up"></div>
+                #foreach($vo in $systems)
+                    <a href="$!{vo.portalUrl}"><div class="header-btn">$vo.namecn</div></a>
+                #end
+            </div>
+        </div>
+        <a class="logout" href="$!property.getLogoutPath()" title="注销"></a>
+    </div>
+</header>
+<div class="frame-navi">
+    <ul class="menu-bar-top">
+        #foreach($v in $menus)
+            <li class="menu-bar">
+                <p onclick="zoom(this)">$v.menuname</p>
+                <ul #if($v.hide)class="display-none" #end>
+                    #foreach($c in $v.children)
+                        <li class="menu-button">
+                            <a href="$!{v.domain}$!{c.contextpath}$!{c.controller}$!{c.requestmapping}" target="myFrame">$c.menuname</a>
+                        </li>
+                    #end
+                </ul>
+            </li>
+        #end
+    </ul>
+</div>
+<div class="frame-main">
+    <iframe name="myFrame" src="$!form_url" vsspace="0" hspace="0" allowTransparency="true" frameborder="0" scrolling="yes" marginheight="0" marginwidth="0" width="100%"></iframe>
+</div>
+<script type="text/javascript">
+    function zoom(li) {
+        var menu = $(li).next();
+    ## 当前li已隐藏
+        if (menu.is(':hidden')) {
+            $('.menu-bar ul').slideUp(200);
+            menu.slideDown(200);
+        } else {
+            menu.slideUp(200);
+        }
+    }
+
+    function autoHeight() {
+        $('iframe[name="myFrame"]')[0].height = win.height - 75;
+        $('.frame-navi').height(win.height - 72);
+    }
+
+    $(function () {
+        autoHeight();
+
+        $(".operate").mouseover(toolMouseOverListener);
+        $(".operate").mouseleave(toolMouseLeaveListener);
+
+        $(".switch").mouseover(toolMouseOverListener);
+        $(".switch").mouseleave(toolMouseLeaveListener);
+    });
+
+    /**
+     * 窗口缩放事件
+     */
+    window.onresize = function () {
+        initWindow();
+        autoHeight();
+    };
+
+    function goHomePage() {
+        $('iframe[name="myFrame"]')[0].src = '$!portal.homeUrl';
+    }
+
+    function toolMouseOverListener(e) {
+        var tool = $(this).children('.header-tool');
+        if (!tool.hasClass("hidden")) {
+            return;
+        }
+        tool.removeClass("hidden");
+        tool.slideDown(200);
+
+        setTimeout(function () {
+            tool.attr("style", "overflow:normal");
+        }, 200);
+        e.stopPropagation();
+    }
+    
+    function toolMouseLeaveListener(e) {
+        var tool = $(this).children('.header-tool');
+        tool.slideUp(200);
+
+        setTimeout(function () {
+            tool.addClass("hidden");
+        }, 200);
+    }
+</script>

@@ -1,0 +1,49 @@
+<script type="text/javascript" src="$!property.getResourcePath()/js/plugin/jquery.ztree/js/jquery.ztree.core.min.js"></script>
+<link rel="stylesheet" type="text/css" href="$!property.getResourcePath()/js/plugin/jquery.ztree/css/metroStyle/metroStyle.css"/>
+<div class="pop-up-main" tabindex="0" hidefocus="true">
+    <div class="pop-up-main-left">
+        <div class="ztree-main">
+            <ul id="dictTree" class="ztree"></ul>
+        </div>
+    </div>
+    <div class="pop-up-main-right">
+    </div>
+</div>
+<script>
+    var setting = {
+        async: {
+            enable: true,
+            url: "#springUrl("/findDictForZTree.ajax")",
+            autoParam: ["id"]
+        },
+        view: {
+            nameIsHTML: true,
+            selectedMulti: false
+        },
+        data: {
+            simpleData: {
+                enable: true,
+                rootPId: 0
+            }
+        },
+        callback: {
+            onClick: zTreeOnClick
+        }
+    };
+
+    $(function () {
+        $('body').css({
+            'width': 'auto',
+            'height': 'auto'
+        });
+        $.fn.zTree.init($("#dictTree"), setting);
+    });
+    function zTreeOnClick(event, treeId, treeNode, clickFlag) {
+        if (!treeNode.isParent) {
+            $('.pop-up-main-right').empty();
+        } else {
+            var data = {code: treeNode.id};
+            load_url("#springUrl("/sortable.html")", $(".pop-up-main-right"), {data: data});
+        }
+    }
+</script>
