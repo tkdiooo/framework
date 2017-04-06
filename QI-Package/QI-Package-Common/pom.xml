@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>QI-Package</artifactId>
+        <groupId>com.qi.package</groupId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>QI-Package-Common</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Basic</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Cache</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Constants</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Dao</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-DataBase</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Facade</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Model</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Spring</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-SpringBoot</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Util</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Velocity</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Web</artifactId>
+        </dependency>
+    </dependencies>
+</project>
