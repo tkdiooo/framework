@@ -26,6 +26,16 @@
             <artifactId>QI-Common-Dao</artifactId>
             <version>${qi.common.version}</version>
         </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Basic</artifactId>
+            <version>${qi.sso.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.qi.common</groupId>
+            <artifactId>QI-Common-Constants</artifactId>
+            <version>${qi.sso.version}</version>
+        </dependency>
         <!-- qi.package -->
         <dependency>
             <groupId>com.qi.package</groupId>
@@ -98,11 +108,6 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.qi.common</groupId>
-            <artifactId>QI-Common-Basic</artifactId>
-            <version>${qi.sso.version}</version>
         </dependency>
     </dependencies>
 
