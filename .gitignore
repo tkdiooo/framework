@@ -1,6 +1,24 @@
-/target/
-/.settings/
-/.classpath
-/.gitignore
+# idea
+.idea/
+*.iml
+
+# maven
+target/
+
+# gradle
+.gradle/
+
+# java
+*.class
+
+# log file
+*.log
+logs/
+
+# other
+bin/
+build/
 /.project
-/*.log
+/.settings
+/.classpath
+.checkstyle
