@@ -8,7 +8,7 @@
     <header class="header-toolbar">
         <ul>
             <li>
-                <a class="toolbar-button" th:href="${application.context_path} + '/dbconfig/added.html'">新增</a>
+                <a class="toolbar-button" th:href="${#httpServletRequest.getContextPath()} + '/dbconfig/added.html'">新增</a>
             </li>
             <li>
                 <a class="toolbar-button" href="javascript:void(0);" onclick="batchDelete();">批量删除</a>
@@ -28,7 +28,7 @@
             <li th:replace="macro/macro :: htmlSearch"></li>
         </ul>
     </header>
-    <form id="menu_query_form" method="post" th:action="${application.context_path} + '/dbconfig/queryPagination.html'"
+    <form id="menu_query_form" method="post" th:action="${#httpServletRequest.getContextPath()} + '/dbconfig/queryPagination.html'"
           onsubmit="return false">
         <input type="hidden" name="status"/>
         <input type="hidden" name="fullText"/>
