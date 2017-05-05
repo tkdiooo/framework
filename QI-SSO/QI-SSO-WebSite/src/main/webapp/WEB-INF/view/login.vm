@@ -45,12 +45,8 @@
             <!-- 分割线 -->
             <div class="ft">
                 <div class="other">
-                    系统选择：
-                    <select class="sel" name="portal">
-                        #foreach($vo in $portal.entrySet())
-                            <option value="$vo.key">$vo.value.namecn</option>
-                        #end
-                    </select>
+                    <a href="#" title="现在注册" target="_blank" class="register">现在注册</a>
+                    <div class="vs"></div>
                     <a href="#" title="忘记密码" target="_blank" class="ext">忘记密码</a>
                 </div>
             </div>

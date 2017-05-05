@@ -15,7 +15,7 @@ public class WebRunner {
 
     public static void main(String[] args) throws Exception {
 
-        String CONFIG_PATH = "D:\\IntelliJ IDEA\\Projects\\tkdiooo\\framework\\trunk\\config\\";
+        String CONFIG_PATH = "F:\\Repositories Git\\framework\\config\\";
 
         System.setProperty(CommonConstants.RESOURCES_CONFIG_PATH, CONFIG_PATH);
 

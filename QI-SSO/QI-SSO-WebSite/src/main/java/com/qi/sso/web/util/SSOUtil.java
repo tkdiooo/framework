@@ -63,8 +63,8 @@ public class SSOUtil {
             List<SystemDto> dataSet = PortalCacheFactory.getBasicSystemCache();
             if (ListUtil.isContentNull(dataSet)) {
                 // 获取门户列表
-                PortalConsumer consumer = (PortalConsumer) SpringContextUtil.getBean("portalConsumer");
-                ActionResult<SystemDto> ar = consumer.findValidPortal();
+//                PortalConsumer consumer = (PortalConsumer) SpringContextUtil.getBean("portalConsumer");
+//                ActionResult<SystemDto> ar = consumer.findValidPortal();
 //                model.put("portal", ar.getDataMap());
             } else {
 //                model.put("portal", MapUtil.toMap(dataSet, "code", SystemDto.class));

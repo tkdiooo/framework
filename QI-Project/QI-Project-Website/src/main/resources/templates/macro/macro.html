@@ -5,8 +5,7 @@
 <div th:fragment="htmlBreadcrumb" class="breadcrumbs">
     <span th:each="var, userStat : ${breadcrumb}">
         <span th:if="${var.value} == ''" th:text="*{var.key}"></span>
-        <a th:if="${var.value} != ''" th:href="${#httpServletRequest.getContextPath()} + *{var.value}" th:text="*{var.key}"
-           class="breadcrumbs-text"></a>
+        <a th:if="${var.value} != ''" th:href="${#httpServletRequest.getContextPath()} + *{var.value}" th:text="*{var.key}" class="breadcrumbs-text"></a>
         <span th:if="${userStat.index + 1 &lt; #maps.size(breadcrumb)}" class="breadcrumbs-split">></span>
     </span>
 </div>
