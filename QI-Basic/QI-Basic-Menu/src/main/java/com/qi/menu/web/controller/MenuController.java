@@ -27,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -62,7 +63,7 @@ public class MenuController extends BasicController<BasicMenu> {
     public String index(ModelMap model) {
         model.put("header", Header.getInstance().buildHeader(0));
         List<BasicSystem> dataSet = portalReadService.findNormalPortal();
-        List<SelectVO> list = ListUtil.getInstance();
+        List<SelectVO> list = new ArrayList<>();
         dataSet.forEach((VO) -> list.add(new SelectVO(VO.getCode(), VO.getNamecn())));
         model.put("portalList", list);
         return "menu/index";
@@ -71,7 +72,7 @@ public class MenuController extends BasicController<BasicMenu> {
     @RequestMapping(value = "added.html")
     public String added(ModelMap model) {
         List<BasicSystem> dataSet = portalReadService.findNormalPortal();
-        List<RTreeVO> list = ListUtil.getInstance();
+        List<RTreeVO> list = new ArrayList<>();
         dataSet.forEach((portal) -> list.add(TreeUtil.convertRTree(portal, "code", "namecn", null)));
         model.put("systemTree", list);
         return "menu/edit";
@@ -83,7 +84,7 @@ public class MenuController extends BasicController<BasicMenu> {
         model.put("menu", menu);
         List<BasicSystem> dataSet = portalReadService.findNormalPortal();
         model.put("system", ListUtil.getBeanByList("code", menu.getSystemcode(), dataSet));
-        List<RTreeVO> list = ListUtil.getInstance();
+        List<RTreeVO> list = new ArrayList<>();
         dataSet.forEach((portal) -> list.add(TreeUtil.convertRTree(portal, "code", "namecn", null)));
         model.put("systemTree", list);
         return "menu/edit";
@@ -93,7 +94,7 @@ public class MenuController extends BasicController<BasicMenu> {
     public String ordering(ModelMap model) {
         model.put("layout", "layout/empty.vm");
         List<BasicSystem> dataSet = portalReadService.findNormalPortal();
-        List<SelectVO> list = ListUtil.getInstance();
+        List<SelectVO> list = new ArrayList<>();
         dataSet.forEach((VO) -> list.add(new SelectVO(VO.getCode(), VO.getNamecn())));
         model.put("portalList", list);
         return "menu/ordering";

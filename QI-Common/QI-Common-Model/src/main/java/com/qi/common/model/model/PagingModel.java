@@ -1,6 +1,6 @@
 package com.qi.common.model.model;
 
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -116,7 +116,7 @@ public class PagingModel<T> implements Serializable {
             StringBuilder sb = new StringBuilder();
             orderCols.forEach((key, value) -> {
                 if (null != value)
-                    sb.append(StringConstants.COMMA).append(key).append(StringConstants.SPACE).append(value ? "DESC" : "ASC");
+                    sb.append(LabelConstants.COMMA).append(key).append(LabelConstants.SPACE).append(value ? "DESC" : "ASC");
             });
             if (sb.length() > 0) {
                 sb.deleteCharAt(0);

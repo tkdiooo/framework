@@ -1,7 +1,7 @@
 package com.qi.common.util;
 
 import com.qi.common.constants.CommonConstants;
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,12 +14,12 @@ import javax.servlet.http.HttpServletRequest;
  */
 public class HttpUtil {
 
-    public static String getFullRequestURI(HttpServletRequest request) {
-        return request.getScheme() + StringConstants.COLON + StringConstants.DOUBLE_SLASH + request.getServerName() + StringConstants.COLON + request.getServerPort() + request.getRequestURI() + (StringUtil.isBlank(request.getQueryString()) ? "" : (StringConstants.QUESTION + request.getQueryString()));
+    public static String getFullUrlRequest(HttpServletRequest request) {
+        return request.getScheme() + LabelConstants.COLON + LabelConstants.DOUBLE_SLASH + request.getServerName() + LabelConstants.COLON + request.getServerPort() + request.getRequestURI() + (StringUtil.isBlank(request.getQueryString()) ? "" : (LabelConstants.QUESTION + request.getQueryString()));
 
     }
 
-    public static boolean isAjax(HttpServletRequest request) {
+    public static boolean isAjaxRequest(HttpServletRequest request) {
         String acceptHeader = request.getHeader("Accept");
         String ajaxParam = request.getParameter(CommonConstants.AJAX_TIME_FRESH);
         return CommonConstants.AJAX_ACCEPT_CONTENT_TYPE.equals(acceptHeader) || StringUtils.hasText(ajaxParam);

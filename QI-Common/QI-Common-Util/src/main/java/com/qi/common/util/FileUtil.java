@@ -1,6 +1,6 @@
 package com.qi.common.util;
 
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 import com.qi.common.tool.Assert;
 import org.apache.commons.io.FileUtils;
 import org.dom4j.Document;
@@ -33,7 +33,7 @@ public class FileUtil extends FileUtils {
      */
     public static String convertPath(String path) {
         Assert.isNotBlank(path, "路径为空");
-        return path.replaceAll("\\\\", StringConstants.FORWARD_SLASH).replaceAll("//", StringConstants.FORWARD_SLASH);
+        return path.replaceAll("\\\\", LabelConstants.FORWARD_SLASH).replaceAll("//", LabelConstants.FORWARD_SLASH);
     }
 
     /**
@@ -66,8 +66,8 @@ public class FileUtil extends FileUtils {
     public static boolean createFolder(String path) {
         Assert.isNotBlank(path, "路径为空");
         String filePath = convertPath(path);
-        int n = filePath.lastIndexOf(StringConstants.FORWARD_SLASH);
-        int m = filePath.lastIndexOf(StringConstants.PERIOD);
+        int n = filePath.lastIndexOf(LabelConstants.FORWARD_SLASH);
+        int m = filePath.lastIndexOf(LabelConstants.PERIOD);
         if (m > n) {
             filePath = filePath.substring(0, n);
         }
@@ -203,7 +203,7 @@ public class FileUtil extends FileUtils {
      * @return Suffix
      */
     public static String getFileSuffixName(String fileName) {
-        int pos = fileName.lastIndexOf(StringConstants.PERIOD);
+        int pos = fileName.lastIndexOf(LabelConstants.PERIOD);
         if (pos == -1) return "NO_EXT_NAME";
         return fileName.substring(pos + 1);
     }
@@ -217,7 +217,7 @@ public class FileUtil extends FileUtils {
      */
     public static String getFileName(String path) {
         String filePath = convertPath(path);
-        return filePath.substring(filePath.lastIndexOf(StringConstants.FORWARD_SLASH) + 1);
+        return filePath.substring(filePath.lastIndexOf(LabelConstants.FORWARD_SLASH) + 1);
     }
 
 
@@ -229,8 +229,8 @@ public class FileUtil extends FileUtils {
      */
     public static String getFileBaseName(String fileName) {
         String filePath = convertPath(fileName);
-        String name = filePath.substring(filePath.lastIndexOf(StringConstants.FORWARD_SLASH) + 1);
-        int pos = name.lastIndexOf(StringConstants.PERIOD);
+        String name = filePath.substring(filePath.lastIndexOf(LabelConstants.FORWARD_SLASH) + 1);
+        int pos = name.lastIndexOf(LabelConstants.PERIOD);
         if (pos == -1) return name;
         else return name.substring(0, pos);
     }
@@ -283,12 +283,12 @@ public class FileUtil extends FileUtils {
         // 获取文件后缀名
         String suffix = getFileSuffixName(name);
         // 如果新名称包含后缀
-        if (newName.contains(StringConstants.PERIOD))
-            newName = newName.substring(0, newName.indexOf(StringConstants.PERIOD));
+        if (newName.contains(LabelConstants.PERIOD))
+            newName = newName.substring(0, newName.indexOf(LabelConstants.PERIOD));
         boolean bool = false;
         // 如果文件存在，执行改名
         if (file.exists()) {
-            bool = file.renameTo(new File(path + StringConstants.FORWARD_SLASH + newName + StringConstants.PERIOD + suffix));
+            bool = file.renameTo(new File(path + LabelConstants.FORWARD_SLASH + newName + LabelConstants.PERIOD + suffix));
         }
         return bool;
     }

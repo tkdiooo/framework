@@ -11,26 +11,14 @@ import java.math.BigDecimal;
 public class Decimal {
 
     public BigDecimal add(BigDecimal a, BigDecimal b) {
-        if (null == a) {
-            a = BigDecimal.ZERO;
-        }
-
-        if (null == b) {
-            b = BigDecimal.ZERO;
-        }
-
+        if (null == a) a = BigDecimal.ZERO;
+        if (null == b) b = BigDecimal.ZERO;
         return a.add(b);
     }
 
     public BigDecimal subtract(BigDecimal a, BigDecimal b) {
-        if (null == a) {
-            a = BigDecimal.ZERO;
-        }
-
-        if (null == b) {
-            b = BigDecimal.ZERO;
-        }
-
+        if (null == a) a = BigDecimal.ZERO;
+        if (null == b) b = BigDecimal.ZERO;
         return a.subtract(b);
     }
 

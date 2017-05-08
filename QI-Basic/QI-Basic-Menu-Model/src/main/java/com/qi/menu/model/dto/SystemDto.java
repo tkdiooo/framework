@@ -1,6 +1,6 @@
 package com.qi.menu.model.dto;
 
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 import com.qi.menu.model.constants.CommonConstants;
 import com.qi.menu.model.domain.BasicSystem;
 
@@ -17,7 +17,7 @@ public class SystemDto extends BasicSystem implements Serializable {
     private static final long serialVersionUID = 3804734236448719618L;
 
     public String getPortalUrl() {
-        return this.getDomain() + CommonConstants.PLATFORM_CONTEXT_PATH + CommonConstants.LAYOUT_TSHAPE + this.getContextpath() + StringConstants.PERIOD + StringConstants.HTML;
+        return this.getDomain() + CommonConstants.PLATFORM_CONTEXT_PATH + CommonConstants.LAYOUT_TSHAPE + this.getContextpath() + LabelConstants.PERIOD + LabelConstants.HTML;
     }
 
     @Override

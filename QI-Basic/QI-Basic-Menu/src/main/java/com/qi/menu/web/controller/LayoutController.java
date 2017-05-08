@@ -1,6 +1,6 @@
 package com.qi.menu.web.controller;
 
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 import com.qi.common.security.EncrypterTool;
 import com.qi.common.tool.Logger;
 import com.qi.common.util.ListUtil;
@@ -41,7 +41,7 @@ public class LayoutController {
     @RequestMapping(value = "{layout}/{path}.html", method = RequestMethod.GET)
     public String index(@PathVariable("layout") String layout, @PathVariable("path") String path, ModelMap model, HttpServletRequest request) {
         SystemVO portal = portalReadService.getSystemVOByContextPath(path);
-        portal.setLayout(StringConstants.FORWARD_SLASH + layout);
+        portal.setLayout(LabelConstants.FORWARD_SLASH + layout);
         String form_url = request.getParameter(SSOConstants.PARAM_FROM_URL);
         if (StringUtil.isNotBlank(form_url)) {
             // TODO 缺少url页面级别验证，如果是非一级页面则选择修改
@@ -60,7 +60,7 @@ public class LayoutController {
         model.put("menus", menuReadService.findMenuByAuthority(0L, portal.getCode()));
         model.put("portal", portal);
         List<SystemVO> systems = ListUtil.copyConvert(SystemVO.class, CacheFactory.getBasicSystemCache());
-        systems.forEach((vo) -> vo.setLayout(StringConstants.FORWARD_SLASH + layout));
+        systems.forEach((vo) -> vo.setLayout(LabelConstants.FORWARD_SLASH + layout));
         model.put("systems", systems);
         return layout + "/index";
     }

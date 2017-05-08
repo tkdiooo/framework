@@ -1,6 +1,5 @@
 package com.qi.common.util;
 
-import com.qi.common.tool.Assert;
 import com.qi.common.tool.Logger;
 import org.apache.commons.collections.MapUtils;
 
@@ -31,16 +30,13 @@ public class MapUtil extends MapUtils {
      * List转Map
      *
      * @param list List
-     * @param cls  V Class
-     * @return Map<code><</code>String, V>
+     * @return Map<code><</code>String, V<code>></code>
      */
-    @SuppressWarnings("unchecked")
-    public static <V> Map<String, V> toMap(List<?> list, Class<V> cls) {
+    public static <V> Map<String, V> toMap(List<V> list) {
         if (ListUtil.isEmpty(list)) ThrowableUtil.throwRuntimeException("list is empty");
-        Assert.notNull(cls, "Class<V> is null");
-        Map<String, V> map = new HashMap<>();
+        Map<String, V> map = new LinkedHashMap<>();
         for (int i = 0; i < list.size(); i++) {
-            map.put(String.valueOf(i), (V) list.get(i));
+            map.put(String.valueOf(i), list.get(i));
         }
         return map;
     }
@@ -48,24 +44,20 @@ public class MapUtil extends MapUtils {
     /**
      * List转Map
      *
-     * @param list
-     * @param name
-     * @param cls
-     * @param <V>
-     * @return
+     * @param list 实体集合
+     * @param kp   map的key对应实体属性名称，重复会覆盖
+     * @return Map<code><</code>String, V<code>></code>
      */
-    @SuppressWarnings("unchecked")
-    public static <V> Map<String, V> toMap(List<?> list, String name, Class<V> cls) {
+    public static <V> Map<String, V> toMap(List<V> list, String kp) {
         if (ListUtil.isEmpty(list)) ThrowableUtil.throwRuntimeException("list is empty");
-        Assert.notNull(cls, "Class<V> is null");
         Map<String, V> map = new LinkedHashMap<>();
-        for (Object obj : list) {
+        list.forEach(v -> {
             try {
-                map.put(BeanUtil.getProperty(obj, name), (V) obj);
+                map.put(BeanUtil.getProperty(v, kp), v);
             } catch (Exception e) {
                 logger.error(ThrowableUtil.getRootMessage(e));
             }
-        }
+        });
         return map;
     }
 
@@ -73,8 +65,7 @@ public class MapUtil extends MapUtils {
      * Object转Map
      *
      * @param obj Object
-     * @return Map<code><</code>String, Object>
-     * @throws Exception
+     * @return Map<code><</code>String, V<code>></code>
      */
     public static Map<String, Object> toMap(Object obj) {
         Map<String, Object> map = new HashMap<>();
@@ -101,7 +92,7 @@ public class MapUtil extends MapUtils {
      * @param order true：asc、false：desc
      * @param <K>   Object
      * @param <V>   Object
-     * @return TreeMap
+     * @return TreeMap<code><</code>K, V<code>></code>
      */
     public static <K, V> Map<K, V> sortByKey(Map<K, V> map, final boolean order) {
         if (isEmpty(map)) ThrowableUtil.throwRuntimeException("map is empty");
@@ -118,7 +109,7 @@ public class MapUtil extends MapUtils {
      * @param order true：asc、false：desc
      * @param <K>   Object
      * @param <V>   Object
-     * @return LinkedHashMap
+     * @return LinkedHashMap<code><</code>K, V<code>></code>
      */
     public static <K, V> Map<K, V> sortByValue(Map<K, V> map, final boolean order) {
         if (isEmpty(map)) ThrowableUtil.throwRuntimeException("map is empty");
@@ -162,7 +153,6 @@ public class MapUtil extends MapUtils {
     @SuppressWarnings("unchecked")
     public static <K> K getFirstKey(Map<K, ?> map) {
         if (isEmpty(map)) ThrowableUtil.throwRuntimeException("map is empty");
-
         Object[] keys = map.keySet().toArray();
         return (K) keys[0];
     }

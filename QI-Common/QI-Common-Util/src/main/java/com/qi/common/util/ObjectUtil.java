@@ -13,6 +13,7 @@ import java.util.Map;
  * @version Description:
  */
 public abstract class ObjectUtil extends ObjectUtils {
+
     public ObjectUtil() {
 
     }
@@ -24,4 +25,5 @@ public abstract class ObjectUtil extends ObjectUtils {
     public static boolean isEmpty(Object obj) {
         return obj == null || (obj.getClass().isArray() ? Array.getLength(obj) == 0 : (obj instanceof CharSequence ? ((CharSequence) obj).length() == 0 : (obj instanceof Collection ? ((Collection) obj).isEmpty() : (obj instanceof Map && ((Map) obj).isEmpty()))));
     }
+
 }

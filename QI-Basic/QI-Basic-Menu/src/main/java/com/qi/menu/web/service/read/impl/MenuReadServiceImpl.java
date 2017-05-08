@@ -23,6 +23,7 @@ import com.qi.menu.web.tool.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -60,7 +61,7 @@ public class MenuReadServiceImpl implements MenuReadService {
 
     @Override
     public List<RTreeVO> findMenuForRTree(Long guid) {
-        List<RTreeVO> dataSet = ListUtil.getInstance();
+        List<RTreeVO> dataSet = new ArrayList<>();
         // 读取菜单数据
         List<BasicMenu> list = this.findMenuByParent(guid);
         list.forEach((menu) -> dataSet.add(TreeUtil.convertRTree(menu, "guid", "menuname", "isleaf")));
@@ -72,7 +73,7 @@ public class MenuReadServiceImpl implements MenuReadService {
         // 分页查询
         dao.queryPagination(pageInfo);
         // List集合转换为map集合
-        pageInfo.setMapResult(ListUtil.getInstance());
+        pageInfo.setMapResult(new ArrayList<>());
         pageInfo.getResult().forEach((VO) -> {
             Map<String, Object> map = MapUtil.toMap(VO);
             map.put("状态", StatusConstants.Status.getValueByKey(VO.getStatus()));
@@ -95,7 +96,7 @@ public class MenuReadServiceImpl implements MenuReadService {
 
     @Override
     public List<ZTreeVO> findMenuForZTree(Long guid, String systemCode) {
-        List<ZTreeVO> dataSet = ListUtil.getInstance();
+        List<ZTreeVO> dataSet = new ArrayList<>();
         if (null == guid) {
             ZTreeVO VO = new ZTreeVO();
             VO.setId(ApplicationConfig.CONSTANT_0.toString());
@@ -126,7 +127,7 @@ public class MenuReadServiceImpl implements MenuReadService {
 
     @Override
     public List<RTreeVO> findMenuByCodeForRTree(String code) {
-        List<RTreeVO> dataSet = ListUtil.getInstance();
+        List<RTreeVO> dataSet = new ArrayList<>();
         BasicMenuExample example = dao.getExample();
         BasicMenuExample.Criteria c = example.createCriteria();
         c.andSystemcodeEqualTo(code);

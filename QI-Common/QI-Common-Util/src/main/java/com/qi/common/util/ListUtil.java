@@ -12,19 +12,9 @@ import java.util.*;
  */
 public class ListUtil extends CollectionUtils {
 
-    /**
-     * 获取ArrayList实例
-     *
-     * @return ArrayList
-     */
-    public static <T> ArrayList<T> getInstance() {
-        return new ArrayList<>();
-    }
-
-
     @SafeVarargs
     public static <T> List<T> toList(T... a) {
-        List<T> list = getInstance();
+        List<T> list = new ArrayList<>();
         Collections.addAll(list, a);
         return list;
     }
@@ -35,10 +25,10 @@ public class ListUtil extends CollectionUtils {
      * @param map Map
      * @param <K> Key
      * @param <V> Bean
-     * @return List
+     * @return List<code><</code>V<code>></code>
      */
     public static <K, V> List<V> toList(Map<K, V> map) {
-        List<V> list = ListUtil.getInstance();
+        List<V> list = new ArrayList<>();
         map.forEach((key, value) -> list.add(value));
         return list;
     }
@@ -46,16 +36,12 @@ public class ListUtil extends CollectionUtils {
     /**
      * 复制转换List
      *
-     * @param cls
-     * @param dataSet
-     * @param <S>
-     * @param <T>
-     * @return
-     * @throws IllegalAccessException
-     * @throws InstantiationException
+     * @param cls Class
+     * @param dataSet DataSet
+     * @return List<code><</code>T<code>></code>
      */
     public static <S, T> List<T> copyConvert(Class<T> cls, List<S> dataSet) {
-        List<T> list = getInstance();
+        List<T> list = new ArrayList<>();
         T target;
         for (S s : dataSet) {
             try {
@@ -81,9 +67,9 @@ public class ListUtil extends CollectionUtils {
     /**
      * List比较是否相同
      *
-     * @param c1
-     * @param c2
-     * @return
+     * @param c1 List
+     * @param c2 List
+     * @return Boolean
      */
     public static boolean equals(List c1, List c2) {
         boolean bool = true;

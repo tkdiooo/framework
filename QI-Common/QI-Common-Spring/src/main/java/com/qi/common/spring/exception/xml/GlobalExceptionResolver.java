@@ -2,6 +2,7 @@ package com.qi.common.spring.exception.xml;
 
 import com.alibaba.fastjson.JSONObject;
 import com.qi.common.constants.CommonConstants;
+import com.qi.common.constants.PropertiesConstants;
 import com.qi.common.constants.i18n.I18NConstants.Tips;
 import com.qi.common.model.exception.BizException;
 import com.qi.common.model.exception.VerifyException;
@@ -10,6 +11,7 @@ import com.qi.common.util.ByteSizeUtil;
 import com.qi.common.util.PropertyUtil;
 import com.qi.common.util.ResourceUtil;
 import com.qi.common.util.ThrowableUtil;
+import org.apache.poi.poifs.property.PropertyConstants;
 import org.springframework.core.Ordered;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
@@ -40,7 +42,7 @@ public class GlobalExceptionResolver extends BasicExceptionHandler implements Ha
         }
         // 文件上传异常
         if (ex instanceof MaxUploadSizeExceededException) {
-            json.put(CommonConstants.MESSAGES, ResourceUtil.getMessage(Tips.ExceptionUpload, ByteSizeUtil.MB().toMBFrac(Long.valueOf(PropertyUtil.getProps(CommonConstants.MULTIPART_MAX_FILE_SIZE))) + "MB"));
+            json.put(CommonConstants.MESSAGES, ResourceUtil.getMessage(Tips.ExceptionUpload, ByteSizeUtil.MB().toMBFrac(Long.valueOf(PropertyUtil.getProps(PropertiesConstants.MULTIPART_MAX_FILE_SIZE))) + "MB"));
         }
         // 业务异常
         else if (ex instanceof BizException) {

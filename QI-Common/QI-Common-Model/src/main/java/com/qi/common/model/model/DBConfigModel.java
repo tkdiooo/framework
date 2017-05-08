@@ -1,7 +1,7 @@
 package com.qi.common.model.model;
 
 import com.qi.common.constants.JdbcConstants.Driver;
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 
 /**
  * Class DBConfigModel
@@ -61,7 +61,7 @@ public class DBConfigModel {
         String url = "";
         switch (driver) {
             case MySQL:
-                url = "jdbc" + StringConstants.COLON + "mysql" + StringConstants.COLON + StringConstants.DOUBLE_SLASH + this.ippost + StringConstants.SLASH + this.dbname + StringConstants.QUESTION + "useUnicode" + StringConstants.EQUAL + StringConstants.TRUE + StringConstants.AMPERSAND + "characterEncoding" + StringConstants.EQUAL + StringConstants.UTF8;
+                url = "jdbc" + LabelConstants.COLON + "mysql" + LabelConstants.COLON + LabelConstants.DOUBLE_SLASH + this.ippost + LabelConstants.SLASH + this.dbname + LabelConstants.QUESTION + "useUnicode" + LabelConstants.EQUAL + LabelConstants.TRUE + LabelConstants.AMPERSAND + "characterEncoding" + LabelConstants.EQUAL + LabelConstants.UTF8;
                 break;
 
         }

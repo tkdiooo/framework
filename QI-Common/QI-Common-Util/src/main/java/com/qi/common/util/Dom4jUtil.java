@@ -16,6 +16,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -108,12 +109,11 @@ public class Dom4jUtil {
         Field[] fields = cls.getDeclaredFields();
         try {
             T t = cls.newInstance();
-            for (int i = 0; i < nodes.size(); i++) {
-                Element node = nodes.get(i);
-                for (int j = 0; j < fields.length; j++) {
-                    if (fields[j].getName().equals(node.getName())) {
-                        fields[j].setAccessible(true);
-                        fields[j].set(t, ClassUtil.convertType(node.getText(), fields[j].getType()));
+            for (Element node : nodes) {
+                for (Field field : fields) {
+                    if (field.getName().equals(node.getName())) {
+                        field.setAccessible(true);
+                        field.set(t, ClassUtil.convertType(node.getText(), field.getType()));
                     }
                 }
             }
@@ -156,7 +156,7 @@ public class Dom4jUtil {
         }
         // 解析子节点
         else {
-            model.setChildren(ListUtil.getInstance());
+            model.setChildren(new ArrayList<>());
             Iterator iterator = element.elementIterator();
             while (iterator.hasNext()) {
                 Element node = (Element) iterator.next();

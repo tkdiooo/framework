@@ -1,7 +1,6 @@
 package com.qi.sso.web.util;
 
-import com.qi.common.constants.StringConstants;
-import com.qi.common.model.result.ActionResult;
+import com.qi.common.constants.LabelConstants;
 import com.qi.common.security.EncrypterTool;
 import com.qi.common.security.rsa.KeyPairModel;
 import com.qi.common.security.rsa.RSA;
@@ -103,11 +102,11 @@ public class SSOUtil {
 //            }
             // 如果路径不包含系统路径，或包含门户入口
 //            else
-            if (!form_url.contains((dto.getDomain() + dto.getContextpath())) || form_url.contains(dto.getContextpath() + StringConstants.PERIOD + StringConstants.HTML)) {
+            if (!form_url.contains((dto.getDomain() + dto.getContextpath())) || form_url.contains(dto.getContextpath() + LabelConstants.PERIOD + LabelConstants.HTML)) {
                 // 默认首页
                 form_url = dto.getPortalUrl();
             } else {
-                form_url = dto.getPortalUrl() + StringConstants.QUESTION + SSOConstants.PARAM_FROM_URL + StringConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, form_url);
+                form_url = dto.getPortalUrl() + LabelConstants.QUESTION + SSOConstants.PARAM_FROM_URL + LabelConstants.EQUAL + EncrypterTool.encrypt(EncrypterTool.Security.Des3ECB, form_url);
             }
         }
         return form_url;

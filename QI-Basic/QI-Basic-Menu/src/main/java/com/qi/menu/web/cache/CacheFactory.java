@@ -9,6 +9,7 @@ import com.qi.menu.model.domain.BasicSystem;
 import com.qi.menu.rpc.constants.CacheConstants;
 import com.qi.menu.web.service.read.SystemReadService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -40,7 +41,7 @@ public class CacheFactory {
                 return getBasicSystemByCode(dataSet, code);
             }
         } else {
-            return getBasicSystemByCode(ListUtil.getInstance(), code);
+            return getBasicSystemByCode(new ArrayList<>(), code);
         }
     }
 

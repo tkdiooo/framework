@@ -1,6 +1,6 @@
 package com.qi.common.security.base64;
 
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 import com.qi.common.tool.Assert;
 import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder;
@@ -24,9 +24,9 @@ public class Base64 {
     public static String encrypt(byte[] bytes) {
         Assert.notNull(bytes, "加密信息为空");
         String cipher = new BASE64Encoder().encode(bytes);
-        return cipher.replaceAll(StringConstants.BACK_SLASH + StringConstants.PLUS, StringConstants.UNDERLINE)
-                .replaceAll(StringConstants.FORWARD_SLASH, StringConstants.MINUS)
-                .replaceAll(StringConstants.EQUAL, StringConstants.PERIOD).replaceAll("\\s", "");
+        return cipher.replaceAll(LabelConstants.BACK_SLASH + LabelConstants.PLUS, LabelConstants.UNDERLINE)
+                .replaceAll(LabelConstants.FORWARD_SLASH, LabelConstants.MINUS)
+                .replaceAll(LabelConstants.EQUAL, LabelConstants.PERIOD).replaceAll("\\s", "");
     }
 
 
@@ -39,9 +39,9 @@ public class Base64 {
     public static byte[] decrypt(String info) {
         Assert.isNotBlank(info, "解密信息为空");
         try {
-            info = info.replaceAll(StringConstants.UNDERLINE, StringConstants.BACK_SLASH + StringConstants.PLUS)
-                    .replaceAll(StringConstants.MINUS, StringConstants.FORWARD_SLASH)
-                    .replaceAll(StringConstants.BACK_SLASH + StringConstants.PERIOD, StringConstants.EQUAL);
+            info = info.replaceAll(LabelConstants.UNDERLINE, LabelConstants.BACK_SLASH + LabelConstants.PLUS)
+                    .replaceAll(LabelConstants.MINUS, LabelConstants.FORWARD_SLASH)
+                    .replaceAll(LabelConstants.BACK_SLASH + LabelConstants.PERIOD, LabelConstants.EQUAL);
             return new BASE64Decoder().decodeBuffer(info);
         } catch (IOException e) {
             e.printStackTrace();

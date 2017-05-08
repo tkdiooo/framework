@@ -6,6 +6,7 @@ package com.qi.common.util;
 import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -728,7 +729,7 @@ public class DateUtil extends DateUtils {
         Assert.notNull(early, "early is null");
         Assert.notNull(late, "late is null");
 
-        List<Date> result = ListUtil.getInstance();
+        List<Date> result = new ArrayList<>();
 
         Calendar c1 = toCalendar(setDate(early));
         Calendar c2 = toCalendar(setDate(late));
@@ -755,7 +756,7 @@ public class DateUtil extends DateUtils {
         Assert.notNull(early, "early is null");
         Assert.notNull(late, "late is null");
 
-        List<Date> result = ListUtil.getInstance();
+        List<Date> result = new ArrayList<>();
 
         Calendar c1 = toCalendar(setDate(early));
         Calendar c2 = toCalendar(setDate(late));

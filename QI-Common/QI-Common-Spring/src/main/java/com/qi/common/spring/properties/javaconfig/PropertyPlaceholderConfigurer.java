@@ -1,11 +1,10 @@
 package com.qi.common.spring.properties.javaconfig;
 
 import com.qi.common.constants.CommonConstants;
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 import com.qi.common.spring.properties.xml.DecryptPropertyPlaceholderConfigurer;
 import com.qi.common.util.StringUtil;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
@@ -48,12 +47,12 @@ public class PropertyPlaceholderConfigurer {
         }
 
         // 分隔文件名称
-        String[] propertyList = System.getProperty(CommonConstants.RESOURCES_PROPERTY_FILE).split(StringConstants.SEMICOLON);
+        String[] propertyList = System.getProperty(CommonConstants.RESOURCES_PROPERTY_FILE).split(LabelConstants.SEMICOLON);
 
         for (String value : propertyList) {
             value = value.trim();
-            if (value.startsWith(StringConstants.MATCHING_FILE))
-                resources.add(new FileSystemResource(StringUtil.replace(value, StringConstants.MATCHING_FILE, location)));
+            if (value.startsWith(LabelConstants.MATCHING_FILE))
+                resources.add(new FileSystemResource(StringUtil.replace(value, LabelConstants.MATCHING_FILE, location)));
             else
                 resources.add(new ClassPathResource(location + value));
         }

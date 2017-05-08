@@ -21,6 +21,7 @@ import com.qi.menu.web.tool.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,7 +45,7 @@ public class SystemReadServiceImpl implements SystemReadService {
         // 分页查询
         dao.queryPagination(pageInfo);
         // List集合转换为map集合
-        pageInfo.setMapResult(ListUtil.getInstance());
+        pageInfo.setMapResult(new ArrayList<>());
         pageInfo.getResult().forEach((VO) -> {
             Map<String, Object> map = MapUtil.toMap(VO);
             map.put("系统类型", PortalConstants.Type.getValueByKey(VO.getStatus()));

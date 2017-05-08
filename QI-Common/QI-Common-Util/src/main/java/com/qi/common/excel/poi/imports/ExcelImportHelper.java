@@ -74,7 +74,7 @@ public class ExcelImportHelper extends ExcelHelper {
         // 无标题读取
         else {
             for (int i = 0; i < sheet.getLastRowNum(); i++) {
-                rows.put(i, MapUtil.toMap(readRow(sheet.getRow(i)), Object.class));
+                rows.put(i, MapUtil.toMap(readRow(sheet.getRow(i))));
             }
         }
     }
@@ -113,9 +113,9 @@ public class ExcelImportHelper extends ExcelHelper {
      * @param row Row
      * @return List
      */
-    public List<String> readRow(Row row) {
+    public List<Object> readRow(Row row) {
         Assert.notNull(row, ResourceUtil.getMessage(Tips.EmptyObject, "row"));
-        List<String> data = new ArrayList<>();
+        List<Object> data = new ArrayList<>();
         for (int i = 0; i < row.getLastCellNum(); i++) {
             data.add(getCellValue(row.getCell(i)));
         }

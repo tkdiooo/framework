@@ -1,6 +1,6 @@
 package com.qi.menu.web.config;
 
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 import com.qi.common.util.PropertyUtil;
 import com.qi.menu.model.constants.CommonConstants;
 import com.qi.menu.web.model.vo.SystemVO;
@@ -26,7 +26,7 @@ public class ApplicationConfig {
     public static String getLayout(SystemVO VO) {
         return VO.getDomain() + CommonConstants.PLATFORM_CONTEXT_PATH + (
                 VO.getLayout().equals(CommonConstants.LAYOUT_TSHAPE) ? CommonConstants.LAYOUT_SPLIT : CommonConstants.LAYOUT_TSHAPE
-        ) + VO.getContextpath() + StringConstants.PERIOD + StringConstants.HTML;
+        ) + VO.getContextpath() + LabelConstants.PERIOD + LabelConstants.HTML;
     }
 //
 //    /**

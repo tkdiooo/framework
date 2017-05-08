@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.qi.common.util;
 
 import org.apache.commons.lang3.StringUtils;

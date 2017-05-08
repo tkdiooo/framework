@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
  * @author 张麒 2016年3月28日
  * @version Description：
  */
-public class StringEscapeUtil extends StringEscapeUtils {
+public class HtmlEscapeUtil extends StringEscapeUtils {
 
     /**
      * Html字符串编码，以适应页面显示

@@ -31,7 +31,7 @@ public abstract class BasicExceptionHandler {
         System.out.println(JSON.toJSONString(json));
 //        String extMessage = ThrowableUtil.getRootMessage(ex);
 //        String stackTrace = ThrowableUtil.getStackTraceAsString(ex);
-        if (HttpUtil.isAjax(request)) {
+        if (HttpUtil.isAjaxRequest(request)) {
             return handleAjaxError(response, json, status);
         }
         return handleViewError(request.getRequestURL().toString(), json, viewName, status);

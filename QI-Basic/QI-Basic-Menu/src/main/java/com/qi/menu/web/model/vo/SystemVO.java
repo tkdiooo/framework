@@ -1,6 +1,6 @@
 package com.qi.menu.web.model.vo;
 
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 import com.qi.common.util.StringUtil;
 import com.qi.menu.model.constants.CommonConstants;
 import com.qi.menu.model.domain.BasicSystem;
@@ -26,7 +26,7 @@ public class SystemVO extends BasicSystem {
     }
 
     public String getPortalUrl() {
-        return this.getDomain() + CommonConstants.PLATFORM_CONTEXT_PATH + getLayout() + this.getContextpath() + StringConstants.PERIOD + StringConstants.HTML;
+        return this.getDomain() + CommonConstants.PLATFORM_CONTEXT_PATH + getLayout() + this.getContextpath() + LabelConstants.PERIOD + LabelConstants.HTML;
     }
 
     public String getHomeUrl() {
@@ -34,6 +34,6 @@ public class SystemVO extends BasicSystem {
     }
 
     public String getLogoICO() {
-        return StringUtil.isNotBlank(getLogopath()) ? getLogopath().substring(0, getLogopath().lastIndexOf(StringConstants.PERIOD)) + ".ico" : "";
+        return StringUtil.isNotBlank(getLogopath()) ? getLogopath().substring(0, getLogopath().lastIndexOf(LabelConstants.PERIOD)) + ".ico" : "";
     }
 }

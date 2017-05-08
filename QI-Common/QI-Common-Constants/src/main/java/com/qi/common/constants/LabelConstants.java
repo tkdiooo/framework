@@ -9,7 +9,7 @@ package com.qi.common.constants;
  * @author 张麒 2016年3月27日
  * @version Description：字符常量类
  */
-public class StringConstants {
+public class LabelConstants {
 
     /**
      * &

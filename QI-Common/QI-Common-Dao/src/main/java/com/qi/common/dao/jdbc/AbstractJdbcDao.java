@@ -5,6 +5,7 @@ import com.qi.common.util.ListUtil;
 
 import java.sql.*;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -122,49 +123,49 @@ public abstract class AbstractJdbcDao {
     @SuppressWarnings("unchecked")
     protected final <T> List<T> getResultSet(Class<T> cls) throws SQLException {
         if (cls.equals(Short.class)) {
-            List<Short> dataSet = ListUtil.getInstance();
+            List<Short> dataSet = new ArrayList<>();
             while (rs.next()) {
                 dataSet.add(rs.getShort(1));
             }
             return (List<T>) dataSet;
         } else if (cls.equals(Integer.class)) {
-            List<Integer> dataSet = ListUtil.getInstance();
+            List<Integer> dataSet = new ArrayList<>();
             while (rs.next()) {
                 dataSet.add(rs.getInt(1));
             }
             return (List<T>) dataSet;
         } else if (cls.equals(Long.class)) {
-            List<Long> dataSet = ListUtil.getInstance();
+            List<Long> dataSet = new ArrayList<>();
             while (rs.next()) {
                 dataSet.add(rs.getLong(1));
             }
             return (List<T>) dataSet;
         } else if (cls.equals(Float.class)) {
-            List<Float> dataSet = ListUtil.getInstance();
+            List<Float> dataSet = new ArrayList<>();
             while (rs.next()) {
                 dataSet.add(rs.getFloat(1));
             }
             return (List<T>) dataSet;
         } else if (cls.equals(Double.class)) {
-            List<Double> dataSet = ListUtil.getInstance();
+            List<Double> dataSet = new ArrayList<>();
             while (rs.next()) {
                 dataSet.add(rs.getDouble(1));
             }
             return (List<T>) dataSet;
         } else if (cls.equals(Byte.class)) {
-            List<Byte> dataSet = ListUtil.getInstance();
+            List<Byte> dataSet = new ArrayList<>();
             while (rs.next()) {
                 dataSet.add(rs.getByte(1));
             }
             return (List<T>) dataSet;
         } else if (cls.equals(String.class)) {
-            List<String> dataSet = ListUtil.getInstance();
+            List<String> dataSet = new ArrayList<>();
             while (rs.next()) {
                 dataSet.add(rs.getString(1));
             }
             return (List<T>) dataSet;
         } else if (cls.equals(Date.class)) {
-            List<Date> dataSet = ListUtil.getInstance();
+            List<Date> dataSet = new ArrayList<>();
             while (rs.next()) {
                 dataSet.add(rs.getDate(1));
             }

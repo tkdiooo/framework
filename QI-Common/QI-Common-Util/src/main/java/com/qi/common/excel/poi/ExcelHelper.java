@@ -246,7 +246,7 @@ public abstract class ExcelHelper {
         Assert.notNull(sheetModel, ResourceUtil.getMessage(Tips.EmptyObject, "sheetModel"));
         Assert.notNull(sheetModel.getRows(), ResourceUtil.getMessage(Tips.EmptyCollection, "sheetModel内rows"));
         Assert.notNull(cls, ResourceUtil.getMessage(Tips.EmptyObject, "Class<T>"));
-        List<T> list = ListUtil.getInstance();
+        List<T> list = new ArrayList<>();
         sheetModel.getRows().forEach((key, value) -> {
             // 不读取标题
             if (!key.equals(sheetModel.getHeaderIndex())) {

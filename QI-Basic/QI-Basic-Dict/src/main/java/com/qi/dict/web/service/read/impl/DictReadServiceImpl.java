@@ -19,6 +19,7 @@ import com.qi.dict.web.tool.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -47,7 +48,7 @@ public class DictReadServiceImpl implements DictReadService {
         // 分页查询
         dao.queryPagination(pageInfo);
         // List集合转换为map集合
-        pageInfo.setMapResult(ListUtil.getInstance());
+        pageInfo.setMapResult(new ArrayList<>());
         pageInfo.getResult().forEach((VO) -> {
             Map<String, Object> map = MapUtil.toMap(VO);
             map.put("状态", StatusConstants.Status.getValueByKey(VO.getStatus()));
@@ -75,7 +76,7 @@ public class DictReadServiceImpl implements DictReadService {
 
     @Override
     public List<ZTreeVO> findDictForZTree(String parentCode) {
-        List<ZTreeVO> dataSet = ListUtil.getInstance();
+        List<ZTreeVO> dataSet = new ArrayList<>();
         if (StringUtil.isBlank(parentCode)) {
             ZTreeVO VO = new ZTreeVO();
             VO.setId(ApplicationConfig.ROOT_CODE);

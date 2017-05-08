@@ -1,13 +1,11 @@
 package com.qi.common.spring.boot.configurer;
 
 import com.qi.common.constants.CommonConstants;
-import com.qi.common.constants.SpringConstants;
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 import com.qi.common.spring.boot.constants.PropertyConstants;
 import com.qi.common.util.ByteSizeUtil;
 import org.hibernate.validator.HibernateValidator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
@@ -48,7 +46,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
-        registry.addViewController(StringConstants.FORWARD_SLASH).setViewName("forward:/index");
+        registry.addViewController(LabelConstants.FORWARD_SLASH).setViewName("forward:/index");
         registry.setOrder(Ordered.HIGHEST_PRECEDENCE);
         super.addViewControllers(registry);
     }
@@ -113,7 +111,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     public static MessageSource messageSource() {
         ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
         messageSource.setBasenames(CommonConstants.RESOURCES_I18N_PATH);
-        messageSource.setDefaultEncoding(StringConstants.UTF8);
+        messageSource.setDefaultEncoding(LabelConstants.UTF8);
         messageSource.setCacheSeconds(600);
         return messageSource;
     }

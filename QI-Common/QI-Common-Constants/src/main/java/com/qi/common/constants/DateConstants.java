@@ -182,11 +182,11 @@ public class DateConstants {
     /**
      * yyyy-MM-dd
      */
-    public static final String PATTERN_YMD_DASH = YEAR_PATTERN + StringConstants.DASH + MONTH_PATTERN + StringConstants.DASH + DAY_PATTERN;
+    public static final String PATTERN_YMD_DASH = YEAR_PATTERN + LabelConstants.DASH + MONTH_PATTERN + LabelConstants.DASH + DAY_PATTERN;
     /**
      * yyyy/MM/dd
      */
-    public static final String PATTERN_YMD_SLASH = YEAR_PATTERN + StringConstants.FORWARD_SLASH + MONTH_PATTERN + StringConstants.FORWARD_SLASH
+    public static final String PATTERN_YMD_SLASH = YEAR_PATTERN + LabelConstants.FORWARD_SLASH + MONTH_PATTERN + LabelConstants.FORWARD_SLASH
             + DAY_PATTERN;
     /**
      * yyyy年MM月dd日
@@ -198,8 +198,8 @@ public class DateConstants {
     /**
      * HH:mm:ss.SSS
      */
-    public static final String PATTERN_HMSM = HOUR_PATTERN + StringConstants.COLON + MINUTE_PATTERN + StringConstants.COLON + SEC_PATTERN
-            + StringConstants.PERIOD + MS_PATTERN;
+    public static final String PATTERN_HMSM = HOUR_PATTERN + LabelConstants.COLON + MINUTE_PATTERN + LabelConstants.COLON + SEC_PATTERN
+            + LabelConstants.PERIOD + MS_PATTERN;
     /**
      * HH时mm分ss秒SSS毫秒
      */
@@ -210,7 +210,7 @@ public class DateConstants {
     /**
      * HH:mm:ss
      */
-    public static final String PATTERN_HMS = HOUR_PATTERN + StringConstants.COLON + MINUTE_PATTERN + StringConstants.COLON + SEC_PATTERN;
+    public static final String PATTERN_HMS = HOUR_PATTERN + LabelConstants.COLON + MINUTE_PATTERN + LabelConstants.COLON + SEC_PATTERN;
     /**
      * HH时mm分ss秒
      */
@@ -221,7 +221,7 @@ public class DateConstants {
     /**
      * HH:mm
      */
-    public static final String PATTERN_HM = HOUR_PATTERN + StringConstants.COLON + MINUTE_PATTERN;
+    public static final String PATTERN_HM = HOUR_PATTERN + LabelConstants.COLON + MINUTE_PATTERN;
     /**
      * HH时mm分
      */
@@ -232,36 +232,36 @@ public class DateConstants {
     /**
      * yyyyMMdd HH:mm:ss
      */
-    public static final String PATTERN_DEFAULT = PATTERN_YMD + StringConstants.SPACE + PATTERN_HMS;
+    public static final String PATTERN_DEFAULT = PATTERN_YMD + LabelConstants.SPACE + PATTERN_HMS;
     /**
      * yyyy-MM-dd HH:mm:ss
      */
-    public static final String PATTERN_DEFAULT_DASH = PATTERN_YMD_DASH + StringConstants.SPACE + PATTERN_HMS;
+    public static final String PATTERN_DEFAULT_DASH = PATTERN_YMD_DASH + LabelConstants.SPACE + PATTERN_HMS;
     /**
      * yyyy/MM/dd HH:mm:ss
      */
-    public static final String PATTERN_DEFAULT_SLASH = PATTERN_YMD_SLASH + StringConstants.SPACE + PATTERN_HMS;
+    public static final String PATTERN_DEFAULT_SLASH = PATTERN_YMD_SLASH + LabelConstants.SPACE + PATTERN_HMS;
     /**
      * yyyy年MM月dd日 HH时mm分ss秒
      */
-    public static final String PATTERN_DEFAULT_CN = PATTERN_YMD_CN + StringConstants.SPACE + PATTERN_HMS_CN;
+    public static final String PATTERN_DEFAULT_CN = PATTERN_YMD_CN + LabelConstants.SPACE + PATTERN_HMS_CN;
 
     // -------------------------------------------------------------------------------------------------------------//
 
     /**
      * yyyyMMdd HH:mm:ss.SSS
      */
-    public static final String PATTERN_FULL = PATTERN_YMD + StringConstants.SPACE + PATTERN_HMSM;
+    public static final String PATTERN_FULL = PATTERN_YMD + LabelConstants.SPACE + PATTERN_HMSM;
     /**
      * yyyy-MM-dd HH:mm:ss.SSS
      */
-    public static final String PATTERN_FULL_DASH = PATTERN_YMD_DASH + StringConstants.SPACE + PATTERN_HMSM;
+    public static final String PATTERN_FULL_DASH = PATTERN_YMD_DASH + LabelConstants.SPACE + PATTERN_HMSM;
     /**
      * yyyy/MM/dd HH:mm:ss.SSS
      */
-    public static final String PATTERN_FULL_SLASH = PATTERN_YMD_SLASH + StringConstants.SPACE + PATTERN_HMSM;
+    public static final String PATTERN_FULL_SLASH = PATTERN_YMD_SLASH + LabelConstants.SPACE + PATTERN_HMSM;
     /**
      * yyyy年MM月dd日 HH时mm分ss秒SSS毫秒
      */
-    public static final String PATTERN_FULL_CN = PATTERN_YMD_CN + StringConstants.SPACE + PATTERN_HMSM_CN;
+    public static final String PATTERN_FULL_CN = PATTERN_YMD_CN + LabelConstants.SPACE + PATTERN_HMSM_CN;
 }

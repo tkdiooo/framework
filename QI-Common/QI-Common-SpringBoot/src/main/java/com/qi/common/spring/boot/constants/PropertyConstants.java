@@ -1,7 +1,7 @@
 package com.qi.common.spring.boot.constants;
 
 import com.qi.common.constants.CommonConstants;
-import com.qi.common.constants.StringConstants;
+import com.qi.common.constants.LabelConstants;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -17,28 +17,28 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties
 public class PropertyConstants {
 
-    @Value(StringConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.MULTIPART_LOCATION + StringConstants.COLON + StringConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.MULTIPART_LOCATION + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     private String location;
 
-    @Value(StringConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.MULTIPART_MAX_FILE_SIZE + StringConstants.COLON + "-1" + StringConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.MULTIPART_MAX_FILE_SIZE + LabelConstants.COLON + "-1" + LabelConstants.CLOSE_CURLY_BRACE)
     private String maxFileSize;
 
-    @Value(StringConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.MULTIPART_MAX_REQUEST_SIZE + StringConstants.COLON + "-1" + StringConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.MULTIPART_MAX_REQUEST_SIZE + LabelConstants.COLON + "-1" + LabelConstants.CLOSE_CURLY_BRACE)
     private String maxRequestSize;
 
-    @Value(StringConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.MULTIPART_FILE_SIZE_THRESHOLD + StringConstants.COLON + "0" + StringConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.MULTIPART_FILE_SIZE_THRESHOLD + LabelConstants.COLON + "0" + LabelConstants.CLOSE_CURLY_BRACE)
     private int fileSizeThreshold;
 
-    @Value(StringConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.PROPERTY_STATIC_RESOURCE + StringConstants.COLON + StringConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.PROPERTY_STATIC_RESOURCE + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     private String staticResources;
 
-    @Value(StringConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.PROPERTY_SSO_LOGIN_URL + StringConstants.COLON + StringConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.PROPERTY_SSO_LOGIN_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     private String ssoLoginUrl;
 
-    @Value(StringConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.PROPERTY_SSO_CHECK_URL + StringConstants.COLON + StringConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.PROPERTY_SSO_CHECK_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     private String ssoCheckUrl;
 
-    @Value(StringConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.PROPERTY_SSO_LOGOUT_URL + StringConstants.COLON + StringConstants.CLOSE_CURLY_BRACE)
+    @Value(LabelConstants.DOLLAR_AND_OPEN_CURLY_BRACE + CommonConstants.PROPERTY_SSO_LOGOUT_URL + LabelConstants.COLON + LabelConstants.CLOSE_CURLY_BRACE)
     private String ssoLogoutUrl;
 
     /**
