@@ -32,6 +32,7 @@ import com.qi.common.util.MapUtil;
 import com.qi.common.util.StringUtil;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -56,7 +57,7 @@ public class Echarts {
         series.setCenter(new String[]{"50%", "55%"});
         series.setLabel(label);
 
-        List<DataPie> data = ListUtil.getInstance();
+        List<DataPie> data = new ArrayList<>();
         BigDecimal total = new BigDecimal(0);
         for (PieVO aPie : pie) {
             BigDecimal amount = aPie.getAmount();
@@ -229,9 +230,9 @@ public class Echarts {
         String[] month = new String[pie.size()];
         String[] datas = new String[pie.size()];
 
-        List<Pieces> pieces = ListUtil.getInstance();
+        List<Pieces> pieces = new ArrayList<>();
 
-        List<List<DataMA>> dms = ListUtil.getInstance();
+        List<List<DataMA>> dms = new ArrayList<>();
 
         int index = 0;
 
@@ -243,7 +244,7 @@ public class Echarts {
                 // 如果比前面一个大，并且比下一个小
                 if (pie.get(i).getAmount().compareTo(pie.get(i - 1).getAmount()) == 1 &&
                         pie.get(i).getAmount().compareTo(pie.get(i + 1).getAmount()) == 1) {
-                    List<DataMA> dm = ListUtil.getInstance();
+                    List<DataMA> dm = new ArrayList<>();
                     dm.add(new DataMA("用" + (type.equals(0) ? "水" : (type.equals(1) ? "电" : "气")) + "高峰", pie.get(i - 1).getTitle() + "月"));
                     dm.add(new DataMA(null, pie.get(i).getTitle() + "月"));
                     dms.add(dm);

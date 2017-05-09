@@ -68,7 +68,10 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public Validator getValidator() {
-        return initLocalValidatorFactoryBean();
+        LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
+        localValidatorFactoryBean.setProviderClass(HibernateValidator.class);
+        localValidatorFactoryBean.setValidationMessageSource(messageSource);
+        return localValidatorFactoryBean;
     }
 
     /**
@@ -76,7 +79,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      *
      * @return
      */
-    @Bean
+//    @Bean
     public LocalValidatorFactoryBean initLocalValidatorFactoryBean() {
         LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
         localValidatorFactoryBean.setProviderClass(HibernateValidator.class);

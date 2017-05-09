@@ -1,6 +1,6 @@
 package com.qi.common.web.tool;
 
-import com.qi.common.constants.CommonConstants;
+import com.qi.common.constants.PropertiesConstants;
 import com.qi.common.util.PropertyUtil;
 
 /**
@@ -12,7 +12,7 @@ import com.qi.common.util.PropertyUtil;
 public class PropertyTool {
 
     public String getResourcePath() {
-        return PropertyUtil.getProps(CommonConstants.PROPERTY_STATIC_RESOURCE);
+        return PropertyUtil.getProps(PropertiesConstants.PROPERTY_STATIC_RESOURCE);
     }
 
     public String getSystemChinese() {

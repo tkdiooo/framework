@@ -161,14 +161,14 @@ public class SSOVerifyFilter implements Filter {
             }
         }
         //to login page
-        String form_url = HttpUtil.getFullRequestURI(request);
+        String form_url = HttpUtil.getFullUrlRequest(request);
         // 嵌套form_url处理
         if (form_url.contains(SSOConstants.PARAM_FROM_URL)) {
             form_url = form_url.substring(form_url.indexOf(SSOConstants.PARAM_FROM_URL + "="), form_url.length());
         }
         Boolean ajax = false;
         // 如果是Ajax请求，获取上一步的请求路径
-        if (HttpUtil.isAjax(request)) {
+        if (HttpUtil.isAjaxRequest(request)) {
             form_url = request.getHeader("Referer");
             ajax = true;
         }

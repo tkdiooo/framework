@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -48,7 +49,7 @@ public class WaterReadServiceImpl implements WaterReadService {
         // 分页查询
         dao.queryPagination(pageInfo);
         // List集合转换为map集合
-        pageInfo.setMapResult(ListUtil.getInstance());
+        pageInfo.setMapResult(new ArrayList<>());
         pageInfo.getResult().forEach((VO) -> {
             Map<String, Object> map = MapUtil.toMap(VO);
             // 数据已生效，不可修改、删除
@@ -88,7 +89,7 @@ public class WaterReadServiceImpl implements WaterReadService {
     @Override
     public List<SelectVO> findYear() {
         List<String> result = dao.findYear();
-        List<SelectVO> list = ListUtil.getInstance();
+        List<SelectVO> list = new ArrayList<>();
         result.forEach((Str) -> list.add(new SelectVO(Str, Str)));
         return list;
     }

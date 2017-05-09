@@ -17,6 +17,7 @@ import com.qi.common.util.MapUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -38,7 +39,7 @@ public class OptionsReadServiceImpl implements OptionsReadService {
         // 分页查询
         dao.queryPagination(pageInfo);
         // List集合转换为map集合
-        pageInfo.setMapResult(ListUtil.getInstance());
+        pageInfo.setMapResult(new ArrayList<>());
         pageInfo.getResult().forEach((VO) -> {
             Map<String, Object> map = MapUtil.toMap(VO);
             map.put("抄表日期间隔类型", DateConstants.DateType.getValueByKey(VO.getIntervaltype()));
@@ -71,7 +72,7 @@ public class OptionsReadServiceImpl implements OptionsReadService {
         example.createCriteria().andOptionstypeEqualTo(cls.getSimpleName());
         List<Options> list = dao.selectByExample(example);
         ListUtil.sort(list, "grade", true);
-        List<OptionsVO> result = ListUtil.getInstance();
+        List<OptionsVO> result = new ArrayList<>();
         for (Options options : list) {
             OptionsVO VO = new OptionsVO();
             BeanUtil.copyPropertiesNotEmpty(VO, options);

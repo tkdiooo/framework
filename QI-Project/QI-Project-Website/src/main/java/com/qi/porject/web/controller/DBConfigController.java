@@ -8,6 +8,7 @@ import com.qi.porject.web.tool.Header;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
@@ -36,7 +37,7 @@ public class DBConfigController extends BasicController {
     }
 
     @RequestMapping(value = "added")
-    public String added(ModelMap model) {
+    public String added(ModelMap model,BindingResult result) {
 //        List<BasicSystem> dataSet = portalReadService.findNormalPortal();
 //        List<RTreeVO> list = ListUtil.getInstance();
 //        dataSet.forEach((portal) -> list.add(TreeUtil.convertRTree(portal, "code", "namecn", null)));
