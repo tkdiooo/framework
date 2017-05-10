@@ -62,29 +62,16 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     }
 
     /**
-     * 添加Spring MVC Validator
+     * Spring MVC Validator 加载：添加自定义验证工厂类
      *
      * @return
      */
     @Override
     public Validator getValidator() {
-        LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
-        localValidatorFactoryBean.setProviderClass(HibernateValidator.class);
-        localValidatorFactoryBean.setValidationMessageSource(messageSource);
-        return localValidatorFactoryBean;
-    }
-
-    /**
-     * 添加自定义验证工厂类
-     *
-     * @return
-     */
-//    @Bean
-    public LocalValidatorFactoryBean initLocalValidatorFactoryBean() {
-        LocalValidatorFactoryBean localValidatorFactoryBean = new LocalValidatorFactoryBean();
-        localValidatorFactoryBean.setProviderClass(HibernateValidator.class);
-        localValidatorFactoryBean.setValidationMessageSource(messageSource);
-        return localValidatorFactoryBean;
+        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
+        validator.setProviderClass(HibernateValidator.class);
+        validator.setValidationMessageSource(messageSource);
+        return validator;
     }
 
     /**
