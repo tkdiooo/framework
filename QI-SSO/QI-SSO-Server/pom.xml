@@ -25,18 +25,15 @@
             <groupId>com.qi.package</groupId>
             <artifactId>QI-Package-Service</artifactId>
         </dependency>
-        <!--log-->
+        <!-- Logback Core -->
         <dependency>
-            <groupId>com.efesco.kafka</groupId>
-            <artifactId>kafka-client</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
         </dependency>
+        <!-- Logback classic -->
         <dependency>
-            <groupId>com.efesco.logback</groupId>
-            <artifactId>logback-rmt</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
         </dependency>
         <!-- tomcat -->
         <dependency>

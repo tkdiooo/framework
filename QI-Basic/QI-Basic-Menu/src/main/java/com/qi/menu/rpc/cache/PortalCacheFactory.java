@@ -23,7 +23,7 @@ public class PortalCacheFactory {
         if (ListUtil.isContentNull(dataSet)) {
             dataSet = CacheFactory.refreshBasicSystemCache();
         }
-        return MapUtil.toMap(dataSet, "code", SystemDto.class);
+        return MapUtil.toMap(dataSet, "code");
     }
 
     public static SystemDto getPortalDtoCacheByCode(String code) {

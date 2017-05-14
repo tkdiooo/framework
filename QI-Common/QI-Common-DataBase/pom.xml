@@ -38,9 +38,15 @@
             <artifactId>ibatis-sqlmap</artifactId>
         </dependency>
         <!-- log -->
+        <!-- Logback Core -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+        </dependency>
+        <!-- Logback classic -->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
         </dependency>
         <!-- test -->
         <dependency>
