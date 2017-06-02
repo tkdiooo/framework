@@ -45,15 +45,17 @@
             <artifactId>guava</artifactId>
         </dependency>
         <!--log-->
-        <!-- Logback Core -->
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-core</artifactId>
+            <groupId>com.efesco.kafka</groupId>
+            <artifactId>kafka-client</artifactId>
         </dependency>
-        <!-- Logback classic -->
         <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
+            <groupId>com.efesco.logback</groupId>
+            <artifactId>logback-rmt</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
         </dependency>
         <!-- tomcat -->
         <dependency>

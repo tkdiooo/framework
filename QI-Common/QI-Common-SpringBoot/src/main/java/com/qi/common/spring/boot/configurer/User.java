@@ -1,4 +1,4 @@
-package com.qi.porject.web.tool;
+package com.qi.common.spring.boot.configurer;
 
 import com.qi.common.constants.i18n.VerifyConstants;
 import org.hibernate.validator.constraints.Length;

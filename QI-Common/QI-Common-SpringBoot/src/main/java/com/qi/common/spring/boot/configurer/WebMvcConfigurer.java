@@ -22,6 +22,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import javax.annotation.Resource;
 import javax.servlet.MultipartConfigElement;
+import javax.validation.ConstraintViolation;
+import java.util.Set;
 
 /**
  * Class WebMvcConfigurer
@@ -68,10 +70,15 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
      */
     @Override
     public Validator getValidator() {
-        LocalValidatorFactoryBean validator = new LocalValidatorFactoryBean();
-        validator.setProviderClass(HibernateValidator.class);
-        validator.setValidationMessageSource(messageSource);
-        return validator;
+        return validator();
+    }
+
+    @Bean
+    public Validator validator() {
+        LocalValidatorFactoryBean mvcValidator = new LocalValidatorFactoryBean();
+        mvcValidator.setProviderClass(HibernateValidator.class);
+        mvcValidator.setValidationMessageSource(messageSource);
+        return mvcValidator;
     }
 
     /**
