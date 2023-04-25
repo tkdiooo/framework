@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.finch.framework</groupId>
+    <artifactId>web</artifactId>
+    <packaging>pom</packaging>
+    <version>2.7.11-SNAPSHOT</version>
+
+    <modules>
+        <module>web-mvc</module>
+        <module>web-flux</module>
+        <module>web-socket</module>
+    </modules>
+
+    <properties>
+        <!--        <sfsctech.common.version>2.2.1-SNAPSHOT</sfsctech.common.version>-->
+        <spring.cloud.version>2021.0.6</spring.cloud.version>
+        <spring.boot.version>2.7.11</spring.boot.version>
+        <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <repository.url>http://172.16.223.24:8081</repository.url>
+        <slf4j.version>1.7.25</slf4j.version>
+        <java.version>1.8</java.version>
+    </properties>
+
+    <dependencies>
+    </dependencies>
+
+    <dependencyManagement>
+    </dependencyManagement>
+
+    <distributionManagement>
+        <repository>
+            <id>releases</id>
+            <name>Nexus Release Repository</name>
+            <url>${repository.url}/repository/maven-releases/</url>
+        </repository>
+        <snapshotRepository>
+            <id>snapshots</id>
+            <name>Nexus Snapshot Repository</name>
+            <url>${repository.url}/repository/maven-snapshots/</url>
+        </snapshotRepository>
+    </distributionManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.5.0</version>
+                <configuration>
+                    <!-- Turnoff all checks -->
+                    <doclint>none</doclint>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>attach-javadocs</id>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <!--                <configuration>-->
+                <!--                    <aggregate>true</aggregate>-->
+                <!--                </configuration>-->
+                <!--                <executions>-->
+                <!--                    <execution>-->
+                <!--                        <id>attach-javadocs</id>-->
+                <!--                        <goals>-->
+                <!--                            <goal>jar</goal>-->
+                <!--                        </goals>-->
+                <!--                        <configuration>-->
+                <!--                            <additionalparam>-Xdoclint:none</additionalparam>-->
+                <!--                        </configuration>-->
+                <!--                    </execution>-->
+                <!--                </executions>-->
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
